@@ -1,0 +1,8 @@
+<div *ngIf="messages.length" class="container">
+    <div class="m-3">
+        <div *ngFor="let msg of messages" class="{{cssClasses(msg)}}">
+            <span [innerHTML]="msg.message"></span>
+            <button class="btn-close" (click)="removeMessage(msg)"></button>
+        </div>
+    </div>
+</div>

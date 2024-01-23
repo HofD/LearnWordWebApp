@@ -1,0 +1,16 @@
+<form [formGroup]="registerForm" (ngSubmit)="Register()">
+    <div class="mb-3">
+        <label for="email" class="form-label">Email Address</label>
+        <input formControlName="email" type="email" class="form-control" id="email" placeholder="name@example.com">
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input formControlName="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp">
+        <div id="passwordHelp" class="form-text">Password lenght must be 6 or more symbols and must have at least one non alphanumeric character.</div>
+    </div>
+    <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm password</label>
+        <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
+    </div>
+    <button [disabled]="!registerForm.valid" type="submit" class="btn btn-primary">Register</button>
+</form>

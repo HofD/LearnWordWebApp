@@ -5,7 +5,7 @@ export function MustMatch(controlName: string, matchingControlName: string) {
     return (group: AbstractControl) => {
         const control = group.get(controlName);
         const matchingControl = group.get(matchingControlName);
-
+        console.log(control);
         if (!control || !matchingControl) {
             return null;
         }

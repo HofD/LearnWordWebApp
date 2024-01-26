@@ -29,12 +29,17 @@ export class LoginComponent {
     });
   }
 
-  Login(){
+  async Login(){
     if (this.loginForm.invalid) {
       this.alertService.error(this.loginForm.value);
       return;
     }
 
+    await this.authService.login(this.loginForm.controls['userEmail'].value, this.loginForm.controls['userPassword'].value);
+
+    if(this.tokenStorageService.getToken() != null){
+      this.alertService.success(this.tokenStorageService.getToken() ?? '');
+    }
 
   }
 

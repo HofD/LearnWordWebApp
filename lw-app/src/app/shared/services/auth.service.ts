@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import { environment } from '../../../environments/environment';
 import {TokenStorageService} from './token-storage.service';
 import {User} from '../models/user.model'
-import { catchError, throwError } from 'rxjs';
+import { catchError, lastValueFrom, throwError } from 'rxjs';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,7 +15,6 @@ const httpOptions = {
 })
 
 export class AuthService {
-    headers = new HttpHeaders().set('Content-Type', 'application/json');
     currentUser = {};
 
     constructor(
@@ -26,6 +25,25 @@ export class AuthService {
 
     public register(user: User) {
         return this.http.post(`${environment.apiUrl}/api/account/register`, user).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    public async login(email: string, password: string) {
+        type LoginResponse = {
+            email: string,
+            token: string
+        }
+        
+        const response$ = this.http.post<LoginResponse>(`${environment.apiUrl}/api/auth/login`, { email, password }).pipe(
+            catchError(this.handleError)
+        );
+        const result = await lastValueFrom(response$);
+        this.tokenStorageService.saveToken(result.token);
+    }
+
+    public confirmEmail(userId: string, code: string){
+        return this.http.get(`${environment.apiUrl}/api/account/confirm?userId=${userId}&code=${code}`).pipe(
             catchError(this.handleError)
         );
     }

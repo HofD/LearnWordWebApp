@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div *ngIf="!loaded">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status"></div>
+        </div>
+    </div>
+    <div *ngIf="this.collections.length == 0 && loaded">
+        <form [formGroup]="newCollectionForm" (ngSubmit)="add()">
+            <div class="mb-3">
+                <label for="name" class="form-label">New collection name</label>
+                <input formControlName="name" type="text" class="form-control" id="name">
+            </div>
+            <button [disabled]="!newCollectionForm.valid" type="submit" class="btn btn-dark">Create</button>
+        </form>
+    </div>
+    <div *ngIf="this.collections.length > 0">
+        <div class="card mb-2" *ngFor="let collection of collections">
+            <!-- <h5 class="card-header">{{collection.name}}</h5> -->
+            <div class="card-body">
+                <h5>{{collection.name}}</h5>
+                <p class="card-text">Cards in this collection: {{collection.cardsCount}}</p>
+                <a href="#" class="btn btn-dark">Open</a>
+            </div>
+        </div>
+        <form [formGroup]="newCollectionForm" (ngSubmit)="add()">
+            <div class="mb-3">
+                <label for="name" class="form-label">New collection name</label>
+                <input formControlName="name" type="text" class="form-control" id="name">
+            </div>
+            <button [disabled]="!newCollectionForm.valid" type="submit" class="btn btn-dark">Create</button>
+        </form>
+    </div>
+</div>

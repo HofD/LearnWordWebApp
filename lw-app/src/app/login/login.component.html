@@ -1,12 +1,17 @@
-<form [formGroup]="loginForm" (ngSubmit)="Login()">
-    <div class="mb-3">
-        <label for="email" class="form-label">Email Address</label>
-        <input formControlName="userEmail" type="email" class="form-control" id="email" placeholder="name@example.com">
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input formControlName="userPassword" type="password" class="form-control" id="password">
-    </div>
-    <button [disabled]="!loginForm.valid" type="submit" class="btn btn-primary">Login</button>
-    <a routerLink="/register" class="btn btn-secondary">Register</a>
-</form>
+<div class="container-fluid">
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input formControlName="userEmail" type="email" class="form-control" id="email"
+                placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input formControlName="userPassword" type="password" class="form-control" id="password">
+        </div>
+        <div class="gap-4 d-sm-block">
+            <button [disabled]="!loginForm.valid" type="submit" class="btn btn-dark gap-4">Login</button>
+            <a routerLink="/register" class="btn btn-light">Register</a>
+        </div>
+    </form>
+</div>

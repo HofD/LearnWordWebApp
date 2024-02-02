@@ -4,16 +4,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MustMatch } from '../_helpers/must-match.validator';
 import { AuthService } from '../shared/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgClass],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  registerForm!: FormGroup;
+  registerForm: FormGroup;
   submitting = false;
   submitted = false;
 
@@ -29,9 +30,9 @@ export class RegisterComponent {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, MustMatch('password', 'confirmPassword')]]
     });
-   }
+  }
 
-  Register() {
+  register() {
     this.submitted = true;
 
     if (this.registerForm.invalid) {
@@ -52,5 +53,13 @@ export class RegisterComponent {
           this.submitting = false;
         }
       });
+  }
+
+  validateControl = (controlName: string) => {
+    return this.registerForm.get(controlName)!.invalid && this.registerForm.get(controlName)!.touched
+  }
+
+  hasError = (controlName: string, errorName: string) => {
+    return this.registerForm.get(controlName)!.hasError(errorName)
   }
 }

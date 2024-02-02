@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { TokenStorageService } from '../shared/services/token-storage.service';
 import { AlertService } from '../shared/services/alert.service';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +30,7 @@ export class LoginComponent {
     });
   }
 
-  async Login(){
+  async login() {
     if (this.loginForm.invalid) {
       this.alertService.error(this.loginForm.value);
       return;
@@ -37,10 +38,12 @@ export class LoginComponent {
 
     await this.authService.login(this.loginForm.controls['userEmail'].value, this.loginForm.controls['userPassword'].value);
 
-    if(this.tokenStorageService.getToken() != null){
-      this.alertService.success(this.tokenStorageService.getToken() ?? '');
+    if (this.tokenStorageService.getToken() != null) {
+      const returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'collections';
+      this.router.navigateByUrl(returnUrl);
+      //this.router.navigate(['collections']);
     }
 
+    //TODO: Add errors
   }
-
 }

@@ -1,16 +1,29 @@
-<form [formGroup]="registerForm" (ngSubmit)="Register()">
-    <div class="mb-3">
-        <label for="email" class="form-label">Email Address</label>
-        <input formControlName="email" type="email" class="form-control" id="email" placeholder="name@example.com">
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input formControlName="password" type="password" class="form-control" id="password" aria-describedby="passwordHelp">
-        <div id="passwordHelp" class="form-text">Password lenght must be 6 or more symbols and must have at least one non alphanumeric character.</div>
-    </div>
-    <div class="mb-3">
-        <label for="confirmPassword" class="form-label">Confirm password</label>
-        <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
-    </div>
-    <button [disabled]="!registerForm.valid" type="submit" class="btn btn-primary">Register</button>
-</form>
+<div class="container-fluid">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input formControlName="email" type="email" class="form-control" id="email" placeholder="name@example.com"
+                [ngClass]="{ 'is-invalid': validateControl('email') }">
+            <div *ngIf="validateControl('email') && hasError('email', 'required')" class="invalid-feedback">Email is
+                required</div>
+            <div *ngIf="validateControl('email') && hasError('email', 'email')" class="invalid-feedback">Email must be a
+                valid email address</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input formControlName="password" type="password" class="form-control" id="password"
+                aria-describedby="passwordHelp" [ngClass]="{ 'is-invalid': validateControl('password') }">
+            <div *ngIf="validateControl('password') && hasError('password', 'required')" class="invalid-feedback">
+                Password is
+                required</div>
+            <div id="passwordHelp" class="form-text">Password length must be 6 or more symbols and must have at least
+                one non alphanumeric character and at least one upper-case letter.</div>
+
+        </div>
+        <div class="mb-3">
+            <label for="confirmPassword" class="form-label">Confirm password</label>
+            <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
+        </div>
+        <button [disabled]="!registerForm.valid" type="submit" class="btn btn-dark">Register</button>
+    </form>
+</div>

@@ -24,7 +24,7 @@ export class AuthService {
     ) {}
 
     public register(user: User) {
-        return this.http.post(`${environment.apiUrl}/api/account/register`, user).pipe(
+        return this.http.post(`${environment.apiUrl}/api/account/register`, user, httpOptions).pipe(
             catchError(this.handleError)
         );
     }
@@ -35,7 +35,7 @@ export class AuthService {
             token: string
         }
         
-        const response$ = this.http.post<LoginResponse>(`${environment.apiUrl}/api/auth/login`, { email, password }).pipe(
+        const response$ = this.http.post<LoginResponse>(`${environment.apiUrl}/api/auth/login`, { email, password }, httpOptions).pipe(
             catchError(this.handleError)
         );
         const result = await lastValueFrom(response$);
@@ -43,7 +43,7 @@ export class AuthService {
     }
 
     public confirmEmail(userId: string, code: string){
-        return this.http.get(`${environment.apiUrl}/api/account/confirm?userId=${userId}&code=${code}`).pipe(
+        return this.http.get(`${environment.apiUrl}/api/account/confirm?userId=${userId}&code=${code}`, httpOptions).pipe(
             catchError(this.handleError)
         );
     }

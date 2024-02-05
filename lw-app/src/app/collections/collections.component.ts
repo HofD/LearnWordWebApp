@@ -38,7 +38,7 @@ export class CollectionsComponent implements OnInit {
     );
   }
 
-  loadCollections(data: any){
+  loadCollections(data: any) {
     this.collections = data["collections"];
     this.loaded = true;
   }
@@ -51,6 +51,18 @@ export class CollectionsComponent implements OnInit {
     this.httpService.add(this.newCollectionForm.controls['name'].value).subscribe({
       next: () => this.get()
     });
+
+    this.newCollectionForm.controls['name'].setValue('');
+  }
+
+  delete(id: number) {
+    this.httpService.delete(id).subscribe({
+      next: () => this.get()
+    })
+  }
+
+  rename(id: number) {
+
   }
 
 }

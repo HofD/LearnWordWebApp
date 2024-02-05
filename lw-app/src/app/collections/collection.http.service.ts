@@ -24,6 +24,18 @@ export class CollectionHttpService {
         );
     }
 
+    public delete(id: number) {
+        return this.http.delete(`${environment.apiUrl}/api/collections/${id}`, httpOptions).pipe(
+            catchError(this.handleError)
+        )
+    }
+
+    public rename(id: number, name: string) {
+        return this.http.put(`${environment.apiUrl}/api/collections/${id}`, { name: name }).pipe(
+            catchError(this.handleError)
+        )
+    }
+
     public getList() {
         return this.http.get(`${environment.apiUrl}/api/collections`, httpOptions).pipe(
             catchError(this.handleError)
@@ -34,7 +46,7 @@ export class CollectionHttpService {
         if (error.status === 0) {
             // A client-side or network error occurred. Handle it accordingly.
             console.error('An error occurred:', error.error);
-        } else if(error.status === 401) {
+        } else if (error.status === 401) {
             this.router.navigate(['login'], { queryParams: { returnUrl: this.router.url } });
         }
         else {

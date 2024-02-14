@@ -5,11 +5,13 @@ import { LoginComponent } from './login/login.component';
 import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { authGuard } from './shared/services/auth.guard';
+import { CollectionComponent } from './collection/collection.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'login', component: LoginComponent },
     { path: 'confirm', component: EmailConfirmComponent },
-    { path: 'collections', component: CollectionsComponent, canActivate: [authGuard] }
+    { path: 'collections', component: CollectionsComponent, canActivate: [authGuard] },
+    { path: 'collection/:id', component: CollectionComponent, canActivate: [authGuard] }
 ];

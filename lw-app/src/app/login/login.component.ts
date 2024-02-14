@@ -4,7 +4,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { TokenStorageService } from '../shared/services/token-storage.service';
 import { AlertService } from '../shared/services/alert.service';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',

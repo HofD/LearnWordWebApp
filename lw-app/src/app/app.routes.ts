@@ -13,5 +13,5 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'confirm', component: EmailConfirmComponent },
     { path: 'collections', component: CollectionsComponent, canActivate: [authGuard] },
-    { path: 'collection/:id', component: CollectionComponent, canActivate: [authGuard] }
+    { path: 'collections/:id', component: CollectionComponent, canActivate: [authGuard] }
 ];

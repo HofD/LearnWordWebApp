@@ -1,0 +1,29 @@
+<div *ngFor="let word of card.words">
+    <div class="mb-2">
+        <div class="fs-5 fw-semibold">{{word.value}}</div>
+        <div class="fs-6 fw-light">{{word.transcription}}</div>
+        <div class="fs-6 fw-light">{{word.translation}}</div>
+    </div>
+</div>
+<div>
+    <a class="btn btn-dark btn-sm" data-bs-toggle="collapse" href="#newWordFormCollapse{{card.id}}" role="button" aria-expanded="false" [attr.aria-controls]="'newWordFormCollapse' + card.id">
+        +
+      </a>
+</div>
+<div class="collapse" id="newWordFormCollapse{{card.id}}">
+    <form [formGroup]="newWordForm" (ngSubmit)="addWord()">
+        <div class="mb-1">
+            <label for="value" class="form-label">Value</label>
+            <input formControlName="value" type="text" class="form-control" id="value">
+        </div>
+        <div class="mb-1">
+            <label for="translation" class="form-label">Translation</label>
+            <input formControlName="translation" type="text" class="form-control" id="translation">
+        </div>
+        <div class="mb-1">
+            <label for="transcription" class="form-label">Transcription</label>
+            <input formControlName="transcription" type="text" class="form-control" id="transcription">
+        </div>
+        <button [disabled]="!newWordForm.valid" type="submit" class="btn btn-dark">Add</button>
+    </form>
+</div>

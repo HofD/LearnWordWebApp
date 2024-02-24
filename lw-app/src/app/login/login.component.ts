@@ -9,6 +9,7 @@ import { AlertService } from '../shared/services/alert.service';
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, RouterLink],
+  providers: [AlertService, AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

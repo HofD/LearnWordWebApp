@@ -1,0 +1,8 @@
+<div *ngFor="let card of cards" class="mb-2">
+    <div class="card">
+        <div class="card-body">
+          <app-card [card]="card" [collectionId]="collectionId"></app-card>
+        </div>
+      </div>
+</div>
+<app-card [collectionId]="collectionId" (onCardAdded)="addCard($event)"></app-card>

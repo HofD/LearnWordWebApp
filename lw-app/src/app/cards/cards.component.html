@@ -1,8 +1,23 @@
-<div *ngFor="let card of cards" class="mb-2">
-    <div class="card">
-        <div class="card-body">
-          <app-card [card]="card" [collectionId]="collectionId"></app-card>
+<div *ngFor="let card of cards; index as i" class="mb-2">
+  <div class="card">
+    <div class="card-header d-grid gap-2 d-sm-flex justify-content-end"><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + card.id">Delete</button></div>
+    <div class="card-body">
+      <app-card [card]="card" [collectionId]="collectionId"></app-card>
+    </div>
+  </div>
+  <div class="modal fade" id="deleteModal{{card.id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5">Delete this card?</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="delete(card.id!, i)" type="button" data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
         </div>
       </div>
+    </div>
+  </div>
 </div>
 <app-card [collectionId]="collectionId" (onCardAdded)="addCard($event)"></app-card>

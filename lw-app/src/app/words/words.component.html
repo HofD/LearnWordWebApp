@@ -7,13 +7,13 @@
 </div>
 <div>
     <a class="btn btn-dark btn-sm" data-bs-toggle="collapse" href="#newWordFormCollapse{{card.id}}" role="button" aria-expanded="false" [attr.aria-controls]="'newWordFormCollapse' + card.id">
-        +
+        Add more...
       </a>
 </div>
 <div class="collapse" id="newWordFormCollapse{{card.id}}">
     <form [formGroup]="newWordForm" (ngSubmit)="addWord()">
         <div class="mb-1">
-            <label for="value" class="form-label">Value</label>
+            <label for="value" class="form-label">Text</label>
             <input formControlName="value" type="text" class="form-control" id="value">
         </div>
         <div class="mb-1">

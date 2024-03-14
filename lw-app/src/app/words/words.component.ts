@@ -39,20 +39,22 @@ export class WordsComponent implements OnInit {
       this.newWordForm.controls["transcription"].value,
       this.newWordForm.controls["translation"].value);
 
-    this.card.words.push(newWord);
-
     if (this.card.id === null) {
-      this.http.add(this.card).subscribe({
+      let newCard = this.card;
+      newCard.words.push(newWord);
+      this.http.add(newCard).subscribe({
         next: (data: any) => this.updateCard(data)
       })
+    }
+    else {
+      this.card.words.push(newWord);
     }
 
     this.newWordForm.reset();
   }
 
-  updateCard(data: any){
+  updateCard(data: any) {
     this.card = data;
     this.onCardAdded.emit(this.card);
-    //this.card.words.pop();
   }
 }

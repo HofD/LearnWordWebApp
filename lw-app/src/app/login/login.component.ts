@@ -9,7 +9,6 @@ import { AlertService } from '../shared/services/alert.service';
   selector: 'app-login',
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, RouterLink],
-  providers: [AlertService, AuthService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -39,6 +38,7 @@ export class LoginComponent {
     await this.authService.login(this.loginForm.controls['userEmail'].value, this.loginForm.controls['userPassword'].value);
 
     if (this.tokenStorageService.getToken() != null) {
+      this.authService.sendAuthStateChangeNotification(true);
       const returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'collections';
       this.router.navigateByUrl(returnUrl);
       //this.router.navigate(['collections']);

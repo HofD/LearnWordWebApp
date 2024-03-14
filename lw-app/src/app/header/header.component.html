@@ -1,23 +1,23 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="collections">
-        <!--<img src="../../assets/brand/lw_brand.jpg" width="30" height="30" class="d-inline-block align-top" alt="Learn Word Brand" loading="lazy">-->
-        Learn Word
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarHeader">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="collections" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" routerLink="/contact" routerLinkActive="active">About</a>
-          </li>
-      </ul>
-      <!--<form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-light my-2 my-sm-0" type="submit">Log In</button>
-      </form>-->
-    </div>
+  <a class="navbar-brand" routerLink="collections">
+    <!--<img src="../../assets/brand/lw_brand.jpg" width="30" height="30" class="d-inline-block align-top" alt="Learn Word Brand" loading="lazy">-->
+    Learn Word
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarHeader">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="collections" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/contact" routerLinkActive="active">About</a>
+      </li>
+    </ul>
+    <form *ngIf="isUserAuthenticated || isLoggedIn()" class="d-flex">
+      <button class="btn btn-outline-light my-2 my-sm-0" (click)="logout()">Log Out</button>
+    </form>
+  </div>
 </nav>

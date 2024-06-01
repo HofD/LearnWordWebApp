@@ -4,6 +4,7 @@ import { Card } from '../card/card';
 import { NgFor, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CardHttpService } from '../card/card.http.service';
+import { WordHttpService } from './word.http.service';
 
 @Component({
   selector: 'app-words',
@@ -13,12 +14,14 @@ import { CardHttpService } from '../card/card.http.service';
   styleUrl: './words.component.css'
 })
 export class WordsComponent implements OnInit {
-  @Input() card!: Card;
+  @Input() card?: Card | null;
+  @Input() collectionId!: number;
   newWordForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: CardHttpService
+    private cardHttp: CardHttpService,
+    private wordHttp: WordHttpService
   ) {
     this.newWordForm = this.formBuilder.group({
       value: ["", Validators.required],
@@ -39,22 +42,30 @@ export class WordsComponent implements OnInit {
       this.newWordForm.controls["transcription"].value,
       this.newWordForm.controls["translation"].value);
 
-    if (this.card.id === null) {
-      let newCard = this.card;
+    if (this.card === undefined) {
+      let newCard = new Card(null, this.collectionId, false, new Array<Word>);
       newCard.words.push(newWord);
-      this.http.add(newCard).subscribe({
-        next: (data: any) => this.updateCard(data)
+      this.cardHttp.add(newCard).subscribe({
+        next: (data: any) => this.addCard(data)
       })
     }
     else {
-      this.card.words.push(newWord);
+      this.card?.words.push(newWord);
+      this.wordHttp.add(newWord, this.card!.id!).subscribe({
+        next: (data: any) => this.updateCard(data)
+      })
     }
 
     this.newWordForm.reset();
   }
 
+  addCard(data: any) {
+    this.onCardAdded.emit(data);
+  }
+
   updateCard(data: any) {
-    this.card = data;
-    this.onCardAdded.emit(this.card);
+    //console.log(data);
+    //this.card = data;
+    //this.onCardAdded.emit(this.card!);
   }
 }

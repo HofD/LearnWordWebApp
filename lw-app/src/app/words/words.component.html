@@ -1,16 +1,18 @@
-<div *ngFor="let word of card.words">
-    <div class="mb-2">
-        <div class="fs-5 fw-semibold">{{word.value}}</div>
-        <div class="fs-6 fw-light">{{word.transcription}}</div>
-        <div class="fs-6 fw-light">{{word.translation}}</div>
+<div *ngIf="this.card?.id !== null">
+    <div *ngFor="let word of card?.words">
+        <div class="mb-2">
+            <div class="fs-5 fw-semibold">{{word.value}}</div>
+            <div class="fs-6 fw-light">{{word.transcription}}</div>
+            <div class="fs-6 fw-light">{{word.translation}}</div>
+        </div>
     </div>
 </div>
 <div>
-    <a class="btn btn-dark btn-sm" data-bs-toggle="collapse" href="#newWordFormCollapse{{card.id}}" role="button" aria-expanded="false" [attr.aria-controls]="'newWordFormCollapse' + card.id">
+    <a class="btn btn-dark btn-sm" data-bs-toggle="collapse" href="#newWordFormCollapse{{card?.id}}" role="button" aria-expanded="false" [attr.aria-controls]="'newWordFormCollapse' + card?.id">
         Add more...
       </a>
 </div>
-<div class="collapse" id="newWordFormCollapse{{card.id}}">
+<div class="collapse" id="newWordFormCollapse{{card?.id}}">
     <form [formGroup]="newWordForm" (ngSubmit)="addWord()">
         <div class="mb-1">
             <label for="value" class="form-label">Text</label>

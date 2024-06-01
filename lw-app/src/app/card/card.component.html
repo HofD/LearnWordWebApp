@@ -1,1 +1,6 @@
-<app-words [card]="card" (onCardAdded)="onCardAddedFromWords($event)"></app-words>
+<div *ngIf="this.card?.id === null">
+    <app-words [collectionId]="collectionId" (onCardAdded)="onCardAddedFromWords($event)"></app-words>
+</div>
+<div *ngIf="this.card?.id !== null">
+    <app-words [card]="card" [collectionId]="collectionId" (onCardAdded)="onCardAddedFromWords($event)"></app-words> 
+</div>

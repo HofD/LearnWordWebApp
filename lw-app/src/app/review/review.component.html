@@ -1,0 +1,62 @@
+<div class="container mt-4">
+    <div *ngIf="!loaded" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div *ngIf="loaded">
+        <div *ngIf="currentCard && currentCard.words && currentCard.words.length > 0" class="card">
+            <div class="card-body">
+                <div class="progress mb-4">
+                    <div class="progress-bar" role="progressbar" 
+                         [style.width.%]="(currentIndex + 1) / cards.length * 100"
+                         [attr.aria-valuenow]="(currentIndex + 1) / cards.length * 100"
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                        {{currentIndex + 1}} / {{cards.length}}
+                    </div>
+                </div>
+
+                <div class="text-center mb-4">
+                    <div class="word-container mb-3">
+                        <h3 class="card-title mb-3">{{currentCard.words[0].value}}</h3>
+                        <p class="card-text text-muted">
+                            {{currentCard.transcription}}
+                        </p>
+                    </div>
+
+                    <div class="translation-container" (click)="toggleTranslation()">
+                        <p *ngIf="!showTranslation" class="card-text lead text-primary" style="cursor: pointer;">
+                            <i class="bi bi-translate"></i> Click to show translation
+                        </p>
+                        <p *ngIf="showTranslation" class="card-text lead">
+                            {{currentCard.words[0].translation}}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-center">
+                    <button (click)="onForget()" class="btn btn-danger btn-lg px-4">
+                        <i class="bi bi-x-circle"></i> Forget
+                    </button>
+                    <button (click)="onLearn()" class="btn btn-success btn-lg px-4">
+                        <i class="bi bi-check-circle"></i> Learn
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!currentCard || !currentCard.words || currentCard.words.length === 0" class="text-center">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title mb-4">No Cards to Review</h3>
+                    <p class="card-text">There are no cards available for review in this collection.</p>
+                    <a routerLink="/collections" class="btn btn-primary btn-lg">
+                        <i class="bi bi-house"></i> Back to Collections
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

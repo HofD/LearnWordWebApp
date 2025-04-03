@@ -25,7 +25,10 @@
                     </button> -->
                 </h5>
                 <p class="card-text">Cards in this collection: {{collection.cardsCount}}</p>
-                <a routerLink="/collections/{{collection.id}}" class="btn btn-dark btn-sm">Open</a>
+                <div class="btn-group gap-2">
+                    <a routerLink="/collections/{{collection.id}}" class="btn btn-dark btn-sm">Open</a>
+                    <a routerLink="/review/{{collection.id}}" class="btn btn-primary btn-sm">Review</a>
+                </div>
             </div>
             <div class="modal fade" id="deleteModal{{collection.id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm">

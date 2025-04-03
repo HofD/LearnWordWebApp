@@ -6,6 +6,7 @@ import { EmailConfirmComponent } from './email-confirm/email-confirm.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { authGuard } from './shared/services/auth.guard';
 import { CollectionComponent } from './collection/collection.component';
+import { ReviewComponent } from './review/review.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'confirm', component: EmailConfirmComponent },
     { path: 'collections', component: CollectionsComponent, canActivate: [authGuard] },
-    { path: 'collections/:id', component: CollectionComponent, canActivate: [authGuard] }
+    { path: 'collections/:id', component: CollectionComponent, canActivate: [authGuard] },
+    { path: 'review/:collectionId', component: ReviewComponent, canActivate: [authGuard] }
 ];

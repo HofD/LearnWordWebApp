@@ -18,19 +18,19 @@ export class ReviewHttpService {
     ) { }
 
     public getCardsForReview(collectionId: number) {
-        return this.http.get(`${environment.apiUrl}/api/Review/collections/${collectionId}/cards`, httpOptions).pipe(
+        return this.http.get(`${environment.apiUrl}/api/collections/${collectionId}/review`, httpOptions).pipe(
             catchError(this.handleError)
         );
     }
 
     public markAsLearned(cardId: number) {
-        return this.http.post(`${environment.apiUrl}/api/Review/cards/${cardId}/learn`, {}, httpOptions).pipe(
+        return this.http.post(`${environment.apiUrl}/api/cards/${cardId}/learn`, {}, httpOptions).pipe(
             catchError(this.handleError)
         );
     }
 
     public markAsForgotten(cardId: number) {
-        return this.http.post(`${environment.apiUrl}/api/Review/cards/${cardId}/forget`, {}, httpOptions).pipe(
+        return this.http.post(`${environment.apiUrl}/api/cards/${cardId}/forget`, {}, httpOptions).pipe(
             catchError(this.handleError)
         );
     }

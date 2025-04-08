@@ -7,6 +7,7 @@ import { CollectionsComponent } from './collections/collections.component';
 import { authGuard } from './shared/services/auth.guard';
 import { CollectionComponent } from './collection/collection.component';
 import { ReviewComponent } from './review/review.component';
+import { AboutComponent } from './about/about.component';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
     { path: 'confirm', component: EmailConfirmComponent },
     { path: 'collections', component: CollectionsComponent, canActivate: [authGuard] },
     { path: 'collections/:id', component: CollectionComponent, canActivate: [authGuard] },
-    { path: 'review/:collectionId', component: ReviewComponent, canActivate: [authGuard] }
+    { path: 'review/:collectionId', component: ReviewComponent, canActivate: [authGuard] },
+    { path: 'about', component: AboutComponent }
 ];

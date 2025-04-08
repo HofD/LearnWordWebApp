@@ -1,0 +1,33 @@
+.card {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.features li, .tech-stack li {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.features i {
+    margin-right: 0.5rem;
+    color: #0d6efd;
+}
+
+.tech-stack li {
+    color: #495057;
+}
+
+hr {
+    background-color: #e9ecef;
+    opacity: 0.5;
+}
+
+.version-info {
+    font-size: 0.9rem;
+} 

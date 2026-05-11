@@ -98,6 +98,21 @@ export class AuthService {
                 `Backend returned code ${error.status}, body was: `, error.error);
         }
         // Return an observable with a user-facing error message.
-        return throwError(() => new Error('Something bad happened; please try again later.'));
+        return throwError(() => new Error(AuthService.getErrorMessage(error)));
+    }
+
+    private static getErrorMessage(error: HttpErrorResponse): string {
+        if (Array.isArray(error.error)) {
+            return error.error
+                .map(item => item.description ?? item.code)
+                .filter(Boolean)
+                .join(' ');
+        }
+
+        if (typeof error.error === 'string' && error.error.length > 0) {
+            return error.error;
+        }
+
+        return 'Something bad happened; please try again later.';
     }
 }

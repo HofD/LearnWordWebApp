@@ -3,7 +3,6 @@ import { HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse, HttpEvent
 
 import { TokenStorageService } from '../shared/services/token-storage.service';
 import { BehaviorSubject, Observable, catchError, filter, switchMap, take, throwError } from 'rxjs';
-import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 
 const TOKEN_HEADER_KEY = 'Authorization';
@@ -17,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private isRefreshing = false;
     private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    constructor(private tokenService: TokenStorageService, private router: Router, private authService: AuthService) { }
+    constructor(private tokenService: TokenStorageService, private authService: AuthService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         let authReq = req;
@@ -29,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
         return next.handle(authReq).pipe(
             catchError((error) => {
-                if (error instanceof HttpErrorResponse && !authReq.url.includes('/login')) {
+                if (error instanceof HttpErrorResponse && !this.isAuthEndpoint(authReq)) {
                     if (error.status === 401) {
                         return this.handle401Error(authReq, next);
                     }
@@ -39,27 +38,32 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        const refreshToken = this.tokenService.getRefreshToken();
+
+        if (refreshToken === null) {
+            this.authService.clearSession(['/login']);
+            return throwError(() => new Error('Refresh token is missing.'));
+        }
+
         if (!this.isRefreshing) {
             this.isRefreshing = true;
             this.refreshTokenSubject.next(null);
+
             return this.authService.refreshToken().pipe(
                 switchMap((response: any) => {
                     this.isRefreshing = false;
 
-                    this.tokenService.saveToken(response.token);
-                    this.tokenService.saveRefreshToken(response.refreshToken)
+                    this.authService.saveTokens(response);
                     this.refreshTokenSubject.next(response.token);
 
                     return next.handle(addTokenHeader(request, response.token));
                 }),
                 catchError((error) => {
                     this.isRefreshing = false;
+                    this.refreshTokenSubject.error(error);
+                    this.refreshTokenSubject = new BehaviorSubject<any>(null);
 
-                    this.tokenService.deleteToken();
-
-                    if (error.status == '403') {
-                        this.router.navigate(['login']);
-                    }
+                    this.authService.clearSession(['/login']);
 
                     return throwError(() => error);
                 })
@@ -71,5 +75,11 @@ export class AuthInterceptor implements HttpInterceptor {
             take(1),
             switchMap((token) => next.handle(addTokenHeader(request, token)))
         );
+    }
+
+    private isAuthEndpoint(request: HttpRequest<any>): boolean {
+        return request.url.includes('/api/auth/login')
+            || request.url.includes('/api/auth/refresh-token')
+            || request.url.includes('/api/auth/revoke-token');
     }
 }

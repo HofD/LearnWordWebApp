@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { TokenStorageService } from './token-storage.service';
 import { User } from '../models/user.model'
-import { Subject, catchError, lastValueFrom, throwError } from 'rxjs';
+import { EMPTY, Subject, catchError, finalize, lastValueFrom, switchMap, take, tap, throwError } from 'rxjs';
 import { AlertService } from './alert.service';
 
 const httpOptions = {
@@ -52,17 +52,26 @@ export class AuthService {
     public refreshToken() {
         const refreshToken = this.tokenStorageService.getRefreshToken();
 
-        return this.http.post<any>(`${environment.apiUrl}/api/auth/refresh-token`, { refreshToken }, httpOptions).pipe(
-            catchError(this.handleError)
-        );
+        if (refreshToken === null) {
+            return throwError(() => new Error('Refresh token is missing.'));
+        }
+
+        return this.http.post<any>(`${environment.apiUrl}/api/auth/refresh-token`, { refreshToken }, httpOptions);
+    }
+
+    public saveTokens(response: { token: string, refreshToken: string }): void {
+        this.tokenStorageService.saveToken(response.token);
+        this.tokenStorageService.saveRefreshToken(response.refreshToken);
     }
 
     public revokeToken() {
         const refreshToken = this.tokenStorageService.getRefreshToken();
 
-        return this.http.post<any>(`${environment.apiUrl}/api/auth/revoke-token`, { refreshToken }, httpOptions).pipe(
-            catchError(this.handleError)
-        );
+        if (refreshToken === null) {
+            return EMPTY;
+        }
+
+        return this.http.post<any>(`${environment.apiUrl}/api/auth/revoke-token`, { refreshToken }, httpOptions);
     }
 
     public confirmEmail(userId: string, code: string) {
@@ -80,12 +89,30 @@ export class AuthService {
     }
 
     public logout = () => {
-        this.revokeToken();
-        this.tokenStorageService.deleteToken();
-        this.sendAuthStateChangeNotification(false);
+        const revoke$ = this.tokenStorageService.isTokenExpired()
+            ? this.refreshToken().pipe(
+                tap(response => this.saveTokens(response)),
+                switchMap(() => this.revokeToken())
+            )
+            : this.revokeToken();
+
+        revoke$.pipe(
+            take(1),
+            catchError(() => EMPTY),
+            finalize(() => this.clearSession(['/']))
+        ).subscribe();
     }
 
-    private handleError(error: HttpErrorResponse) {
+    public clearSession = (redirectTo?: string[]): void => {
+        this.tokenStorageService.deleteToken();
+        this.sendAuthStateChangeNotification(false);
+
+        if (redirectTo !== undefined) {
+            this.router.navigate(redirectTo);
+        }
+    }
+
+    private handleError = (error: HttpErrorResponse) => {
         if (error.status === 0) {
             // A client-side or network error occurred. Handle it accordingly.
             console.error('An error occurred:', error.error);

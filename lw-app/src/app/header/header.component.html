@@ -17,7 +17,7 @@
       </li>
     </ul>
     <div *ngIf="isUserAuthenticated || isLoggedIn()" class="d-flex">
-      <a class="link-secondary my-2 my-sm-0" href="" (click)="logout()">Log Out</a>
+      <button type="button" class="btn btn-link link-secondary my-2 my-sm-0 p-0" (click)="logout()">Log Out</button>
     </div>
   </div>
 </nav>

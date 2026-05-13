@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { NgIf } from '@angular/common';
 
@@ -14,8 +14,7 @@ export class HeaderComponent implements OnInit {
   isUserAuthenticated!: boolean;
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -31,6 +30,5 @@ export class HeaderComponent implements OnInit {
 
   logout = () => {
     this.authService.logout();
-    this.router.navigate(["/"]);
   }
 }

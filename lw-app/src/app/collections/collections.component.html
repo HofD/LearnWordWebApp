@@ -1,56 +1,59 @@
-<div class="container mt-4">
-    <div *ngIf="!loaded">
-        <div class="d-flex justify-content-center">
-            <div class="spinner-border" role="status"></div>
+<div class="page-shell stack">
+    <div class="page-heading">
+        <h1>Collections</h1>
+        <p>Organize words into small groups, then review them when you are ready.</p>
+    </div>
+
+    <div *ngIf="!loaded" class="spinner-page">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
     </div>
-    <div *ngIf="this.collections.length == 0 && loaded">
-        <form [formGroup]="newCollectionForm" (ngSubmit)="add()">
-            <div class="mb-3">
-                <label for="name" class="form-label">New collection name</label>
-                <input formControlName="name" type="text" class="form-control" id="name">
-            </div>
-            <button [disabled]="!newCollectionForm.valid" type="submit" class="btn btn-dark">Create</button>
-        </form>
-    </div>
-    <div *ngIf="this.collections.length > 0">
-        <div class="card mb-2" *ngFor="let collection of collections">
-            <div class="card-header d-grid gap-2 d-sm-flex justify-content-end"><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + collection.id">Delete</button></div>
-            <div class="card-body">
-                <h5>{{collection.name}}
-                    <!-- <button  class="btn btn-sm btn-light mb-2" (click)="rename(collection.id)">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                        </svg>
-                    </button> -->
-                </h5>
-                <p class="card-text">Cards in this collection: {{collection.cardsCount}}</p>
-                <div class="btn-group gap-2">
-                    <a routerLink="/collections/{{collection.id}}" class="btn btn-dark btn-sm">Open</a>
-                    <a routerLink="/review/{{collection.id}}" class="btn btn-primary btn-sm">Review</a>
-                </div>
-            </div>
-            <div class="modal fade" id="deleteModal{{collection.id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5">Delete {{collection.name}}?</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <ng-container *ngIf="loaded">
+        <div *ngIf="collections.length > 0" class="stack">
+            <article class="content-card collection-card" *ngFor="let collection of collections">
+                <div class="collection-card-layout">
+                    <div class="collection-summary">
+                        <h2 class="h5 mb-1">{{collection.name}}</h2>
+                        <p class="text-muted mb-0">Cards in this collection: {{collection.cardsCount}}</p>
                     </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button (click)="delete(collection.id)" type="button" data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+                    <div class="collection-actions">
+                        <a routerLink="/collections/{{collection.id}}" class="btn btn-dark btn-sm">Open</a>
+                        <a routerLink="/review/{{collection.id}}" class="btn btn-outline-secondary btn-sm">Review</a>
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + collection.id">Delete</button>
                     </div>
-                  </div>
                 </div>
-              </div>
+                <div class="modal fade" id="deleteModal{{collection.id}}" tabindex="-1" [attr.aria-labelledby]="'deleteModalLabel' + collection.id" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="deleteModalLabel{{collection.id}}">Delete {{collection.name}}?</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                          <button (click)="delete(collection.id)" type="button" data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </article>
         </div>
-        <form [formGroup]="newCollectionForm" (ngSubmit)="add()">
-            <div class="mb-3">
+
+        <form class="content-card stack-sm" [formGroup]="newCollectionForm" (ngSubmit)="add()">
+            <div>
                 <label for="name" class="form-label">New collection name</label>
-                <input formControlName="name" type="text" class="form-control" id="name">
+                <input formControlName="name" type="text" class="form-control" id="name" placeholder="For example, Travel">
             </div>
-            <button [disabled]="!newCollectionForm.valid" type="submit" class="btn btn-dark">Create</button>
+            <div class="form-actions">
+                <button [disabled]="!newCollectionForm.valid" type="submit" class="btn btn-dark">Create Collection</button>
+            </div>
         </form>
-    </div>
+
+        <div *ngIf="collections.length == 0" class="empty-state text-center">
+            <h2 class="h5">No collections yet</h2>
+            <p class="text-muted mb-0">Create your first collection above and start adding words.</p>
+        </div>
+    </ng-container>
 </div>

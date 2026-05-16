@@ -1,23 +1,31 @@
-<div *ngFor="let card of cards; index as i" class="mb-2">
-  <div class="card">
-    <div class="card-header d-grid gap-2 d-sm-flex justify-content-end"><button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + card.id">Delete</button></div>
-    <div class="card-body">
-      <app-card [card]="card" [collectionId]="collectionId"></app-card>
+<div class="stack">
+  <article *ngFor="let card of cards; index as i" class="content-card word-card">
+    <div class="word-card-header">
+      <span class="word-card-meta">Card · {{card.words.length}} word{{card.words.length === 1 ? '' : 's'}}</span>
+      <button type="button" class="word-card-delete" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + card.id" aria-label="Delete this card"></button>
     </div>
-  </div>
-  <div class="modal fade" id="deleteModal{{card.id}}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">Delete this card?</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button (click)="delete(card.id!, i)" type="button" data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+    <app-card [card]="card" [collectionId]="collectionId"></app-card>
+    <div class="modal fade" id="deleteModal{{card.id}}" tabindex="-1" [attr.aria-labelledby]="'deleteModalLabel' + card.id" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="deleteModalLabel{{card.id}}">Delete this card?</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            <button (click)="delete(card.id!, i)" type="button" data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </article>
+
+  <section class="content-card add-card-panel">
+    <div class="add-card-heading">
+      <h2 class="h5 mb-1">Add a new card</h2>
+      <p class="text-muted mb-0">Start with the first word, then add more words to the card when needed.</p>
+    </div>
+    <app-card [collectionId]="collectionId" (onCardAdded)="addCard($event)"></app-card>
+  </section>
 </div>
-<app-card [collectionId]="collectionId" (onCardAdded)="addCard($event)"></app-card>

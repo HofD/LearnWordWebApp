@@ -1,1 +1,175 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --lw-page-bg: #f6f7f9;
+  --lw-surface: #ffffff;
+  --lw-surface-muted: #f8f9fa;
+  --lw-border: #dee2e6;
+  --lw-border-soft: #e9ecef;
+  --lw-text: #212529;
+  --lw-muted: #6c757d;
+  --lw-radius: 8px;
+  --lw-shadow: 0 8px 24px rgba(33, 37, 41, 0.06);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--lw-page-bg);
+  color: var(--lw-text);
+}
+
+a {
+  text-underline-offset: 0.18em;
+}
+
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  padding: 1.5rem 0 2rem;
+}
+
+.page-shell {
+  width: min(100% - 2rem, 960px);
+  margin: 0 auto;
+}
+
+.page-shell-narrow {
+  width: min(100% - 2rem, 440px);
+  margin: 0 auto;
+}
+
+.page-shell-focus {
+  width: min(100% - 2rem, 720px);
+  margin: 0 auto;
+}
+
+.page-heading {
+  margin-bottom: 1rem;
+}
+
+.page-heading h1,
+.page-heading h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.page-heading p {
+  margin: 0.35rem 0 0;
+  color: var(--lw-muted);
+}
+
+.content-card,
+.auth-panel,
+.empty-state {
+  background: var(--lw-surface);
+  border: 1px solid var(--lw-border-soft);
+  border-radius: var(--lw-radius);
+  box-shadow: var(--lw-shadow);
+}
+
+.content-card {
+  padding: 1rem;
+}
+
+.auth-panel,
+.empty-state {
+  padding: 1.25rem;
+}
+
+.stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.stack-sm {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.form-actions,
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.form-actions .btn,
+.card-actions .btn {
+  min-height: 2.5rem;
+}
+
+.btn {
+  border-radius: 7px;
+}
+
+.btn-light {
+  border-color: var(--lw-border);
+  background-color: #fff;
+}
+
+.form-control {
+  border-radius: 7px;
+}
+
+.form-control:focus,
+.btn:focus-visible,
+.nav-link:focus-visible,
+.navbar-brand:focus-visible {
+  box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.18);
+}
+
+.spinner-page {
+  min-height: 14rem;
+  display: grid;
+  place-items: center;
+}
+
+.app-footer {
+  border-top: 1px solid var(--lw-border-soft);
+  background: #fff;
+  color: var(--lw-muted);
+  font-size: 0.875rem;
+  padding: 1rem 0;
+}
+
+.app-footer .page-shell {
+  display: flex;
+  justify-content: center;
+}
+
+.app-footer a {
+  color: inherit;
+}
+
+@media (max-width: 575.98px) {
+  .app-main {
+    padding-top: 1rem;
+  }
+
+  .content-card,
+  .auth-panel,
+  .empty-state {
+    padding: 1rem;
+  }
+
+  .form-actions,
+  .card-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions .btn,
+  .card-actions .btn {
+    width: 100%;
+  }
+}

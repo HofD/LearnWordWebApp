@@ -1,11 +1,14 @@
-<div class="container mt-4">
-    <div *ngIf="!loaded">
-        <div class="d-flex justify-content-center">
-            <div class="spinner-border" role="status"></div>
+<div class="page-shell stack">
+    <div *ngIf="!loaded" class="spinner-page">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
         </div>
     </div>
-    <div *ngIf="loaded">
-        <h5>{{collection.name}}</h5>
+    <div *ngIf="loaded" class="stack">
+        <div class="page-heading">
+            <h1>{{collection.name}}</h1>
+            <p>Add words to this collection or edit the existing cards.</p>
+        </div>
         <app-cards [cards]="collection.cards" [collectionId]="collection.id"></app-cards>
     </div>
 </div>

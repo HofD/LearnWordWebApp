@@ -1,5 +1,9 @@
-<div class="container-fluid">
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
+<div class="page-shell-narrow">
+    <form class="auth-panel stack" [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="page-heading mb-0">
+            <h1>Log In</h1>
+            <p>Continue to your collections and review queue.</p>
+        </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email Address</label>
             <input formControlName="userEmail" type="email" class="form-control" id="email"
@@ -9,9 +13,9 @@
             <label for="password" class="form-label">Password</label>
             <input formControlName="userPassword" type="password" class="form-control" id="password">
         </div>
-        <div class="gap-4 d-sm-block">
-            <button [disabled]="!loginForm.valid" type="submit" class="btn btn-dark gap-4">Login</button>
-            <a routerLink="/register" class="btn btn-light">Register</a>
+        <div class="form-actions">
+            <button [disabled]="!loginForm.valid" type="submit" class="btn btn-dark">Login</button>
+            <a routerLink="/register" class="btn btn-outline-secondary">Register</a>
         </div>
     </form>
 </div>

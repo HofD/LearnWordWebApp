@@ -1,5 +1,9 @@
-<div class="container-fluid">
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
+<div class="page-shell-narrow">
+    <form class="auth-panel stack" [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="page-heading mb-0">
+            <h1>Register</h1>
+            <p>Create an account to save collections and review progress.</p>
+        </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email Address</label>
             <input formControlName="email" type="email" class="form-control" id="email" placeholder="name@example.com"
@@ -17,13 +21,16 @@
                 Password is
                 required</div>
             <div id="passwordHelp" class="form-text">Password length must be 6 or more symbols and must have at least
-                one non alphanumeric character and at least one upper-case letter.</div>
+                one non-alphanumeric character and one digit.</div>
 
         </div>
         <div class="mb-3">
             <label for="confirmPassword" class="form-label">Confirm password</label>
             <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
         </div>
-        <button [disabled]="!registerForm.valid" type="submit" class="btn btn-dark">Register</button>
+        <div class="form-actions">
+            <button [disabled]="!registerForm.valid" type="submit" class="btn btn-dark">Register</button>
+            <a routerLink="/login" class="btn btn-outline-secondary">Log In</a>
+        </div>
     </form>
 </div>

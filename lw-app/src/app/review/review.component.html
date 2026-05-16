@@ -1,14 +1,18 @@
-<div class="container mt-4">
-    <div *ngIf="!loaded" class="d-flex justify-content-center">
+<div class="page-shell-focus stack">
+    <div class="page-heading">
+        <h1>Review</h1>
+        <p>Move through the cards one by one and mark what needs more practice.</p>
+    </div>
+
+    <div *ngIf="!loaded" class="spinner-page">
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
 
     <div *ngIf="loaded">
-        <div *ngIf="currentCard && currentCard.words && currentCard.words.length > 0" class="card">
-            <div class="card-body">
-                <div class="progress mb-4">
+        <div *ngIf="currentCard && currentCard.words && currentCard.words.length > 0" class="content-card review-card stack">
+                <div class="progress">
                     <div class="progress-bar" role="progressbar" 
                          [style.width.%]="(currentIndex + 1) / cards.length * 100"
                          [attr.aria-valuenow]="(currentIndex + 1) / cards.length * 100"
@@ -18,45 +22,42 @@
                     </div>
                 </div>
 
-                <div class="text-center mb-4">
-                    <div class="word-container mb-3">
-                        <h3 class="card-title mb-3">{{currentCard.words[0].value}}</h3>
-                        <p class="card-text text-muted">
+                <div class="review-word text-center">
+                    <div class="word-container">
+                        <h2 class="card-title">{{currentCard.words[0].value}}</h2>
+                        <p class="card-text text-muted mb-0">
                             {{currentCard.transcription}}
                         </p>
                     </div>
 
-                    <div class="translation-container" (click)="toggleTranslation()">
-                        <p *ngIf="!showTranslation" class="card-text lead text-primary" style="cursor: pointer;">
-                            <i class="bi bi-translate"></i> Click to show translation
+                    <button type="button" class="translation-container" (click)="toggleTranslation()">
+                        <p *ngIf="!showTranslation" class="card-text lead text-muted mb-0">
+                            Show Translation
                         </p>
-                        <p *ngIf="showTranslation" class="card-text lead">
+                        <p *ngIf="showTranslation" class="card-text lead mb-0">
                             {{currentCard.words[0].translation}}
                         </p>
-                    </div>
+                    </button>
                 </div>
 
-                <div class="d-grid gap-2 d-md-flex justify-content-center">
-                    <button (click)="onForget()" class="btn btn-danger btn-lg px-4">
-                        <i class="bi bi-x-circle"></i> Forget
+                <div class="review-actions">
+                    <button (click)="onForget()" class="btn btn-outline-danger">
+                        Forget
                     </button>
-                    <button (click)="onLearn()" class="btn btn-success btn-lg px-4">
-                        <i class="bi bi-check-circle"></i> Learn
+                    <button (click)="onLearn()" class="btn btn-success">
+                        Learn
                     </button>
                 </div>
-            </div>
         </div>
 
-        <div *ngIf="!currentCard || !currentCard.words || currentCard.words.length === 0" class="text-center">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title mb-4">No Cards to Review</h3>
-                    <p class="card-text">There are no cards available for review in this collection.</p>
-                    <a routerLink="/collections" class="btn btn-primary btn-lg">
-                        <i class="bi bi-house"></i> Back to Collections
-                    </a>
-                </div>
+        <div *ngIf="!currentCard || !currentCard.words || currentCard.words.length === 0" class="empty-state text-center stack">
+            <div>
+                <h2 class="h5">No Cards to Review</h2>
+                <p class="text-muted mb-0">There are no cards available for review in this collection.</p>
+            </div>
+            <div class="form-actions justify-content-center">
+                <a routerLink="/collections" class="btn btn-dark">Back to Collections</a>
             </div>
         </div>
     </div>
-</div> 
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
 import { first } from 'rxjs';
@@ -14,7 +14,7 @@ enum EmailStatus {
 @Component({
   selector: 'app-email-confirm',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './email-confirm.component.html',
   styleUrl: './email-confirm.component.css'
 })

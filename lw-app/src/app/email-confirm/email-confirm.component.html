@@ -1,9 +1,13 @@
-<h3 class="card-header">Verify Email</h3>
-<div class="card-body">
-    <div *ngIf="emailStatus == EmailStatus.Verifying">
-        Verifying...
-    </div>
-    <div *ngIf="emailStatus == EmailStatus.Failed">
-        Verification failed, you can also verify your account using the <a routerLink="forgot-password">forgot password</a> page.
-    </div>
+<div class="page-shell-narrow">
+    <section class="content-card stack">
+        <div class="page-heading mb-0">
+            <h1>Verify Email</h1>
+        </div>
+        <div *ngIf="emailStatus == EmailStatus.Verifying" class="text-muted">
+            Verifying...
+        </div>
+        <div *ngIf="emailStatus == EmailStatus.Failed" class="text-muted">
+            Verification failed, you can also verify your account using the <a routerLink="forgot-password">forgot password</a> page.
+        </div>
+    </section>
 </div>

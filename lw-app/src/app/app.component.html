@@ -1,18 +1,18 @@
-<header class="bg-dark">
-  <div class="container">
-    <app-header></app-header>
-  </div>
-</header>
-<section>
-  <app-messages></app-messages>
-</section>
-<section>
-  <router-outlet></router-outlet>
-</section>
-<footer class="footer mt-5">
-  <nav class="navbar fixed-bottom">
-    <div class="container-fluid">
-      <span class="text-muted">© Aleksey Karpov 2025 <a href="https://alekseykarpov.com" target="_blank">alekseykarpov.com</a></span>
+<div class="app-layout">
+  <header class="bg-dark">
+    <div class="page-shell">
+      <app-header></app-header>
     </div>
-  </nav>
-</footer>
+  </header>
+
+  <main class="app-main">
+    <app-messages></app-messages>
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="app-footer">
+    <div class="page-shell">
+      <span>© Aleksey Karpov 2025 · <a href="https://alekseykarpov.com" target="_blank" rel="noopener">alekseykarpov.com</a></span>
+    </div>
+  </footer>
+</div>

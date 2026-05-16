@@ -1,0 +1,51 @@
+.word-row {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--lw-border-soft);
+}
+
+.word-row:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.word-form {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--lw-border-soft);
+}
+
+.word-toggle {
+    min-width: 10rem;
+    min-height: 2.5rem;
+}
+
+.word-form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.word-submit {
+    min-width: 12rem;
+    min-height: 2.75rem;
+}
+
+.word-submit:disabled {
+    cursor: not-allowed;
+}
+
+.word-form-hint {
+    color: var(--lw-muted);
+    font-size: 0.875rem;
+}
+
+@media (max-width: 767.98px) {
+    .word-form-actions {
+        display: grid;
+    }
+
+    .word-submit {
+        width: 100%;
+    }
+}

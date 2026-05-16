@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Word } from '../card/word';
 import { Card } from '../card/card';
 import { NgFor, NgIf } from '@angular/common';
@@ -17,6 +17,7 @@ export class WordsComponent implements OnInit {
   @Input() card?: Card | null;
   @Input() collectionId!: number;
   newWordForm: FormGroup;
+  formOpen = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,7 +37,16 @@ export class WordsComponent implements OnInit {
 
   }
 
+  toggleForm() {
+    this.formOpen = !this.formOpen;
+  }
+
   addWord() {
+    if (this.newWordForm.invalid) {
+      this.newWordForm.markAllAsTouched();
+      return;
+    }
+
     let newWord = new Word(null,
       this.newWordForm.controls["value"].value,
       this.newWordForm.controls["transcription"].value,
@@ -46,17 +56,21 @@ export class WordsComponent implements OnInit {
       let newCard = new Card(null, this.collectionId, false, new Array<Word>);
       newCard.words.push(newWord);
       this.cardHttp.add(newCard).subscribe({
-        next: (data: any) => this.addCard(data)
+        next: (data: any) => {
+          this.addCard(data);
+          this.closeForm();
+        }
       })
     }
     else {
       this.card?.words.push(newWord);
       this.wordHttp.add(newWord, this.card!.id!).subscribe({
-        next: (data: any) => this.updateCard(data)
+        next: (data: any) => {
+          this.updateCard(data);
+          this.closeForm();
+        }
       })
     }
-
-    this.newWordForm.reset();
   }
 
   addCard(data: any) {
@@ -67,5 +81,10 @@ export class WordsComponent implements OnInit {
     //console.log(data);
     //this.card = data;
     //this.onCardAdded.emit(this.card!);
+  }
+
+  private closeForm() {
+    this.newWordForm.reset();
+    this.formOpen = false;
   }
 }

@@ -15,6 +15,7 @@ export class CardComponent implements OnInit {
   @Input() collectionId!: number;
   @Input() card?: Card | null;
   @Output() onCardAdded = new EventEmitter<Card>();
+  @Output() onCardRemoved = new EventEmitter<number>();
 
   ngOnInit(): void {
     if (this.card === null) {
@@ -24,6 +25,10 @@ export class CardComponent implements OnInit {
 
   onCardAddedFromWords(card: Card) {
     this.onCardAdded.emit(card);
+  }
+
+  onCardRemovedFromWords(cardId: number) {
+    this.onCardRemoved.emit(cardId);
   }
 
 }

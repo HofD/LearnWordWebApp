@@ -21,7 +21,19 @@ export class WordHttpService {
 
     public add(word: Word, cardId: number) {
         return this.http.post(`${environment.apiUrl}/api/cards/${cardId}/words`, word, httpOptions).pipe(
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
+        );
+    }
+
+    public update(word: Word, cardId: number, id: number) {
+        return this.http.put(`${environment.apiUrl}/api/cards/${cardId}/words/${id}`, word, httpOptions).pipe(
+            catchError(error => this.handleError(error))
+        );
+    }
+
+    public delete(cardId: number, id: number) {
+        return this.http.delete(`${environment.apiUrl}/api/cards/${cardId}/words/${id}`, httpOptions).pipe(
+            catchError(error => this.handleError(error))
         );
     }
 

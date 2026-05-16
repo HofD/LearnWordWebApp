@@ -17,7 +17,9 @@ export class WordsComponent implements OnInit {
   @Input() card?: Card | null;
   @Input() collectionId!: number;
   newWordForm: FormGroup;
+  editWordForm: FormGroup;
   formOpen = false;
+  editingWordId: number | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,10 +30,16 @@ export class WordsComponent implements OnInit {
       value: ["", Validators.required],
       transcription: [""],
       translation: ["", Validators.required]
+    });
+    this.editWordForm = this.formBuilder.group({
+      value: ["", Validators.required],
+      transcription: [""],
+      translation: ["", Validators.required]
     })
   }
 
   @Output() onCardAdded = new EventEmitter<Card>();
+  @Output() onCardRemoved = new EventEmitter<number>();
 
   ngOnInit(): void {
 
@@ -39,6 +47,24 @@ export class WordsComponent implements OnInit {
 
   toggleForm() {
     this.formOpen = !this.formOpen;
+  }
+
+  startEdit(word: Word) {
+    if (word.id === null) {
+      return;
+    }
+
+    this.editingWordId = word.id;
+    this.editWordForm.reset({
+      value: word.value,
+      transcription: word.transcription,
+      translation: word.translation
+    });
+  }
+
+  cancelEdit() {
+    this.editingWordId = null;
+    this.editWordForm.reset();
   }
 
   addWord() {
@@ -63,24 +89,75 @@ export class WordsComponent implements OnInit {
       })
     }
     else {
-      this.card?.words.push(newWord);
       this.wordHttp.add(newWord, this.card!.id!).subscribe({
         next: (data: any) => {
-          this.updateCard(data);
+          this.addWordToCard(data);
           this.closeForm();
         }
       })
     }
   }
 
+  saveEdit(word: Word) {
+    if (word.id === null || this.card?.id === null || this.card?.id === undefined) {
+      return;
+    }
+
+    if (this.editWordForm.invalid) {
+      this.editWordForm.markAllAsTouched();
+      return;
+    }
+
+    const updatedWord = new Word(
+      word.id,
+      this.editWordForm.controls["value"].value,
+      this.editWordForm.controls["transcription"].value,
+      this.editWordForm.controls["translation"].value
+    );
+
+    this.wordHttp.update(updatedWord, this.card.id, word.id).subscribe({
+      next: (data: any) => {
+        this.replaceWord(word, data);
+        this.cancelEdit();
+      }
+    });
+  }
+
+  deleteWord(word: Word) {
+    if (word.id === null || this.card?.id === null || this.card?.id === undefined) {
+      return;
+    }
+
+    const isLastWord = this.card.words.length === 1;
+
+    this.wordHttp.delete(this.card.id, word.id).subscribe({
+      next: () => {
+        if (isLastWord) {
+          this.onCardRemoved.emit(this.card!.id!);
+          return;
+        }
+
+        this.card!.words = this.card!.words.filter(existingWord => existingWord !== word);
+        if (this.editingWordId === word.id) {
+          this.cancelEdit();
+        }
+      }
+    });
+  }
+
   addCard(data: any) {
     this.onCardAdded.emit(data);
   }
 
-  updateCard(data: any) {
-    //console.log(data);
-    //this.card = data;
-    //this.onCardAdded.emit(this.card!);
+  addWordToCard(word: Word) {
+    this.card?.words.push(word);
+  }
+
+  private replaceWord(currentWord: Word, updatedWord: Word) {
+    const wordIndex = this.card?.words.indexOf(currentWord) ?? -1;
+    if (wordIndex >= 0) {
+      this.card!.words[wordIndex] = updatedWord;
+    }
   }
 
   private closeForm() {

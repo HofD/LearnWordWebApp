@@ -1,9 +1,59 @@
 <div class="stack-sm w-100">
     <div *ngIf="card" class="stack-sm">
         <div *ngFor="let word of card?.words" class="word-row">
-            <div class="fs-5 fw-semibold">{{word.value}}</div>
-            <div *ngIf="word.transcription" class="text-muted small">{{word.transcription}}</div>
-            <div class="text-muted">{{word.translation}}</div>
+            <div *ngIf="word.id === null || editingWordId !== word.id" class="word-display">
+                <div class="word-main">
+                    <div class="fs-5 fw-semibold">{{word.value}}</div>
+                    <div *ngIf="word.transcription" class="text-muted small">{{word.transcription}}</div>
+                    <div class="text-muted">{{word.translation}}</div>
+                </div>
+                <div *ngIf="word.id !== null" class="word-actions" aria-label="Word actions">
+                    <button type="button" class="word-icon-button word-edit-button" (click)="startEdit(word)" aria-label="Edit word" title="Edit word">
+                        <img src="assets/icons/pencil.svg" alt="" aria-hidden="true">
+                    </button>
+                    <button type="button" class="word-icon-button word-delete-button" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteWordModal' + card.id + '-' + word.id" aria-label="Delete word" title="Delete word"></button>
+                </div>
+            </div>
+
+            <form *ngIf="word.id !== null && editingWordId === word.id" class="word-edit-form stack-sm" [formGroup]="editWordForm">
+                <div>
+                    <label for="editValue{{card.id}}-{{word.id}}" class="form-label">Text <span class="text-muted">(required)</span></label>
+                    <input formControlName="value" type="text" class="form-control" id="editValue{{card.id}}-{{word.id}}" [class.is-invalid]="editWordForm.controls['value'].invalid && editWordForm.controls['value'].touched">
+                    <div class="invalid-feedback">Text is required.</div>
+                </div>
+                <div>
+                    <label for="editTranslation{{card.id}}-{{word.id}}" class="form-label">Translation <span class="text-muted">(required)</span></label>
+                    <input formControlName="translation" type="text" class="form-control" id="editTranslation{{card.id}}-{{word.id}}" [class.is-invalid]="editWordForm.controls['translation'].invalid && editWordForm.controls['translation'].touched">
+                    <div class="invalid-feedback">Translation is required.</div>
+                </div>
+                <div>
+                    <label for="editTranscription{{card.id}}-{{word.id}}" class="form-label">Transcription <span class="text-muted">(optional)</span></label>
+                    <input formControlName="transcription" type="text" class="form-control" id="editTranscription{{card.id}}-{{word.id}}">
+                </div>
+                <div class="word-form-actions">
+                    <button [disabled]="!editWordForm.valid" type="button" class="btn btn-dark word-save" (click)="saveEdit(word)">Save</button>
+                    <button type="button" class="btn btn-outline-secondary word-save" (click)="cancelEdit()">Cancel</button>
+                </div>
+            </form>
+
+            <div *ngIf="word.id !== null" class="modal fade" id="deleteWordModal{{card.id}}-{{word.id}}" tabindex="-1" [attr.aria-labelledby]="'deleteWordModalLabel' + card.id + '-' + word.id" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="deleteWordModalLabel{{card.id}}-{{word.id}}">Delete this word?</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="mb-0">This removes only this word.</p>
+                            <p *ngIf="card.words.length === 1" class="text-muted small mt-2 mb-0">This is the last word, so the card will be removed too.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            <button (click)="deleteWord(word)" type="button" data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

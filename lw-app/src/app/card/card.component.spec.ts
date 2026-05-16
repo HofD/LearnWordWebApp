@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { CardComponent } from './card.component';
 
@@ -8,7 +10,7 @@ describe('CardsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CardComponent]
+      imports: [CardComponent, HttpClientTestingModule, RouterTestingModule]
     })
     .compileComponents();
     
@@ -19,5 +21,13 @@ describe('CardsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should re-emit card removal from words', () => {
+    spyOn(component.onCardRemoved, 'emit');
+
+    component.onCardRemovedFromWords(4);
+
+    expect(component.onCardRemoved.emit).toHaveBeenCalledWith(4);
   });
 });

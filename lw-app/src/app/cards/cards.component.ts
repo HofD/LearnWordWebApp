@@ -23,6 +23,13 @@ export class CardsComponent {
     this.cards.push(card);
   }
 
+  removeCard(cardId: number) {
+    const cardIndex = this.cards.findIndex(card => card.id === cardId);
+    if (cardIndex >= 0) {
+      this.cards.splice(cardIndex, 1);
+    }
+  }
+
   delete(id: number, index: number) {
     this.http.delete(id).subscribe({
       next: () => this.cards.splice(index, 1)

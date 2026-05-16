@@ -4,7 +4,7 @@
       <span class="word-card-meta">Card · {{card.words.length}} word{{card.words.length === 1 ? '' : 's'}}</span>
       <button type="button" class="word-card-delete" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + card.id" aria-label="Delete this card"></button>
     </div>
-    <app-card [card]="card" [collectionId]="collectionId"></app-card>
+    <app-card [card]="card" [collectionId]="collectionId" (onCardRemoved)="removeCard($event)"></app-card>
     <div class="modal fade" id="deleteModal{{card.id}}" tabindex="-1" [attr.aria-labelledby]="'deleteModalLabel' + card.id" aria-hidden="true">
       <div class="modal-dialog modal-sm">
         <div class="modal-content">

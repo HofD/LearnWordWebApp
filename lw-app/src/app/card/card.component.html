@@ -2,5 +2,5 @@
     <app-words [collectionId]="collectionId" (onCardAdded)="onCardAddedFromWords($event)"></app-words>
 </div>
 <div *ngIf="this.card?.id !== null">
-    <app-words [card]="card" [collectionId]="collectionId" (onCardAdded)="onCardAddedFromWords($event)"></app-words> 
+    <app-words [card]="card" [collectionId]="collectionId" (onCardAdded)="onCardAddedFromWords($event)" (onCardRemoved)="onCardRemovedFromWords($event)"></app-words> 
 </div>

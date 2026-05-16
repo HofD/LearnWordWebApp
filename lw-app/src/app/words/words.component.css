@@ -8,10 +8,98 @@
     border-bottom: 0;
 }
 
+.word-display {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.word-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.word-actions {
+    display: flex;
+    gap: 0.25rem;
+    margin-top: 0.125rem;
+    margin-left: 0.25rem;
+    padding-left: 0.625rem;
+    border-left: 1px solid var(--lw-border-soft);
+}
+
+.word-icon-button {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--lw-muted);
+    opacity: 0.72;
+}
+
+.word-icon-button:hover,
+.word-icon-button:focus-visible {
+    border-color: #d7dce1;
+    background: #f6f8fa;
+    color: #212529;
+    opacity: 1;
+}
+
+.word-icon-button:focus-visible {
+    outline: 2px solid rgba(13, 110, 253, 0.35);
+    outline-offset: 2px;
+}
+
+.word-edit-button img {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.word-delete-button::before,
+.word-delete-button::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.75rem;
+    height: 1.5px;
+    border-radius: 999px;
+    background: currentColor;
+    transform-origin: center;
+}
+
+.word-delete-button::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.word-delete-button::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.word-delete-button:hover,
+.word-delete-button:focus-visible {
+    border-color: #f1c7cc;
+    background: #fff7f8;
+    color: #b02a37;
+}
+
 .word-form {
     margin-top: 0.75rem;
     padding-top: 0.75rem;
     border-top: 1px solid var(--lw-border-soft);
+}
+
+.word-edit-form {
+    padding: 0.75rem;
+    border: 1px solid var(--lw-border-soft);
+    border-radius: 0.5rem;
+    background: #fbfcfd;
 }
 
 .word-toggle {
@@ -31,6 +119,11 @@
     min-height: 2.75rem;
 }
 
+.word-save {
+    min-width: 7rem;
+    min-height: 2.5rem;
+}
+
 .word-submit:disabled {
     cursor: not-allowed;
 }
@@ -41,11 +134,17 @@
 }
 
 @media (max-width: 767.98px) {
+    .word-actions {
+        margin-left: 0;
+        padding-left: 0.5rem;
+    }
+
     .word-form-actions {
         display: grid;
     }
 
-    .word-submit {
+    .word-submit,
+    .word-save {
         width: 100%;
     }
 }

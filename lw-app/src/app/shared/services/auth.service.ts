@@ -33,6 +33,18 @@ export class AuthService {
         );
     }
 
+    public forgotPassword(email: string) {
+        return this.http.post(`${environment.apiUrl}/api/account/password/forgot`, { email }, httpOptions).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    public resetPassword(email: string, code: string, password: string) {
+        return this.http.post(`${environment.apiUrl}/api/account/password/reset`, { email, code, password }, httpOptions).pipe(
+            catchError(this.handleError)
+        );
+    }
+
     public async login(email: string, password: string) {
         type LoginResponse = {
             email: string,

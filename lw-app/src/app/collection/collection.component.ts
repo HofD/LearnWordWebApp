@@ -4,6 +4,7 @@ import { CollectionHttpService } from '../collections/collection.http.service';
 import { Collection } from './collection';
 import { NgIf } from '@angular/common';
 import { CardsComponent } from '../cards/cards.component';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component({
   selector: 'app-collection',
@@ -19,7 +20,8 @@ export class CollectionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: CollectionHttpService
+    private http: CollectionHttpService,
+    public i18n: I18nService
   ) { }
 
   ngOnInit(): void {

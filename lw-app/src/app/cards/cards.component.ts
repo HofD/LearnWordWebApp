@@ -3,6 +3,7 @@ import { Card } from '../card/card';
 import { CardComponent } from '../card/card.component';
 import { NgFor } from '@angular/common';
 import { CardHttpService } from '../card/card.http.service';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component({
   selector: 'app-cards',
@@ -16,7 +17,8 @@ export class CardsComponent {
   @Input() collectionId!: number;
 
   constructor(
-    private http: CardHttpService
+    private http: CardHttpService,
+    public i18n: I18nService
   ) { }
 
   addCard(card: Card) {

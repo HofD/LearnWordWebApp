@@ -1,36 +1,32 @@
 <div class="page-shell-narrow">
     <form class="auth-panel stack" [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="page-heading mb-0">
-            <h1>Register</h1>
-            <p>Create an account to save collections and review progress.</p>
+            <h1>{{i18n.text().register.title}}</h1>
+            <p>{{i18n.text().register.intro}}</p>
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
-            <input formControlName="email" type="email" class="form-control" id="email" placeholder="name@example.com"
+            <label for="email" class="form-label">{{i18n.text().register.email}}</label>
+            <input formControlName="email" type="email" class="form-control" id="email" [placeholder]="i18n.text().common.emailPlaceholder"
                 [ngClass]="{ 'is-invalid': validateControl('email') }">
-            <div *ngIf="validateControl('email') && hasError('email', 'required')" class="invalid-feedback">Email is
-                required</div>
-            <div *ngIf="validateControl('email') && hasError('email', 'email')" class="invalid-feedback">Email must be a
-                valid email address</div>
+            <div *ngIf="validateControl('email') && hasError('email', 'required')" class="invalid-feedback">{{i18n.text().password.emailRequired}}</div>
+            <div *ngIf="validateControl('email') && hasError('email', 'email')" class="invalid-feedback">{{i18n.text().password.emailInvalid}}</div>
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">{{i18n.text().register.password}}</label>
             <input formControlName="password" type="password" class="form-control" id="password"
                 aria-describedby="passwordHelp" [ngClass]="{ 'is-invalid': validateControl('password') }">
             <div *ngIf="validateControl('password') && hasError('password', 'required')" class="invalid-feedback">
-                Password is
-                required</div>
-            <div id="passwordHelp" class="form-text">Password length must be 6 or more symbols and must have at least
-                one non-alphanumeric character and one digit.</div>
+                {{i18n.text().password.passwordRequired}}</div>
+            <div id="passwordHelp" class="form-text">{{i18n.text().register.passwordHelp}}</div>
 
         </div>
         <div class="mb-3">
-            <label for="confirmPassword" class="form-label">Confirm password</label>
+            <label for="confirmPassword" class="form-label">{{i18n.text().register.confirmPassword}}</label>
             <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword">
         </div>
         <div class="form-actions">
-            <button [disabled]="!registerForm.valid" type="submit" class="btn btn-dark">Register</button>
-            <a routerLink="/login" class="btn btn-outline-secondary">Log In</a>
+            <button [disabled]="!registerForm.valid" type="submit" class="btn btn-dark">{{i18n.text().register.submit}}</button>
+            <a routerLink="/login" class="btn btn-outline-secondary">{{i18n.text().register.login}}</a>
         </div>
     </form>
 </div>

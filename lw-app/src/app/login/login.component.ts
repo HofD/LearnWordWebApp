@@ -4,6 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { TokenStorageService } from '../shared/services/token-storage.service';
 import { AlertService } from '../shared/services/alert.service';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService,
     private tokenStorageService: TokenStorageService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public i18n: I18nService
   ) {
     this.loginForm = this.formBuilder.group({
       userEmail: ['', Validators.required],

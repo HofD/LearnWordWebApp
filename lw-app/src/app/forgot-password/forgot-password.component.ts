@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -21,7 +22,8 @@ export class ForgotPasswordComponent {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public i18n: I18nService
   ) {
     this.forgotPasswordForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]]
@@ -43,7 +45,7 @@ export class ForgotPasswordComponent {
       .subscribe({
         next: () => {
           this.instructionsSent = true;
-          this.alertService.success('If an account exists for this email, password reset instructions were sent.');
+          this.alertService.success(this.i18n.text().password.instructionsSent);
           this.submitting = false;
         },
         error: error => {

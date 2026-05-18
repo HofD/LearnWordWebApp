@@ -1,24 +1,24 @@
 <div class="page-shell-narrow">
     <form class="auth-panel stack" [formGroup]="loginForm" (ngSubmit)="login()">
         <div class="page-heading mb-0">
-            <h1>Log In</h1>
-            <p>Continue to your collections and review queue.</p>
+            <h1>{{i18n.text().login.title}}</h1>
+            <p>{{i18n.text().login.intro}}</p>
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Email Address</label>
+            <label for="email" class="form-label">{{i18n.text().login.email}}</label>
             <input formControlName="userEmail" type="email" class="form-control" id="email"
-                placeholder="name@example.com">
+                [placeholder]="i18n.text().common.emailPlaceholder">
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">{{i18n.text().login.password}}</label>
             <input formControlName="userPassword" type="password" class="form-control" id="password">
             <div class="form-text">
-                <a routerLink="/forgot-password">Forgot your password?</a>
+                <a routerLink="/forgot-password">{{i18n.text().login.forgotPassword}}</a>
             </div>
         </div>
         <div class="form-actions">
-            <button [disabled]="!loginForm.valid" type="submit" class="btn btn-dark">Login</button>
-            <a routerLink="/register" class="btn btn-outline-secondary">Register</a>
+            <button [disabled]="!loginForm.valid" type="submit" class="btn btn-dark">{{i18n.text().login.submit}}</button>
+            <a routerLink="/register" class="btn btn-outline-secondary">{{i18n.text().login.register}}</a>
         </div>
     </form>
 </div>

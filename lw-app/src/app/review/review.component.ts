@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReviewHttpService } from './review.http.service';
+import { I18nService } from '../i18n/i18n.service';
 
 interface Word {
     id: number;
@@ -34,7 +35,8 @@ export class ReviewComponent implements OnInit {
 
   constructor(
     private reviewService: ReviewHttpService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public i18n: I18nService
   ) {}
 
   ngOnInit() {

@@ -1,13 +1,13 @@
 <div class="page-shell stack">
     <div *ngIf="!loaded" class="spinner-page">
         <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
+            <span class="visually-hidden">{{i18n.text().common.loading}}</span>
         </div>
     </div>
     <div *ngIf="loaded" class="stack">
         <div class="page-heading">
             <h1>{{collection.name}}</h1>
-            <p>Add words to this collection or edit the existing cards.</p>
+            <p>{{i18n.text().collection.intro}}</p>
         </div>
         <app-cards [cards]="collection.cards" [collectionId]="collection.id"></app-cards>
     </div>

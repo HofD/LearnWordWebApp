@@ -1,13 +1,13 @@
 <div class="page-shell-narrow">
     <section class="content-card stack">
         <div class="page-heading mb-0">
-            <h1>Verify Email</h1>
+            <h1>{{i18n.text().emailConfirm.title}}</h1>
         </div>
         <div *ngIf="emailStatus == EmailStatus.Verifying" class="text-muted">
-            Verifying...
+            {{i18n.text().emailConfirm.verifying}}
         </div>
         <div *ngIf="emailStatus == EmailStatus.Failed" class="text-muted">
-            Verification failed, you can also verify your account using the <a routerLink="/forgot-password">forgot password</a> page.
+            {{i18n.text().emailConfirm.failedPrefix}} <a routerLink="/forgot-password">{{i18n.text().emailConfirm.forgotPasswordLink}}</a> {{i18n.text().emailConfirm.failedSuffix}}
         </div>
     </section>
 </div>

@@ -1,23 +1,35 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-0">
   <a class="navbar-brand" routerLink="collections">
     <!--<img src="../../assets/brand/lw_brand.jpg" width="30" height="30" class="d-inline-block align-top" alt="Learn Word Brand" loading="lazy">-->
-    Learn Word
+    {{i18n.text().common.brand}}
   </a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" [attr.aria-label]="i18n.text().header.toggleNavigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarHeader">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item">
-        <a class="nav-link" routerLink="collections" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+        <a class="nav-link" routerLink="collections" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">{{i18n.text().header.home}}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="about" routerLinkActive="active">About</a>
+        <a class="nav-link" routerLink="about" routerLinkActive="active">{{i18n.text().header.about}}</a>
       </li>
     </ul>
-    <div *ngIf="isUserAuthenticated || isLoggedIn()" class="d-flex">
-      <button type="button" class="btn btn-outline-light btn-sm" (click)="logout()">Log Out</button>
+    <div class="header-actions">
+      <button *ngIf="isUserAuthenticated || isLoggedIn()" type="button" class="nav-link logout-link" (click)="logout()">{{i18n.text().header.logout}}</button>
+      <div class="language-switcher" role="group" [attr.aria-label]="i18n.text().header.selectLanguage">
+        <button
+          *ngFor="let language of i18n.languages"
+          type="button"
+          class="language-option"
+          [class.active]="language.code === i18n.language()"
+          [attr.aria-pressed]="language.code === i18n.language()"
+          [title]="language.label"
+          (click)="setLanguage(language.code)">
+          {{language.shortLabel}}
+        </button>
+      </div>
     </div>
   </div>
 </nav>

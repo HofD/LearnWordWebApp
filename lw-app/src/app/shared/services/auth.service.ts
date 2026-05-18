@@ -6,6 +6,7 @@ import { TokenStorageService } from './token-storage.service';
 import { User } from '../models/user.model'
 import { EMPTY, Subject, catchError, finalize, lastValueFrom, switchMap, take, tap, throwError } from 'rxjs';
 import { AlertService } from './alert.service';
+import { I18nService } from '../../i18n/i18n.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -24,6 +25,7 @@ export class AuthService {
         private http: HttpClient,
         private tokenStorageService: TokenStorageService,
         private alertService: AlertService,
+        private i18n: I18nService,
         public router: Router
     ) { }
 
@@ -129,7 +131,7 @@ export class AuthService {
             // A client-side or network error occurred. Handle it accordingly.
             console.error('An error occurred:', error.error);
         } else if (error.status === 401) {
-            this.alertService.error("Wrong username or password.");
+            this.alertService.error(this.i18n.text().errors.wrongCredentials);
         } else {
             // The backend returned an unsuccessful response code.
             // The response body may contain clues as to what went wrong.
@@ -137,10 +139,10 @@ export class AuthService {
                 `Backend returned code ${error.status}, body was: `, error.error);
         }
         // Return an observable with a user-facing error message.
-        return throwError(() => new Error(AuthService.getErrorMessage(error)));
+        return throwError(() => new Error(this.getErrorMessage(error)));
     }
 
-    private static getErrorMessage(error: HttpErrorResponse): string {
+    private getErrorMessage(error: HttpErrorResponse): string {
         if (Array.isArray(error.error)) {
             return error.error
                 .map(item => item.description ?? item.code)
@@ -152,6 +154,6 @@ export class AuthService {
             return error.error;
         }
 
-        return 'Something bad happened; please try again later.';
+        return this.i18n.text().errors.generic;
     }
 }

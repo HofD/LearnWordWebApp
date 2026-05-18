@@ -5,6 +5,7 @@ import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule } from '@angular/forms';
 import { MessagesComponent } from './messages/messages.component';
+import { I18nService } from './i18n/i18n.service';
 
 @Component({
   selector: 'app-root',
@@ -15,4 +16,6 @@ import { MessagesComponent } from './messages/messages.component';
 })
 export class AppComponent {
   title = 'lw-app';
+
+  constructor(public i18n: I18nService) {}
 }

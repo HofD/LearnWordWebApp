@@ -4,6 +4,7 @@ import { CollectionHttpService } from './collection.http.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component({
   selector: 'app-collections',
@@ -19,7 +20,8 @@ export class CollectionsComponent implements OnInit {
 
   constructor(
     private httpService: CollectionHttpService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public i18n: I18nService
   ) {
     this.newCollectionForm = this.formBuilder.group({
       name: ['', Validators.required]

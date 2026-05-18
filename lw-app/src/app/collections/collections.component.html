@@ -1,12 +1,12 @@
 <div class="page-shell stack">
     <div class="page-heading">
-        <h1>Collections</h1>
-        <p>Organize words into small groups, then review them when you are ready.</p>
+        <h1>{{i18n.text().collections.title}}</h1>
+        <p>{{i18n.text().collections.intro}}</p>
     </div>
 
     <div *ngIf="!loaded" class="spinner-page">
         <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
+            <span class="visually-hidden">{{i18n.text().common.loading}}</span>
         </div>
     </div>
 
@@ -16,24 +16,24 @@
                 <div class="collection-card-layout">
                     <div class="collection-summary">
                         <h2 class="h5 mb-1">{{collection.name}}</h2>
-                        <p class="text-muted mb-0">Cards in this collection: {{collection.cardsCount}}</p>
+                        <p class="text-muted mb-0">{{i18n.text().collections.cardsCount}} {{collection.cardsCount}}</p>
                     </div>
                     <div class="collection-actions">
-                        <a routerLink="/collections/{{collection.id}}" class="btn btn-dark btn-sm">Open</a>
-                        <a routerLink="/review/{{collection.id}}" class="btn btn-outline-secondary btn-sm">Review</a>
-                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + collection.id">Delete</button>
+                        <a routerLink="/collections/{{collection.id}}" class="btn btn-dark btn-sm">{{i18n.text().collections.open}}</a>
+                        <a routerLink="/review/{{collection.id}}" class="btn btn-outline-secondary btn-sm">{{i18n.text().collections.review}}</a>
+                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + collection.id">{{i18n.text().collections.deleteCollection}}</button>
                     </div>
                 </div>
                 <div class="modal fade" id="deleteModal{{collection.id}}" tabindex="-1" [attr.aria-labelledby]="'deleteModalLabel' + collection.id" aria-hidden="true">
                     <div class="modal-dialog modal-sm">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="deleteModalLabel{{collection.id}}">Delete {{collection.name}}?</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          <h1 class="modal-title fs-5" id="deleteModalLabel{{collection.id}}">{{i18n.text().collections.deleteTitle}} {{collection.name}}{{i18n.text().collections.deleteQuestionMark}}</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" [attr.aria-label]="i18n.text().common.close"></button>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                          <button (click)="delete(collection.id)" type="button" data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{i18n.text().common.close}}</button>
+                          <button (click)="delete(collection.id)" type="button" data-bs-dismiss="modal" class="btn btn-danger">{{i18n.text().common.delete}}</button>
                         </div>
                       </div>
                     </div>
@@ -43,17 +43,17 @@
 
         <form class="content-card stack-sm" [formGroup]="newCollectionForm" (ngSubmit)="add()">
             <div>
-                <label for="name" class="form-label">New collection name</label>
-                <input formControlName="name" type="text" class="form-control" id="name" placeholder="For example, Travel">
+                <label for="name" class="form-label">{{i18n.text().collections.newName}}</label>
+                <input formControlName="name" type="text" class="form-control" id="name" [placeholder]="i18n.text().collections.namePlaceholder">
             </div>
             <div class="form-actions">
-                <button [disabled]="!newCollectionForm.valid" type="submit" class="btn btn-dark">Create Collection</button>
+                <button [disabled]="!newCollectionForm.valid" type="submit" class="btn btn-dark">{{i18n.text().collections.create}}</button>
             </div>
         </form>
 
         <div *ngIf="collections.length == 0" class="empty-state text-center">
-            <h2 class="h5">No collections yet</h2>
-            <p class="text-muted mb-0">Create your first collection above and start adding words.</p>
+            <h2 class="h5">{{i18n.text().collections.emptyTitle}}</h2>
+            <p class="text-muted mb-0">{{i18n.text().collections.emptyIntro}}</p>
         </div>
     </ng-container>
 </div>

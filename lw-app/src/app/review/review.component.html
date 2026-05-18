@@ -1,12 +1,12 @@
 <div class="page-shell-focus stack">
     <div class="page-heading">
-        <h1>Review</h1>
-        <p>Move through the cards one by one and mark what needs more practice.</p>
+        <h1>{{i18n.text().review.title}}</h1>
+        <p>{{i18n.text().review.intro}}</p>
     </div>
 
     <div *ngIf="!loaded" class="spinner-page">
         <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
+            <span class="visually-hidden">{{i18n.text().common.loading}}</span>
         </div>
     </div>
 
@@ -32,7 +32,7 @@
 
                     <button type="button" class="translation-container" (click)="toggleTranslation()">
                         <p *ngIf="!showTranslation" class="card-text lead text-muted mb-0">
-                            Show Translation
+                            {{i18n.text().review.showTranslation}}
                         </p>
                         <p *ngIf="showTranslation" class="card-text lead mb-0">
                             {{currentCard.words[0].translation}}
@@ -42,21 +42,21 @@
 
                 <div class="review-actions">
                     <button (click)="onForget()" class="btn btn-outline-danger">
-                        Forget
+                        {{i18n.text().review.forget}}
                     </button>
                     <button (click)="onLearn()" class="btn btn-success">
-                        Learn
+                        {{i18n.text().review.learn}}
                     </button>
                 </div>
         </div>
 
         <div *ngIf="!currentCard || !currentCard.words || currentCard.words.length === 0" class="empty-state text-center stack">
             <div>
-                <h2 class="h5">No Cards to Review</h2>
-                <p class="text-muted mb-0">There are no cards available for review in this collection.</p>
+                <h2 class="h5">{{i18n.text().review.emptyTitle}}</h2>
+                <p class="text-muted mb-0">{{i18n.text().review.emptyIntro}}</p>
             </div>
             <div class="form-actions justify-content-center">
-                <a routerLink="/collections" class="btn btn-dark">Back to Collections</a>
+                <a routerLink="/collections" class="btn btn-dark">{{i18n.text().review.backToCollections}}</a>
             </div>
         </div>
     </div>

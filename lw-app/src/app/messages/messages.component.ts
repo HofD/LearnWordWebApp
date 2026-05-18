@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Alert, AlertType } from '../shared/models/alert.model';
 import { AlertService } from '../shared/services/alert.service';
 import { CommonModule } from '@angular/common';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component({
   selector: 'app-messages',
@@ -20,7 +21,11 @@ export class MessagesComponent implements OnInit, OnDestroy {
   messageSubscription!: Subscription;
   routeSubscription!: Subscription;
 
-  constructor(private router: Router, private alertService: AlertService) { }
+  constructor(
+      private router: Router,
+      private alertService: AlertService,
+      public i18n: I18nService
+  ) { }
 
   ngOnInit() {
       // subscribe to new messages

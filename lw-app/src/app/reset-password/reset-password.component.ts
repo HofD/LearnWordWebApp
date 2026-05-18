@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MustMatch } from '../_helpers/must-match.validator';
 import { AuthService } from '../shared/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -24,7 +25,8 @@ export class ResetPasswordComponent {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public i18n: I18nService
   ) {
     this.code = this.route.snapshot.queryParams['code'] ?? '';
 
@@ -54,7 +56,7 @@ export class ResetPasswordComponent {
     )
       .subscribe({
         next: () => {
-          this.alertService.success('Password reset successful, you can now login', { keepAfterRouteChange: true });
+          this.alertService.success(this.i18n.text().password.resetSuccess, { keepAfterRouteChange: true });
           this.router.navigate(['/login']);
         },
         error: error => {

@@ -7,32 +7,32 @@
                     <div *ngIf="word.transcription" class="text-muted small">{{word.transcription}}</div>
                     <div class="text-muted">{{word.translation}}</div>
                 </div>
-                <div *ngIf="word.id !== null" class="word-actions" aria-label="Word actions">
-                    <button type="button" class="word-icon-button word-edit-button" (click)="startEdit(word)" aria-label="Edit word" title="Edit word">
+                <div *ngIf="word.id !== null" class="word-actions" [attr.aria-label]="i18n.text().words.actions">
+                    <button type="button" class="word-icon-button word-edit-button" (click)="startEdit(word)" [attr.aria-label]="i18n.text().words.editWord" [title]="i18n.text().words.editWord">
                         <img src="assets/icons/pencil.svg" alt="" aria-hidden="true">
                     </button>
-                    <button type="button" class="word-icon-button word-delete-button" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteWordModal' + card.id + '-' + word.id" aria-label="Delete word" title="Delete word"></button>
+                    <button type="button" class="word-icon-button word-delete-button" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteWordModal' + card.id + '-' + word.id" [attr.aria-label]="i18n.text().words.deleteWord" [title]="i18n.text().words.deleteWord"></button>
                 </div>
             </div>
 
             <form *ngIf="word.id !== null && editingWordId === word.id" class="word-edit-form stack-sm" [formGroup]="editWordForm">
                 <div>
-                    <label for="editValue{{card.id}}-{{word.id}}" class="form-label">Text <span class="text-muted">(required)</span></label>
+                    <label for="editValue{{card.id}}-{{word.id}}" class="form-label">{{i18n.text().words.text}} <span class="text-muted">({{i18n.text().common.required}})</span></label>
                     <input formControlName="value" type="text" class="form-control" id="editValue{{card.id}}-{{word.id}}" [class.is-invalid]="editWordForm.controls['value'].invalid && editWordForm.controls['value'].touched">
-                    <div class="invalid-feedback">Text is required.</div>
+                    <div class="invalid-feedback">{{i18n.text().words.textRequired}}</div>
                 </div>
                 <div>
-                    <label for="editTranslation{{card.id}}-{{word.id}}" class="form-label">Translation <span class="text-muted">(required)</span></label>
+                    <label for="editTranslation{{card.id}}-{{word.id}}" class="form-label">{{i18n.text().words.translation}} <span class="text-muted">({{i18n.text().common.required}})</span></label>
                     <input formControlName="translation" type="text" class="form-control" id="editTranslation{{card.id}}-{{word.id}}" [class.is-invalid]="editWordForm.controls['translation'].invalid && editWordForm.controls['translation'].touched">
-                    <div class="invalid-feedback">Translation is required.</div>
+                    <div class="invalid-feedback">{{i18n.text().words.translationRequired}}</div>
                 </div>
                 <div>
-                    <label for="editTranscription{{card.id}}-{{word.id}}" class="form-label">Transcription <span class="text-muted">(optional)</span></label>
+                    <label for="editTranscription{{card.id}}-{{word.id}}" class="form-label">{{i18n.text().words.transcription}} <span class="text-muted">({{i18n.text().common.optional}})</span></label>
                     <input formControlName="transcription" type="text" class="form-control" id="editTranscription{{card.id}}-{{word.id}}">
                 </div>
                 <div class="word-form-actions">
-                    <button [disabled]="!editWordForm.valid" type="button" class="btn btn-dark word-save" (click)="saveEdit(word)">Save</button>
-                    <button type="button" class="btn btn-outline-secondary word-save" (click)="cancelEdit()">Cancel</button>
+                    <button [disabled]="!editWordForm.valid" type="button" class="btn btn-dark word-save" (click)="saveEdit(word)">{{i18n.text().common.save}}</button>
+                    <button type="button" class="btn btn-outline-secondary word-save" (click)="cancelEdit()">{{i18n.text().common.cancel}}</button>
                 </div>
             </form>
 
@@ -40,16 +40,16 @@
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="deleteWordModalLabel{{card.id}}-{{word.id}}">Delete this word?</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <h1 class="modal-title fs-5" id="deleteWordModalLabel{{card.id}}-{{word.id}}">{{i18n.text().words.deleteQuestion}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" [attr.aria-label]="i18n.text().common.close"></button>
                         </div>
                         <div class="modal-body">
-                            <p class="mb-0">This removes only this word.</p>
-                            <p *ngIf="card.words.length === 1" class="text-muted small mt-2 mb-0">This is the last word, so the card will be removed too.</p>
+                            <p class="mb-0">{{i18n.text().words.deleteBody}}</p>
+                            <p *ngIf="card.words.length === 1" class="text-muted small mt-2 mb-0">{{i18n.text().words.lastWordWarning}}</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-                            <button (click)="deleteWord(word)" type="button" data-bs-dismiss="modal" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{i18n.text().common.close}}</button>
+                            <button (click)="deleteWord(word)" type="button" data-bs-dismiss="modal" class="btn btn-danger">{{i18n.text().common.delete}}</button>
                         </div>
                     </div>
                 </div>
@@ -59,29 +59,29 @@
 
     <div>
         <button type="button" class="btn btn-outline-secondary btn-sm word-toggle" (click)="toggleForm()" [attr.aria-expanded]="formOpen">
-            {{card ? 'Add More' : 'Add Word'}}
+            {{card ? i18n.text().words.addMore : i18n.text().words.addWord}}
         </button>
     </div>
 
     <div *ngIf="formOpen">
         <form class="word-form stack-sm" [formGroup]="newWordForm" (ngSubmit)="addWord()">
             <div>
-                <label for="value{{card?.id}}" class="form-label">Text <span class="text-muted">(required)</span></label>
-                <input formControlName="value" type="text" class="form-control" id="value{{card?.id}}" placeholder="Moon" [class.is-invalid]="newWordForm.controls['value'].invalid && newWordForm.controls['value'].touched">
-                <div class="invalid-feedback">Text is required.</div>
+                <label for="value{{card?.id}}" class="form-label">{{i18n.text().words.text}} <span class="text-muted">({{i18n.text().common.required}})</span></label>
+                <input formControlName="value" type="text" class="form-control" id="value{{card?.id}}" [placeholder]="i18n.text().words.valuePlaceholder" [class.is-invalid]="newWordForm.controls['value'].invalid && newWordForm.controls['value'].touched">
+                <div class="invalid-feedback">{{i18n.text().words.textRequired}}</div>
             </div>
             <div>
-                <label for="translation{{card?.id}}" class="form-label">Translation <span class="text-muted">(required)</span></label>
-                <input formControlName="translation" type="text" class="form-control" id="translation{{card?.id}}" placeholder="Луна" [class.is-invalid]="newWordForm.controls['translation'].invalid && newWordForm.controls['translation'].touched">
-                <div class="invalid-feedback">Translation is required.</div>
+                <label for="translation{{card?.id}}" class="form-label">{{i18n.text().words.translation}} <span class="text-muted">({{i18n.text().common.required}})</span></label>
+                <input formControlName="translation" type="text" class="form-control" id="translation{{card?.id}}" [placeholder]="i18n.text().words.translationPlaceholder" [class.is-invalid]="newWordForm.controls['translation'].invalid && newWordForm.controls['translation'].touched">
+                <div class="invalid-feedback">{{i18n.text().words.translationRequired}}</div>
             </div>
             <div>
-                <label for="transcription{{card?.id}}" class="form-label">Transcription <span class="text-muted">(optional)</span></label>
-                <input formControlName="transcription" type="text" class="form-control" id="transcription{{card?.id}}" placeholder="[muːn]">
+                <label for="transcription{{card?.id}}" class="form-label">{{i18n.text().words.transcription}} <span class="text-muted">({{i18n.text().common.optional}})</span></label>
+                <input formControlName="transcription" type="text" class="form-control" id="transcription{{card?.id}}" [placeholder]="i18n.text().words.transcriptionPlaceholder">
             </div>
             <div class="word-form-actions">
-                <button [disabled]="!newWordForm.valid" type="submit" class="btn btn-dark word-submit">Add</button>
-                <div *ngIf="newWordForm.invalid" class="word-form-hint">Fill in text and translation to add the word.</div>
+                <button [disabled]="!newWordForm.valid" type="submit" class="btn btn-dark word-submit">{{i18n.text().words.add}}</button>
+                <div *ngIf="newWordForm.invalid" class="word-form-hint">{{i18n.text().words.addHint}}</div>
             </div>
         </form>
     </div>

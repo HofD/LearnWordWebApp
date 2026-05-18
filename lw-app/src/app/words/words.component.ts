@@ -5,6 +5,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CardHttpService } from '../card/card.http.service';
 import { WordHttpService } from './word.http.service';
+import { I18nService } from '../i18n/i18n.service';
 
 @Component({
   selector: 'app-words',
@@ -24,7 +25,8 @@ export class WordsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private cardHttp: CardHttpService,
-    private wordHttp: WordHttpService
+    private wordHttp: WordHttpService,
+    public i18n: I18nService
   ) {
     this.newWordForm = this.formBuilder.group({
       value: ["", Validators.required],

@@ -4,6 +4,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
 import { first } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { I18nService } from '../i18n/i18n.service';
 
 enum EmailStatus {
   Verifying,
@@ -26,7 +27,8 @@ export class EmailConfirmComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    public i18n: I18nService
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class EmailConfirmComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          this.alertService.success('Verification successful, you can now login', { keepAfterRouteChange: true });
+          this.alertService.success(this.i18n.text().emailConfirm.success, { keepAfterRouteChange: true });
           this.emailStatus = EmailStatus.Verified;
           this.router.navigate(['../login'], { relativeTo: this.route });
         },

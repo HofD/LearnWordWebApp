@@ -5,20 +5,8 @@
             <p>{{i18n.text().about.intro}}</p>
         </div>
 
-        <div class="row g-3">
-            <div class="col-md-6">
-                <h2 class="h5">{{i18n.text().about.helpsTitle}}</h2>
-                <ul class="list-unstyled stack-sm mb-0">
-                    <li *ngFor="let item of helpItems">{{item}}</li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <h2 class="h5">{{i18n.text().about.technologyTitle}}</h2>
-                <ul class="list-unstyled stack-sm mb-0">
-                    <li *ngFor="let item of technologyItems">{{item}}</li>
-                </ul>
-            </div>
-        </div>
+        <p class="mb-0">{{i18n.text().about.free}}</p>
+        <p class="mb-0 text-muted">{{i18n.text().about.note}}</p>
 
         <div class="border-top pt-3 text-muted small">
             {{i18n.text().about.version}} {{version}} · © {{year}} {{i18n.text().common.brand}}. {{i18n.text().footer.rights}}

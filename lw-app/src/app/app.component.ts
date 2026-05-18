@@ -16,6 +16,14 @@ import { I18nService } from './i18n/i18n.service';
 })
 export class AppComponent {
   title = 'lw-app';
+  private readonly startYear = 2025;
+  private readonly currentYear = new Date().getFullYear();
 
   constructor(public i18n: I18nService) {}
+
+  get copyrightYears(): string {
+    return this.currentYear > this.startYear
+      ? `${this.startYear}-${this.currentYear}`
+      : `${this.startYear}`;
+  }
 }

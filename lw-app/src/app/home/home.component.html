@@ -1,9 +1,13 @@
 <div class="page-shell-narrow">
-    <section class="empty-state text-center stack">
+    <section class="empty-state home-intro text-center stack">
         <div class="page-heading mb-0">
             <h1>{{i18n.text().home.title}}</h1>
             <p>{{i18n.text().home.intro}}</p>
         </div>
+        <p class="home-description mb-0">{{i18n.text().home.description}}</p>
+        <ul class="home-highlights list-unstyled mb-0">
+            <li *ngFor="let item of highlights">{{item}}</li>
+        </ul>
         <div class="form-actions justify-content-center">
             <a routerLink="/login" class="btn btn-dark">{{i18n.text().home.login}}</a>
             <a routerLink="/register" class="btn btn-outline-secondary">{{i18n.text().home.register}}</a>

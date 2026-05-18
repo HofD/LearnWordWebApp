@@ -1,0 +1,21 @@
+.home-intro {
+  text-align: center;
+}
+
+.home-description {
+  color: var(--lw-text);
+  line-height: 1.55;
+}
+
+.home-highlights {
+  display: grid;
+  gap: 0.5rem;
+  color: var(--lw-muted);
+}
+
+.home-highlights li {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid var(--lw-border-soft);
+  border-radius: 7px;
+  background: var(--lw-surface-muted);
+}

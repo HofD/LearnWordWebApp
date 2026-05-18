@@ -33,7 +33,13 @@ export const uiText = {
     },
     home: {
       title: 'Learn Word',
-      intro: 'Start learning new words with small collections, simple cards, and focused review.',
+      intro: 'A free vocabulary notebook for learning foreign words without spreadsheets or scattered notes.',
+      description: 'Create collections for topics you care about, add words with translations and transcriptions, and review them as cards when you are ready to practice.',
+      highlights: [
+        'Keep words organized by topic',
+        'Store translation and pronunciation hints in one place',
+        'Review cards to remember words with less effort'
+      ],
       login: 'Log In',
       register: 'Register'
     },
@@ -146,21 +152,9 @@ export const uiText = {
     },
     about: {
       title: 'About Learn Word',
-      intro: 'A small application for building word collections and reviewing them without extra friction.',
-      helpsTitle: 'What it helps with',
-      helpItems: [
-        'Create and manage word collections',
-        'Add words with translations and transcriptions',
-        'Review cards and track learning progress',
-        'Keep practice focused on the next word'
-      ],
-      technologyTitle: 'Technology',
-      technologyItems: [
-        'Angular 17',
-        'Bootstrap 5',
-        '.NET Core Web API',
-        'Entity Framework Core'
-      ],
+      intro: 'Learn Word is a simple app for collecting foreign words and repeating them with cards.',
+      free: 'The app is free to use. Create an account, save your own collections, add translations and transcriptions, and come back to review them at your pace.',
+      note: 'It is made for everyday vocabulary practice: small lists, clear cards, and no unnecessary setup.',
       version: 'Version'
     },
     errors: {
@@ -193,7 +187,13 @@ export const uiText = {
     },
     home: {
       title: 'Learn Word',
-      intro: 'Учите новые слова с небольшими коллекциями, простыми карточками и сфокусированным повторением.',
+      intro: 'Бесплатный словарь для изучения иностранных слов без таблиц и разрозненных заметок.',
+      description: 'Создавайте коллекции по нужным темам, добавляйте слова с переводами и транскрипциями, а затем повторяйте их как карточки, когда готовы практиковаться.',
+      highlights: [
+        'Храните слова по темам',
+        'Держите перевод и подсказку по произношению рядом',
+        'Повторяйте карточки, чтобы легче запоминать слова'
+      ],
       login: 'Войти',
       register: 'Регистрация'
     },
@@ -306,21 +306,9 @@ export const uiText = {
     },
     about: {
       title: 'О Learn Word',
-      intro: 'Небольшое приложение для создания словарных коллекций и повторения без лишнего трения.',
-      helpsTitle: 'Чем помогает',
-      helpItems: [
-        'Создавать и управлять коллекциями слов',
-        'Добавлять слова с переводами и транскрипциями',
-        'Повторять карточки и отслеживать прогресс',
-        'Фокусироваться на следующем слове'
-      ],
-      technologyTitle: 'Технологии',
-      technologyItems: [
-        'Angular 17',
-        'Bootstrap 5',
-        '.NET Core Web API',
-        'Entity Framework Core'
-      ],
+      intro: 'Learn Word — простое приложение для сбора иностранных слов и повторения их с помощью карточек.',
+      free: 'Приложение бесплатное. Создайте аккаунт, сохраняйте свои коллекции, добавляйте переводы и транскрипции и возвращайтесь к повторению в удобном темпе.',
+      note: 'Оно сделано для повседневной словарной практики: короткие списки, понятные карточки и ничего лишнего.',
       version: 'Версия'
     },
     errors: {

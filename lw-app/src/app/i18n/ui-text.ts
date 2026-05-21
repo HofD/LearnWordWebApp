@@ -111,6 +111,26 @@ export const uiText = {
     collection: {
       intro: 'Add words to this collection or edit the existing cards.'
     },
+    aiCards: {
+      title: 'Generate cards with AI',
+      intro: 'Paste a short text and review draft cards before saving them.',
+      sourceText: 'Source text',
+      sourcePlaceholder: 'Paste a paragraph, notes, or a short word list.',
+      sourceLanguage: 'Source language',
+      targetLanguage: 'Target language',
+      level: 'Level',
+      maxCards: 'Max cards',
+      generate: 'Generate Suggestions',
+      generating: 'Generating...',
+      suggestions: 'Suggestions',
+      selected: 'selected',
+      selectSuggestion: 'Select suggestion',
+      saveSelected: 'Save Selected',
+      saving: 'Saving...',
+      generateError: 'Could not generate suggestions. Your collection is still loaded.',
+      saveError: 'Could not save selected suggestions. Please try again.',
+      saveSuccess: 'Selected cards were saved.'
+    },
     cards: {
       card: 'Card',
       word: 'word',
@@ -264,6 +284,26 @@ export const uiText = {
     },
     collection: {
       intro: 'Добавляйте слова в коллекцию или редактируйте существующие карточки.'
+    },
+    aiCards: {
+      title: 'Создать карточки с AI',
+      intro: 'Вставьте короткий текст и проверьте черновики перед сохранением.',
+      sourceText: 'Исходный текст',
+      sourcePlaceholder: 'Вставьте абзац, заметки или короткий список слов.',
+      sourceLanguage: 'Исходный язык',
+      targetLanguage: 'Язык перевода',
+      level: 'Уровень',
+      maxCards: 'Максимум карточек',
+      generate: 'Создать варианты',
+      generating: 'Создаем...',
+      suggestions: 'Варианты',
+      selected: 'выбрано',
+      selectSuggestion: 'Выбрать вариант',
+      saveSelected: 'Сохранить выбранные',
+      saving: 'Сохраняем...',
+      generateError: 'Не удалось создать варианты. Коллекция осталась загруженной.',
+      saveError: 'Не удалось сохранить выбранные варианты. Попробуйте еще раз.',
+      saveSuccess: 'Выбранные карточки сохранены.'
     },
     cards: {
       card: 'Карточка',

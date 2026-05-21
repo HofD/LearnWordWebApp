@@ -1,0 +1,116 @@
+.ai-card-generator {
+    display: grid;
+    gap: 1rem;
+    border-color: #d7dce1;
+}
+
+.ai-card-heading {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.ai-card-heading:focus-visible {
+    outline: 2px solid #212529;
+    outline-offset: 0.25rem;
+}
+
+.ai-card-toggle {
+    display: inline-flex;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 2rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--lw-border);
+    border-radius: var(--lw-radius);
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.ai-source-text {
+    min-height: 9rem;
+    resize: vertical;
+}
+
+.ai-options-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.ai-suggestions {
+    padding-top: 1rem;
+    border-top: 1px solid var(--lw-border-soft);
+}
+
+.ai-suggestions-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.ai-suggestion {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.85rem;
+    border: 1px solid var(--lw-border-soft);
+    border-radius: var(--lw-radius);
+    background: #fff;
+}
+
+.ai-suggestion-selected {
+    border-color: #adb5bd;
+    background: #fbfcfd;
+}
+
+.ai-suggestion-select {
+    padding-top: 0.15rem;
+}
+
+.ai-suggestion-body {
+    display: grid;
+    gap: 0.45rem;
+    min-width: 0;
+}
+
+.ai-suggestion-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.75rem;
+}
+
+.ai-suggestion-translation,
+.ai-suggestion-note {
+    overflow-wrap: anywhere;
+}
+
+.ai-suggestion-note {
+    color: var(--lw-muted);
+    font-size: 0.875rem;
+}
+
+.ai-difficulty {
+    justify-self: start;
+    padding: 0.15rem 0.45rem;
+    border: 1px solid var(--lw-border);
+    border-radius: 999px;
+    color: var(--lw-muted);
+    font-size: 0.75rem;
+}
+
+@media (max-width: 575.98px) {
+    .ai-options-grid,
+    .ai-suggestion-main {
+        grid-template-columns: 1fr;
+    }
+}

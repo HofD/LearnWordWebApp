@@ -9,6 +9,92 @@
             <h1>{{collection.name}}</h1>
             <p>{{i18n.text().collection.intro}}</p>
         </div>
+
+        <section class="content-card ai-card-generator">
+            <button type="button" class="ai-card-heading" (click)="toggleAiPanel()" [attr.aria-expanded]="aiPanelOpen" aria-controls="aiCardGeneratorBody">
+                <span>
+                    <h2 class="h5 mb-1">{{i18n.text().aiCards.title}}</h2>
+                    <p class="text-muted mb-0">{{i18n.text().aiCards.intro}}</p>
+                </span>
+                <span class="ai-card-toggle" aria-hidden="true">{{aiPanelOpen ? '-' : '+'}}</span>
+            </button>
+
+            <form *ngIf="aiPanelOpen" id="aiCardGeneratorBody" class="stack-sm" (ngSubmit)="generateSuggestions()">
+                <div>
+                    <label for="aiSourceText" class="form-label">{{i18n.text().aiCards.sourceText}} <span class="text-muted">({{i18n.text().common.required}})</span></label>
+                    <textarea id="aiSourceText" name="sourceText" class="form-control ai-source-text" rows="5" [(ngModel)]="sourceText" [disabled]="generating || savingSuggestions" [placeholder]="i18n.text().aiCards.sourcePlaceholder"></textarea>
+                </div>
+
+                <div class="ai-options-grid">
+                    <div>
+                        <label for="aiSourceLanguage" class="form-label">{{i18n.text().aiCards.sourceLanguage}}</label>
+                        <select id="aiSourceLanguage" name="sourceLanguage" class="form-select" [(ngModel)]="sourceLanguage" [disabled]="generating || savingSuggestions">
+                            <option *ngFor="let language of languageOptions" [value]="language">{{language}}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="aiTargetLanguage" class="form-label">{{i18n.text().aiCards.targetLanguage}}</label>
+                        <select id="aiTargetLanguage" name="targetLanguage" class="form-select" [(ngModel)]="targetLanguage" [disabled]="generating || savingSuggestions">
+                            <option *ngFor="let language of languageOptions" [value]="language">{{language}}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="aiLevel" class="form-label">{{i18n.text().aiCards.level}}</label>
+                        <select id="aiLevel" name="level" class="form-select" [(ngModel)]="level" [disabled]="generating || savingSuggestions">
+                            <option *ngFor="let level of levelOptions" [value]="level">{{level}}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="aiMaxCards" class="form-label">{{i18n.text().aiCards.maxCards}}</label>
+                        <input id="aiMaxCards" name="maxCards" type="number" min="1" max="10" class="form-control" [(ngModel)]="maxCards" [disabled]="generating || savingSuggestions">
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-dark" [disabled]="!sourceText.trim() || generating || savingSuggestions">
+                        <span *ngIf="generating" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                        {{generating ? i18n.text().aiCards.generating : i18n.text().aiCards.generate}}
+                    </button>
+                    <div *ngIf="generationError" class="text-danger small">{{generationError}}</div>
+                    <div *ngIf="saveError" class="text-danger small">{{saveError}}</div>
+                    <div *ngIf="saveSuccess" class="text-success small">{{saveSuccess}}</div>
+                </div>
+            </form>
+
+            <div *ngIf="suggestions.length > 0" class="ai-suggestions stack-sm">
+                <div class="ai-suggestions-header">
+                    <h3 class="h6 mb-0">{{i18n.text().aiCards.suggestions}}</h3>
+                    <span class="text-muted small">{{selectedCount()}} {{i18n.text().aiCards.selected}}</span>
+                </div>
+
+                <div *ngFor="let suggestion of suggestions; index as i" class="ai-suggestion" [class.ai-suggestion-selected]="isSuggestionSelected(i)">
+                    <label class="ai-suggestion-select">
+                        <input type="checkbox" class="form-check-input" [checked]="isSuggestionSelected(i)" (change)="toggleSuggestion(i)" [disabled]="generating || savingSuggestions">
+                        <span class="visually-hidden">{{i18n.text().aiCards.selectSuggestion}}</span>
+                    </label>
+                    <div class="ai-suggestion-body">
+                        <div class="ai-suggestion-main">
+                            <div>
+                                <div class="fw-semibold">{{suggestion.value}}</div>
+                                <div *ngIf="suggestion.transcription" class="text-muted small">{{suggestion.transcription}}</div>
+                            </div>
+                            <div class="ai-suggestion-translation">{{suggestion.translation}}</div>
+                        </div>
+                        <p *ngIf="suggestion.example" class="ai-suggestion-note mb-0">{{suggestion.example}}</p>
+                        <p *ngIf="suggestion.explanation" class="ai-suggestion-note mb-0">{{suggestion.explanation}}</p>
+                        <span *ngIf="suggestion.difficulty" class="ai-difficulty">{{suggestion.difficulty}}</span>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-dark" (click)="saveSelectedSuggestions()" [disabled]="selectedCount() === 0 || generating || savingSuggestions">
+                        <span *ngIf="savingSuggestions" class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+                        {{savingSuggestions ? i18n.text().aiCards.saving : i18n.text().aiCards.saveSelected}}
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <app-cards [cards]="collection.cards" [collectionId]="collection.id"></app-cards>
     </div>
 </div>

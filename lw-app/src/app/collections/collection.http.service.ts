@@ -2,11 +2,32 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { catchError, lastValueFrom, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
+export interface GenerateCardsRequest {
+    sourceText: string;
+    sourceLanguage?: string;
+    targetLanguage?: string;
+    level?: string;
+    maxCards: number;
+}
+
+export interface GeneratedCardSuggestion {
+    value: string;
+    transcription: string;
+    translation: string;
+    example?: string;
+    explanation?: string;
+    difficulty?: string;
+}
+
+export interface GenerateCardsResponse {
+    cards: Array<GeneratedCardSuggestion>;
+}
 
 @Injectable({
     providedIn: 'root'
@@ -20,31 +41,41 @@ export class CollectionHttpService {
 
     public add(name: string) {
         return this.http.post(`${environment.apiUrl}/api/collections`, { name: name }, httpOptions).pipe(
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
     public delete(id: number) {
         return this.http.delete(`${environment.apiUrl}/api/collections/${id}`, httpOptions).pipe(
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         )
     }
 
     public rename(id: number, name: string) {
         return this.http.put(`${environment.apiUrl}/api/collections/${id}`, { name: name }).pipe(
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         )
     }
 
     public getList() {
         return this.http.get(`${environment.apiUrl}/api/collections`, httpOptions).pipe(
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
         );
     }
 
     public get(id: number) {
         return this.http.get(`${environment.apiUrl}/api/collections/${id}`, httpOptions).pipe(
-            catchError(this.handleError)
+            catchError(error => this.handleError(error))
+        );
+    }
+
+    public generateCards(collectionId: number, request: GenerateCardsRequest) {
+        return this.http.post<GenerateCardsResponse>(
+            `${environment.apiUrl}/api/collections/${collectionId}/ai/generate-cards`,
+            request,
+            httpOptions
+        ).pipe(
+            catchError(error => this.handleError(error))
         );
     }
 

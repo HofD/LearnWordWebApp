@@ -29,6 +29,16 @@ export interface GenerateCardsResponse {
     cards: Array<GeneratedCardSuggestion>;
 }
 
+export class ApiError extends Error {
+    constructor(
+        message: string,
+        public readonly status?: number,
+        public readonly code?: string
+    ) {
+        super(message);
+    }
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -92,7 +102,11 @@ export class CollectionHttpService {
             console.error(
                 `Backend returned code ${error.status}, body was: `, error.error);
         }
-        // Return an observable with a user-facing error message.
-        return throwError(() => new Error('Something bad happened; please try again later.'));
+        const message = typeof error.error?.detail === 'string'
+            ? error.error.detail
+            : 'Something bad happened; please try again later.';
+        const code = typeof error.error?.code === 'string' ? error.error.code : undefined;
+
+        return throwError(() => new ApiError(message, error.status, code));
     }
 }

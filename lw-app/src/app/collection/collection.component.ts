@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CollectionHttpService, GeneratedCardSuggestion } from '../collections/collection.http.service';
+import { ApiError, CollectionHttpService, GeneratedCardSuggestion } from '../collections/collection.http.service';
 import { Collection } from './collection';
 import { NgFor, NgIf } from '@angular/common';
 import { CardsComponent } from '../cards/cards.component';
@@ -96,8 +96,8 @@ export class CollectionComponent implements OnInit {
         this.selectedSuggestions = new Set(this.suggestions.map((_, index) => index));
         this.generating = false;
       },
-      error: () => {
-        this.generationError = this.i18n.text().aiCards.generateError;
+      error: error => {
+        this.generationError = this.generationErrorMessage(error);
         this.generating = false;
       }
     });
@@ -151,10 +151,14 @@ export class CollectionComponent implements OnInit {
         });
 
         this.collection.cards.push(...savedCollectionCards);
-        this.suggestions = this.suggestions.filter((_, index) => !savedIndexes.has(index));
-        this.selectedSuggestions = new Set(
-          Array.from(this.selectedSuggestions).filter(index => !savedIndexes.has(index))
-        );
+        if (savedCollectionCards.length === selectedCards.length) {
+          this.resetAiForm();
+        } else {
+          this.suggestions = this.suggestions.filter((_, index) => !savedIndexes.has(index));
+          this.selectedSuggestions = new Set(
+            Array.from(this.selectedSuggestions).filter(index => !savedIndexes.has(index))
+          );
+        }
         this.saveSuccess = savedCollectionCards.length > 0 ? this.i18n.text().aiCards.saveSuccess : '';
         this.saveError = savedCollectionCards.length === selectedCards.length ? '' : this.i18n.text().aiCards.saveError;
         this.savingSuggestions = false;
@@ -176,6 +180,30 @@ export class CollectionComponent implements OnInit {
   private safeMaxCards() {
     const rounded = Math.round(Number(this.maxCards));
     return Math.min(10, Math.max(1, Number.isFinite(rounded) ? rounded : 8));
+  }
+
+  private generationErrorMessage(error: unknown) {
+    if (error instanceof ApiError) {
+      if (error.code === 'ai_provider_rate_limited') {
+        return this.i18n.text().aiCards.providerRateLimited;
+      }
+
+      if (error.code === 'ai_provider_unavailable' || error.code === 'ai_provider_configuration_error') {
+        return this.i18n.text().aiCards.providerUnavailable;
+      }
+    }
+
+    return this.i18n.text().aiCards.generateError;
+  }
+
+  private resetAiForm() {
+    this.sourceText = '';
+    this.sourceLanguage = 'English';
+    this.targetLanguage = 'Russian';
+    this.level = 'A2';
+    this.maxCards = 8;
+    this.suggestions = [];
+    this.selectedSuggestions = new Set<number>();
   }
 
 }

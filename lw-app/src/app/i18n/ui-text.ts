@@ -128,6 +128,8 @@ export const uiText = {
       saveSelected: 'Save Selected',
       saving: 'Saving...',
       generateError: 'Could not generate suggestions. Your collection is still loaded.',
+      providerRateLimited: 'AI generation is temporarily rate limited. Please try again in a minute.',
+      providerUnavailable: 'AI generation is temporarily unavailable. Please try again later.',
       saveError: 'Could not save selected suggestions. Please try again.',
       saveSuccess: 'Selected cards were saved.'
     },
@@ -302,6 +304,8 @@ export const uiText = {
       saveSelected: 'Сохранить выбранные',
       saving: 'Сохраняем...',
       generateError: 'Не удалось создать варианты. Коллекция осталась загруженной.',
+      providerRateLimited: 'AI-генерация временно ограничена провайдером. Попробуйте еще раз через минуту.',
+      providerUnavailable: 'AI-генерация временно недоступна. Попробуйте позже.',
       saveError: 'Не удалось сохранить выбранные варианты. Попробуйте еще раз.',
       saveSuccess: 'Выбранные карточки сохранены.'
     },

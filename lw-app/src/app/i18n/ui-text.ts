@@ -33,12 +33,12 @@ export const uiText = {
     },
     home: {
       title: 'Learn Word',
-      intro: 'A free vocabulary notebook for learning foreign words without spreadsheets or scattered notes.',
-      description: 'Create collections for topics you care about, add words with translations and transcriptions, and review them as cards when you are ready to practice.',
+      intro: 'A free AI-assisted vocabulary app for turning texts, notes, and word lists into study-ready cards.',
+      description: 'Generate draft cards with AI, review translations and transcriptions before saving, organize words into topic collections, and practice them with spaced repetition.',
       highlights: [
-        'Keep words organized by topic',
-        'Store translation and pronunciation hints in one place',
-        'Review cards to remember words with less effort'
+        'Create vocabulary cards faster from your own texts',
+        'Keep translations, transcriptions, and topic collections together',
+        'Review cards with spaced repetition when they are due'
       ],
       login: 'Log In',
       register: 'Register'
@@ -181,9 +181,9 @@ export const uiText = {
     },
     about: {
       title: 'About Learn Word',
-      intro: 'Learn Word is a simple app for collecting foreign words and repeating them with cards.',
-      free: 'The app is free to use. Create an account, save your own collections, add translations and transcriptions, and come back to review them at your pace.',
-      note: 'It is made for everyday vocabulary practice: small lists, clear cards, and no unnecessary setup.',
+      intro: 'Learn Word is an AI-assisted vocabulary learning app for creating cards from real texts and reviewing them over time.',
+      free: 'The app is free to use. Create an account, generate draft cards with AI, check translations and transcriptions, save your own collections, and return to review them at your pace.',
+      note: 'It is made for everyday language practice: quick card creation, clear review flows, and spaced repetition without unnecessary setup.',
       version: 'Version'
     },
     errors: {
@@ -216,12 +216,12 @@ export const uiText = {
     },
     home: {
       title: 'Learn Word',
-      intro: 'Бесплатный словарь для изучения иностранных слов без таблиц и разрозненных заметок.',
-      description: 'Создавайте коллекции по нужным темам, добавляйте слова с переводами и транскрипциями, а затем повторяйте их как карточки, когда готовы практиковаться.',
+      intro: 'Бесплатное приложение с AI для изучения иностранных слов и создания карточек из текстов, заметок и списков слов.',
+      description: 'Создавайте черновики карточек с AI, проверяйте переводы и транскрипции перед сохранением, собирайте слова в тематические коллекции и повторяйте их по интервальной системе.',
       highlights: [
-        'Храните слова по темам',
-        'Держите перевод и подсказку по произношению рядом',
-        'Повторяйте карточки, чтобы легче запоминать слова'
+        'Быстрее создавайте карточки из своих текстов',
+        'Храните переводы, транскрипции и тематические коллекции вместе',
+        'Повторяйте карточки по интервальной системе, когда они снова нужны'
       ],
       login: 'Войти',
       register: 'Регистрация'
@@ -364,9 +364,9 @@ export const uiText = {
     },
     about: {
       title: 'О Learn Word',
-      intro: 'Learn Word — простое приложение для сбора иностранных слов и повторения их с помощью карточек.',
-      free: 'Приложение бесплатное. Создайте аккаунт, сохраняйте свои коллекции, добавляйте переводы и транскрипции и возвращайтесь к повторению в удобном темпе.',
-      note: 'Оно сделано для повседневной словарной практики: короткие списки, понятные карточки и ничего лишнего.',
+      intro: 'Learn Word — приложение с AI для изучения слов: создавайте карточки из реальных текстов и повторяйте их со временем.',
+      free: 'Приложение бесплатное. Создайте аккаунт, генерируйте черновики карточек с AI, проверяйте переводы и транскрипции, сохраняйте коллекции и возвращайтесь к повторению в удобном темпе.',
+      note: 'Оно сделано для повседневной языковой практики: быстрое создание карточек, понятное повторение и интервальная система без лишней настройки.',
       version: 'Версия'
     },
     errors: {

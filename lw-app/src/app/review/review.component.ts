@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReviewHttpService } from './review.http.service';
+import { ReviewHttpService, ReviewOutcome } from './review.http.service';
 import { I18nService } from '../i18n/i18n.service';
 
 interface Word {
@@ -16,7 +16,11 @@ interface Card {
     collectionId: number;
     words: Word[];
     learnt: boolean;
-    transcription: string;
+    dueDate?: string | null;
+    intervalDays?: number | null;
+    easeFactor?: number | null;
+    reviewCount?: number | null;
+    lastReviewedAt?: string | null;
 }
 
 @Component({
@@ -32,6 +36,7 @@ export class ReviewComponent implements OnInit {
   currentIndex = 0;
   loaded = false;
   showTranslation = false;
+  submitting = false;
 
   constructor(
     private reviewService: ReviewHttpService,
@@ -52,10 +57,12 @@ export class ReviewComponent implements OnInit {
           this.currentCard = this.cards[0] || null;
           this.loaded = true;
           this.showTranslation = false;
+          this.submitting = false;
         },
         error: (error) => {
           console.error('Error loading cards:', error);
           this.loaded = true;
+          this.submitting = false;
         }
       });
   }
@@ -64,29 +71,21 @@ export class ReviewComponent implements OnInit {
     this.showTranslation = !this.showTranslation;
   }
 
-  onLearn() {
+  submitReview(outcome: ReviewOutcome) {
     if (!this.currentCard) return;
-    
-    this.reviewService.markAsLearned(this.currentCard.id)
-      .subscribe({
-        next: () => {
-          this.nextCard();
-          this.showTranslation = false;
-        },
-        error: (error) => console.error('Error marking card as learned:', error)
-      });
-  }
 
-  onForget() {
-    if (!this.currentCard) return;
-    
-    this.reviewService.markAsForgotten(this.currentCard.id)
+    this.submitting = true;
+    this.reviewService.reviewCard(this.currentCard.id, outcome)
       .subscribe({
         next: () => {
           this.nextCard();
           this.showTranslation = false;
+          this.submitting = false;
         },
-        error: (error) => console.error('Error marking card as forgotten:', error)
+        error: (error) => {
+          console.error('Error reviewing card:', error);
+          this.submitting = false;
+        },
       });
   }
 
@@ -99,4 +98,4 @@ export class ReviewComponent implements OnInit {
       this.currentCard = null;
     }
   }
-} 
+}

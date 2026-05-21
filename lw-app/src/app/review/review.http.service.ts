@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 import { environment } from "../../environments/environment";
 import { catchError, throwError } from "rxjs";
 
+export type ReviewOutcome = 'Again' | 'Hard' | 'Good' | 'Easy';
+
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -19,19 +21,17 @@ export class ReviewHttpService {
 
     public getCardsForReview(collectionId: number) {
         return this.http.get(`${environment.apiUrl}/api/collections/${collectionId}/review`, httpOptions).pipe(
-            catchError(this.handleError)
+            catchError((error) => this.handleError(error))
         );
     }
 
-    public markAsLearned(cardId: number) {
-        return this.http.post(`${environment.apiUrl}/api/cards/${cardId}/learn`, {}, httpOptions).pipe(
-            catchError(this.handleError)
-        );
-    }
-
-    public markAsForgotten(cardId: number) {
-        return this.http.post(`${environment.apiUrl}/api/cards/${cardId}/forget`, {}, httpOptions).pipe(
-            catchError(this.handleError)
+    public reviewCard(cardId: number, outcome: ReviewOutcome) {
+        return this.http.post(
+            `${environment.apiUrl}/api/review/cards/${cardId}/review`,
+            { outcome },
+            httpOptions
+        ).pipe(
+            catchError((error) => this.handleError(error))
         );
     }
 

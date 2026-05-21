@@ -25,8 +25,8 @@
                 <div class="review-word text-center">
                     <div class="word-container">
                         <h2 class="card-title">{{currentCard.words[0].value}}</h2>
-                        <p class="card-text text-muted mb-0">
-                            {{currentCard.transcription}}
+                        <p *ngIf="currentCard.words[0].transcription" class="card-text text-muted mb-0">
+                            {{currentCard.words[0].transcription}}
                         </p>
                     </div>
 
@@ -40,12 +40,40 @@
                     </button>
                 </div>
 
+                <div class="review-meta" [attr.aria-label]="i18n.text().review.srsMeta">
+                    <span *ngIf="currentCard.intervalDays !== null && currentCard.intervalDays !== undefined">{{i18n.text().review.interval}} {{currentCard.intervalDays}} {{i18n.text().review.daysShort}}</span>
+                    <span *ngIf="currentCard.reviewCount !== null && currentCard.reviewCount !== undefined">{{i18n.text().review.reviews}} {{currentCard.reviewCount}}</span>
+                    <span *ngIf="currentCard.dueDate">{{i18n.text().review.due}} {{currentCard.dueDate | date:'shortDate'}}</span>
+                </div>
+
                 <div class="review-actions">
-                    <button (click)="onForget()" class="btn btn-outline-danger">
-                        {{i18n.text().review.forget}}
+                    <button
+                        type="button"
+                        (click)="submitReview('Again')"
+                        class="btn btn-outline-danger"
+                        [disabled]="submitting">
+                        {{i18n.text().review.again}}
                     </button>
-                    <button (click)="onLearn()" class="btn btn-success">
-                        {{i18n.text().review.learn}}
+                    <button
+                        type="button"
+                        (click)="submitReview('Hard')"
+                        class="btn btn-warning"
+                        [disabled]="submitting">
+                        {{i18n.text().review.hard}}
+                    </button>
+                    <button
+                        type="button"
+                        (click)="submitReview('Good')"
+                        class="btn btn-success"
+                        [disabled]="submitting">
+                        {{i18n.text().review.good}}
+                    </button>
+                    <button
+                        type="button"
+                        (click)="submitReview('Easy')"
+                        class="btn btn-outline-success"
+                        [disabled]="submitting">
+                        {{i18n.text().review.easy}}
                     </button>
                 </div>
         </div>

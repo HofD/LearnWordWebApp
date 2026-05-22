@@ -1,27 +1,67 @@
-# LwApp
+# LearnWord Angular App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.9.
+This directory contains the Angular 17 frontend for LearnWord.
 
-## Development server
+For the repository-level overview, architecture notes, local Docker flow, and license, see `../README.md`.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Local Development
 
-## Code scaffolding
+```bash
+npm install
+npm start
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Open:
 
-## Build
+```text
+http://localhost:4200
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+The development build uses the gateway API at:
 
-## Running unit tests
+```text
+http://localhost:5100
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Start the backend and full Docker stack from the sibling backend repository when you need the real gateway, services, database, and Mailpit:
 
-## Running end-to-end tests
+```bash
+cd ../../LearnWord
+cp deploy/env/local.env.example deploy/env/local.env
+./deploy/local-up.sh
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Useful Commands
 
-## Further help
+```bash
+npm run build
+npm test
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+`npm run build` creates the production Angular build under `dist/`. `npm test` runs the Karma/Jasmine unit test suite.
+
+## Source Layout
+
+```text
+src/app/
+  app.routes.ts             public and authenticated routes
+  shared/services/          auth, token storage, alerts, and route guard
+  http-interceptors/        bearer-token and refresh-token HTTP behavior
+  i18n/                     English and Russian UI strings
+  collections/              collection list flow
+  collection/               single collection and card flow
+  card/                     card editing and AI draft interaction
+  review/                   spaced repetition review flow
+```
+
+Static SEO files are kept in `src/robots.txt`, `src/sitemap.xml`, and `src/index.html`.
+
+## Behavior Contract
+
+The accepted frontend behavior is documented in:
+
+```text
+../../LearnWord/specs/frontend-behavior.md
+```
+
+Keep route behavior, API calls, auth handling, localization, and visible states aligned with that spec.

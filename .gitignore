@@ -1,1 +1,8 @@
 .DS_Store
+
+# Environment files with local secrets.
+.env
+.env.*
+*.env
+*.env.*
+!*.env.example

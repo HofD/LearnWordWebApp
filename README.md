@@ -1,5 +1,7 @@
 # LearnWord Web App
 
+[![Frontend CI](https://github.com/HofD/LearnWordWebApp/actions/workflows/frontend-ci.yml/badge.svg?branch=main)](https://github.com/HofD/LearnWordWebApp/actions/workflows/frontend-ci.yml)
+
 LearnWord Web App is the Angular frontend for LearnWord, a fullstack language-learning application used as a sandbox for experimenting with a spec-driven, agent-assisted software delivery workflow.
 
 The frontend lets users register, confirm email, log in, manage word collections, create cards with words and translations, generate draft cards with AI through the backend, and review due cards with spaced repetition. The portfolio value of the project is broader than the UI itself: it demonstrates how a frontend can stay aligned with explicit behavior specs, backend API contracts, Docker-first verification, and role-specific AI agent work.

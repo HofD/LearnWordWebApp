@@ -42,13 +42,16 @@ This repository shows the frontend side of that workflow. The core loop is:
 4. Verify changes through Angular builds, Docker startup, and browser checks.
 5. Record significant delivery work in the backend repository's `agent-runs/` artifacts.
 
-See the sibling backend repository for the broader project documentation:
+## Related Backend Documentation
 
-- `../LearnWord/docs/architecture.md`
-- `../LearnWord/docs/agentic-sdlc.md`
-- `../LearnWord/docs/ai-features.md`
-- `../LearnWord/docs/demo-scenarios.md`
-- `../LearnWord/agent-runs/`
+The broader architecture and agent-assisted delivery workflow are documented in the backend repository:
+
+- [Backend repository](https://github.com/HofD/LearnWord)
+- [Architecture](https://github.com/HofD/LearnWord/blob/main/docs/architecture.md)
+- [Agentic SDLC workflow](https://github.com/HofD/LearnWord/blob/main/docs/agentic-sdlc.md)
+- [AI features](https://github.com/HofD/LearnWord/blob/main/docs/ai-features.md)
+- [Demo scenarios](https://github.com/HofD/LearnWord/blob/main/docs/demo-scenarios.md)
+- [Recorded agent runs](https://github.com/HofD/LearnWord/tree/main/agent-runs)
 
 ## Repository Layout
 
@@ -67,9 +70,7 @@ LearnWordWebApp/
 
 The .NET backend, gateway, deployment scripts, specs, and agent workflow docs live in the sibling repository:
 
-```text
-../LearnWord
-```
+[Backend repository](https://github.com/HofD/LearnWord)
 
 ## Architecture
 
@@ -96,11 +97,8 @@ The frontend calls the public gateway through `/api/...` endpoints. Development 
 
 ## Frontend Behavior
 
-Current behavior is documented in:
-
-```text
-../LearnWord/specs/frontend-behavior.md
-```
+Current behavior is documented in the shared
+[frontend behavior specification](https://github.com/HofD/LearnWord/blob/main/specs/frontend-behavior.md).
 
 Important routes:
 
@@ -167,10 +165,10 @@ Use browser checks against `http://localhost:8088` after UI changes when the Doc
 
 ## Project Guidance
 
-- Treat `../LearnWord/specs/frontend-behavior.md` as the source of truth for accepted frontend behavior.
-- Keep API URL, DTO, auth, and validation behavior aligned with `../LearnWord/specs/backend-api.md`.
-- Start cross-domain or ambiguous work with `../LearnWord/agents/system-analyst/AGENT.md`.
-- Frontend-specific implementation work is owned by `../LearnWord/agents/frontend-ui/AGENT.md`.
+- Treat the [frontend behavior specification](https://github.com/HofD/LearnWord/blob/main/specs/frontend-behavior.md) as the source of truth for accepted frontend behavior.
+- Keep API URL, DTO, auth, and validation behavior aligned with the [backend API specification](https://github.com/HofD/LearnWord/blob/main/specs/backend-api.md).
+- Start cross-domain or ambiguous work with the [System Analyst agent](https://github.com/HofD/LearnWord/blob/main/agents/system-analyst/AGENT.md).
+- Frontend-specific implementation work is owned by the [Frontend UI agent](https://github.com/HofD/LearnWord/blob/main/agents/frontend-ui/AGENT.md).
 
 ## License
 

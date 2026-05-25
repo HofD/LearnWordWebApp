@@ -10,6 +10,8 @@ import { Card } from '../card/card';
 import { Word } from '../card/word';
 import { CardHttpService } from '../card/card.http.service';
 import { catchError, forkJoin, of } from 'rxjs';
+import { AnalyticsService } from '../shared/services/analytics.service';
+import { AnalyticsEvents } from '../shared/services/analytics-events';
 
 @Component({
   selector: 'app-collection',
@@ -53,6 +55,7 @@ export class CollectionComponent implements OnInit {
     private route: ActivatedRoute,
     private http: CollectionHttpService,
     private cardHttp: CardHttpService,
+    private analytics: AnalyticsService,
     public i18n: I18nService
   ) { }
 
@@ -94,6 +97,13 @@ export class CollectionComponent implements OnInit {
       next: response => {
         this.suggestions = response.cards ?? [];
         this.selectedSuggestions = new Set(this.suggestions.map((_, index) => index));
+        this.analytics.reachGoal(AnalyticsEvents.AiCardsGenerated, {
+          collectionId: this.collection.id,
+          cardsCount: this.suggestions.length,
+          sourceLanguage: this.emptyToUndefined(this.sourceLanguage),
+          targetLanguage: this.emptyToUndefined(this.targetLanguage),
+          level: this.emptyToUndefined(this.level)
+        });
         this.generating = false;
       },
       error: error => {
@@ -151,6 +161,13 @@ export class CollectionComponent implements OnInit {
         });
 
         this.collection.cards.push(...savedCollectionCards);
+        if (savedCollectionCards.length > 0) {
+          this.analytics.reachGoal(AnalyticsEvents.CardCreated, {
+            collectionId: this.collection.id,
+            cardsCount: savedCollectionCards.length,
+            source: 'ai'
+          });
+        }
         if (savedCollectionCards.length === selectedCards.length) {
           this.resetAiForm();
         } else {

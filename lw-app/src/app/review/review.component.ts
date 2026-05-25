@@ -3,6 +3,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReviewHttpService, ReviewOutcome } from './review.http.service';
 import { I18nService } from '../i18n/i18n.service';
+import { AnalyticsService } from '../shared/services/analytics.service';
+import { AnalyticsEvents } from '../shared/services/analytics-events';
 
 interface Word {
     id: number;
@@ -37,16 +39,19 @@ export class ReviewComponent implements OnInit {
   loaded = false;
   showTranslation = false;
   submitting = false;
+  private collectionId!: number;
+  private reviewStarted = false;
 
   constructor(
     private reviewService: ReviewHttpService,
     private route: ActivatedRoute,
+    private analytics: AnalyticsService,
     public i18n: I18nService
   ) {}
 
   ngOnInit() {
-    const collectionId = this.route.snapshot.params['collectionId'];
-    this.loadCards(collectionId);
+    this.collectionId = Number(this.route.snapshot.params['collectionId']);
+    this.loadCards(this.collectionId);
   }
 
   loadCards(collectionId: number) {
@@ -58,6 +63,13 @@ export class ReviewComponent implements OnInit {
           this.loaded = true;
           this.showTranslation = false;
           this.submitting = false;
+          if (this.cards.length > 0 && !this.reviewStarted) {
+            this.reviewStarted = true;
+            this.analytics.reachGoal(AnalyticsEvents.ReviewStarted, {
+              collectionId: this.collectionId,
+              cardsCount: this.cards.length
+            });
+          }
         },
         error: (error) => {
           console.error('Error loading cards:', error);
@@ -78,7 +90,20 @@ export class ReviewComponent implements OnInit {
     this.reviewService.reviewCard(this.currentCard.id, outcome)
       .subscribe({
         next: () => {
+          this.analytics.reachGoal(AnalyticsEvents.ReviewCardAnswered, {
+            collectionId: this.collectionId,
+            outcome,
+            cardPosition: this.currentIndex + 1,
+            cardsCount: this.cards.length
+          });
           this.nextCard();
+          if (this.currentCard === null) {
+            this.analytics.reachGoal(AnalyticsEvents.ReviewFinished, {
+              collectionId: this.collectionId,
+              cardsReviewed: this.currentIndex,
+              cardsCount: this.cards.length
+            });
+          }
           this.showTranslation = false;
           this.submitting = false;
         },

@@ -6,6 +6,8 @@ import { AuthService } from '../shared/services/auth.service';
 import { AlertService } from '../shared/services/alert.service';
 import { NgClass, NgIf } from '@angular/common';
 import { I18nService } from '../i18n/i18n.service';
+import { AnalyticsService } from '../shared/services/analytics.service';
+import { AnalyticsEvents } from '../shared/services/analytics-events';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +27,7 @@ export class RegisterComponent {
     private router: Router,
     private authService: AuthService,
     private alertService: AlertService,
+    private analytics: AnalyticsService,
     public i18n: I18nService
   ) {
     this.registerForm = this.formBuilder.group({
@@ -47,6 +50,7 @@ export class RegisterComponent {
     this.authService.register(this.registerForm.value)
       .subscribe({
         next: () => {
+          this.analytics.reachGoal(AnalyticsEvents.RegisterSuccess);
           this.alertService.success(this.i18n.text().register.success, { keepAfterRouteChange: true });
           this.router.navigate(['../login'], { relativeTo: this.route });
         },

@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CardHttpService } from '../card/card.http.service';
 import { WordHttpService } from './word.http.service';
 import { I18nService } from '../i18n/i18n.service';
+import { AnalyticsService } from '../shared/services/analytics.service';
+import { AnalyticsEvents } from '../shared/services/analytics-events';
 
 @Component({
   selector: 'app-words',
@@ -26,6 +28,7 @@ export class WordsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cardHttp: CardHttpService,
     private wordHttp: WordHttpService,
+    private analytics: AnalyticsService,
     public i18n: I18nService
   ) {
     this.newWordForm = this.formBuilder.group({
@@ -85,6 +88,10 @@ export class WordsComponent implements OnInit {
       newCard.words.push(newWord);
       this.cardHttp.add(newCard).subscribe({
         next: (data: any) => {
+          this.analytics.reachGoal(AnalyticsEvents.CardCreated, {
+            collectionId: this.collectionId,
+            source: 'manual'
+          });
           this.addCard(data);
           this.closeForm();
         }

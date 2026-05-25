@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { RouterLink } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { I18nService } from '../i18n/i18n.service';
+import { AnalyticsService } from '../shared/services/analytics.service';
+import { AnalyticsEvents } from '../shared/services/analytics-events';
 
 @Component({
   selector: 'app-collections',
@@ -21,6 +23,7 @@ export class CollectionsComponent implements OnInit {
   constructor(
     private httpService: CollectionHttpService,
     private formBuilder: FormBuilder,
+    private analytics: AnalyticsService,
     public i18n: I18nService
   ) {
     this.newCollectionForm = this.formBuilder.group({
@@ -51,7 +54,12 @@ export class CollectionsComponent implements OnInit {
     }
 
     this.httpService.add(this.newCollectionForm.controls['name'].value).subscribe({
-      next: () => this.get()
+      next: () => {
+        this.analytics.reachGoal(AnalyticsEvents.CollectionCreated, {
+          source: 'collections'
+        });
+        this.get();
+      }
     });
 
     this.newCollectionForm.controls['name'].setValue('');

@@ -7,6 +7,8 @@ import { User } from '../models/user.model'
 import { EMPTY, Subject, catchError, finalize, lastValueFrom, switchMap, take, tap, throwError } from 'rxjs';
 import { AlertService } from './alert.service';
 import { I18nService } from '../../i18n/i18n.service';
+import { AnalyticsService } from './analytics.service';
+import { AnalyticsEvents } from './analytics-events';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -26,6 +28,7 @@ export class AuthService {
         private tokenStorageService: TokenStorageService,
         private alertService: AlertService,
         private i18n: I18nService,
+        private analytics: AnalyticsService,
         public router: Router
     ) { }
 
@@ -61,6 +64,7 @@ export class AuthService {
         this.tokenStorageService.saveToken(result.token);
         this.tokenStorageService.saveRefreshToken(result.refreshToken);
         this.sendAuthStateChangeNotification(true);
+        this.analytics.reachGoal(AnalyticsEvents.LoginSuccess);
     }
 
     public refreshToken() {

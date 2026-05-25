@@ -4,6 +4,17 @@ LearnWord Web App is the Angular frontend for LearnWord, a fullstack language-le
 
 The frontend lets users register, confirm email, log in, manage word collections, create cards with words and translations, generate draft cards with AI through the backend, and review due cards with spaced repetition. The portfolio value of the project is broader than the UI itself: it demonstrates how a frontend can stay aligned with explicit behavior specs, backend API contracts, Docker-first verification, and role-specific AI agent work.
 
+## Live Demo
+
+Try the published application: **[learnword.online](https://learnword.online)**
+
+Key scenario:
+1. Register and confirm email.
+2. Create a collection.
+3. Paste source text into AI Card Generator.
+4. Review generated card suggestions.
+5. Save selected cards and practice them through spaced repetition.
+
 ## Highlights
 
 - Angular 17 standalone-component application.

@@ -28,6 +28,10 @@
     background-color: var(--lw-surface-muted);
 }
 
+.word-container-list {
+    place-items: stretch;
+}
+
 .translation-container {
     width: 100%;
     color: inherit;
@@ -46,6 +50,49 @@
 
 .card-text {
     font-size: 1.1rem;
+}
+
+.review-word-list,
+.review-translation-list {
+    width: 100%;
+    max-height: min(36vh, 22rem);
+    overflow-y: auto;
+}
+
+.review-word-list {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.review-word-item,
+.review-translation-item {
+    padding: 0.25rem 0;
+    overflow-wrap: anywhere;
+}
+
+.review-word-item + .review-word-item,
+.review-translation-item + .review-translation-item {
+    border-top: 1px solid var(--lw-border-soft);
+    padding-top: 0.75rem;
+}
+
+.review-word-value {
+    font-size: clamp(1.35rem, 4vw, 1.9rem);
+    font-weight: 650;
+    line-height: 1.2;
+    letter-spacing: 0;
+}
+
+.review-word-transcription {
+    margin-top: 0.2rem;
+    font-size: 0.95rem;
+}
+
+.review-translation-list {
+    display: grid;
+    gap: 0.75rem;
+    font-size: 1.1rem;
+    line-height: 1.35;
 }
 
 .review-meta {

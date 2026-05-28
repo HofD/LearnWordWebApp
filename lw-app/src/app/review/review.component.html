@@ -23,20 +23,38 @@
                 </div>
 
                 <div class="review-word text-center">
-                    <div class="word-container">
-                        <h2 class="card-title">{{currentCard.words[0].value}}</h2>
-                        <p *ngIf="currentCard.words[0].transcription" class="card-text text-muted mb-0">
-                            {{currentCard.words[0].transcription}}
-                        </p>
+                    <div class="word-container" [class.word-container-list]="currentCard.words.length > 1">
+                        <ng-container *ngIf="currentCard.words.length === 1; else multipleWords">
+                            <h2 class="card-title">{{currentCard.words[0].value}}</h2>
+                            <p *ngIf="currentCard.words[0].transcription" class="card-text text-muted mb-0">
+                                {{currentCard.words[0].transcription}}
+                            </p>
+                        </ng-container>
+
+                        <ng-template #multipleWords>
+                            <div class="review-word-list">
+                                <div *ngFor="let word of currentCard.words" class="review-word-item">
+                                    <div class="review-word-value">{{word.value}}</div>
+                                    <div *ngIf="word.transcription" class="review-word-transcription text-muted">
+                                        {{word.transcription}}
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
                     </div>
 
                     <button type="button" class="translation-container" (click)="toggleTranslation()">
                         <p *ngIf="!showTranslation" class="card-text lead text-muted mb-0">
                             {{i18n.text().review.showTranslation}}
                         </p>
-                        <p *ngIf="showTranslation" class="card-text lead mb-0">
+                        <p *ngIf="showTranslation && currentCard.words.length === 1" class="card-text lead mb-0">
                             {{currentCard.words[0].translation}}
                         </p>
+                        <span *ngIf="showTranslation && currentCard.words.length > 1" class="review-translation-list">
+                            <span *ngFor="let word of currentCard.words" class="review-translation-item">
+                                {{word.translation}}
+                            </span>
+                        </span>
                     </button>
                 </div>
 

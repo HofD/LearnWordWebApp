@@ -10,16 +10,29 @@
             <p>{{i18n.text().collection.intro}}</p>
         </div>
 
-        <section class="content-card ai-card-generator">
-            <button type="button" class="ai-card-heading" (click)="toggleAiPanel()" [attr.aria-expanded]="aiPanelOpen" aria-controls="aiCardGeneratorBody">
-                <span>
-                    <h2 class="h5 mb-1">{{i18n.text().aiCards.title}}</h2>
-                    <p class="text-muted mb-0">{{i18n.text().aiCards.intro}}</p>
-                </span>
-                <span class="ai-card-toggle" aria-hidden="true">{{aiPanelOpen ? '-' : '+'}}</span>
-            </button>
+        <section class="content-card add-card-generator">
+            <div class="add-card-heading">
+                <div class="add-card-title-row">
+                    <h2 class="h5 mb-1">{{i18n.text().collection.addCardsTitle}}</h2>
+                    <div class="add-mode-switch" role="tablist" [attr.aria-label]="i18n.text().collection.addCardsMode">
+                        <button type="button" role="tab" class="add-mode-option" [class.add-mode-option-active]="addMode === 'ai'" [attr.aria-selected]="addMode === 'ai'" aria-controls="aiCardGeneratorBody" (click)="setAddMode('ai')">
+                            {{i18n.text().collection.aiMode}}
+                        </button>
+                        <button type="button" role="tab" class="add-mode-option" [class.add-mode-option-active]="addMode === 'manual'" [attr.aria-selected]="addMode === 'manual'" aria-controls="manualCardGeneratorBody" (click)="setAddMode('manual')">
+                            {{i18n.text().collection.manualMode}}
+                        </button>
+                    </div>
+                </div>
+                <div class="add-card-controls">
+                    <button type="button" class="add-card-toggle" (click)="toggleAddPanel()" [attr.aria-expanded]="addPanelOpen" [attr.aria-controls]="addMode === 'ai' ? 'aiCardGeneratorBody' : 'manualCardGeneratorBody'">
+                        <span aria-hidden="true">{{addPanelOpen ? '-' : '+'}}</span>
+                        <span class="visually-hidden">{{addPanelOpen ? i18n.text().common.close : i18n.text().collection.addCardsTitle}}</span>
+                    </button>
+                </div>
+            </div>
+            <p *ngIf="addPanelOpen" class="add-card-intro text-muted mb-0">{{addMode === 'ai' ? i18n.text().aiCards.intro : i18n.text().cards.addIntro}}</p>
 
-            <form *ngIf="aiPanelOpen" id="aiCardGeneratorBody" class="stack-sm" (ngSubmit)="generateSuggestions()">
+            <form *ngIf="addPanelOpen && addMode === 'ai'" id="aiCardGeneratorBody" class="stack-sm add-card-body" role="tabpanel" (ngSubmit)="generateSuggestions()">
                 <div>
                     <label for="aiSourceText" class="form-label">{{i18n.text().aiCards.sourceText}} <span class="text-muted">({{i18n.text().common.required}})</span></label>
                     <textarea id="aiSourceText" name="sourceText" class="form-control ai-source-text" rows="5" [(ngModel)]="sourceText" [disabled]="generating || savingSuggestions" [placeholder]="i18n.text().aiCards.sourcePlaceholder"></textarea>
@@ -61,7 +74,11 @@
                 </div>
             </form>
 
-            <div *ngIf="suggestions.length > 0" class="ai-suggestions stack-sm">
+            <div *ngIf="addPanelOpen && addMode === 'manual'" id="manualCardGeneratorBody" class="manual-card-form add-card-body" role="tabpanel">
+                <app-card [collectionId]="collection.id" (onCardAdded)="onManualCardAdded($event)"></app-card>
+            </div>
+
+            <div *ngIf="addPanelOpen && addMode === 'ai' && suggestions.length > 0" class="ai-suggestions stack-sm">
                 <div class="ai-suggestions-header">
                     <h3 class="h6 mb-0">{{i18n.text().aiCards.suggestions}}</h3>
                     <span class="text-muted small">{{selectedCount()}} {{i18n.text().aiCards.selected}}</span>

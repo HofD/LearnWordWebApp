@@ -111,17 +111,6 @@
     opacity: 1;
 }
 
-.add-card-panel {
-    border-style: dashed;
-    background: #fbfcfd;
-}
-
-.add-card-heading {
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--lw-border-soft);
-}
-
 @media (max-width: 575.98px) {
     .cards-pager {
         align-items: stretch;

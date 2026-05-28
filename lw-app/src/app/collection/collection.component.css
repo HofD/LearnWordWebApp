@@ -1,28 +1,82 @@
-.ai-card-generator {
+.add-card-generator {
     display: grid;
     gap: 1rem;
     border-color: #d7dce1;
 }
 
-.ai-card-heading {
+.add-card-heading {
     display: flex;
-    width: 100%;
-    padding: 0;
-    border: 0;
-    background: transparent;
-    color: inherit;
-    text-align: left;
     justify-content: space-between;
-    gap: 1rem;
-    align-items: flex-start;
+    gap: 0.75rem;
+    align-items: center;
 }
 
-.ai-card-heading:focus-visible {
+.add-card-title-row {
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.add-card-title-row h2 {
+    flex: 0 1 auto;
+    min-width: 0;
+    margin-bottom: 0 !important;
+}
+
+.add-card-intro {
+    max-width: 38rem;
+}
+
+.add-card-controls {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.add-mode-switch {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 11.75rem;
+    padding: 0.1875rem;
+    border: 1px solid var(--lw-border);
+    border-radius: 999px;
+    background: #eef0f2;
+    gap: 0.125rem;
+}
+
+.add-mode-option {
+    min-height: 1.75rem;
+    padding: 0.2rem 0.65rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--lw-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.add-mode-option-active {
+    background: #fff;
+    color: var(--lw-text);
+    box-shadow: 0 1px 4px rgba(33, 37, 41, 0.12);
+}
+
+.add-mode-option-active[aria-selected="true"]:first-child {
+    background: linear-gradient(135deg, #eef4ff 0%, #f4f0ff 100%);
+    color: #3157c8;
+    box-shadow: 0 1px 5px rgba(74, 104, 225, 0.22);
+}
+
+.add-mode-option:focus-visible {
     outline: 2px solid #212529;
-    outline-offset: 0.25rem;
+    outline-offset: 0.125rem;
 }
 
-.ai-card-toggle {
+.add-card-toggle {
     display: inline-flex;
     width: 2rem;
     height: 2rem;
@@ -30,9 +84,20 @@
     align-items: center;
     justify-content: center;
     border: 1px solid var(--lw-border);
-    border-radius: var(--lw-radius);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--lw-text);
     font-size: 1.25rem;
     line-height: 1;
+}
+
+.add-card-toggle:focus-visible {
+    outline: 2px solid #212529;
+    outline-offset: 0.125rem;
+}
+
+.add-card-body {
+    padding-top: 0.25rem;
 }
 
 .ai-source-text {
@@ -48,6 +113,10 @@
 
 .ai-suggestions {
     padding-top: 1rem;
+    border-top: 1px solid var(--lw-border-soft);
+}
+
+.manual-card-form {
     border-top: 1px solid var(--lw-border-soft);
 }
 
@@ -109,6 +178,25 @@
 }
 
 @media (max-width: 575.98px) {
+    .add-card-heading {
+        align-items: center;
+    }
+
+    .add-card-title-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+    }
+
+    .add-mode-switch {
+        width: min(100%, 15rem);
+    }
+
+    .add-mode-option {
+        min-width: 0;
+        white-space: normal;
+    }
+
     .ai-options-grid,
     .ai-suggestion-main {
         grid-template-columns: 1fr;

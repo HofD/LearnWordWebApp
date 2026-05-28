@@ -109,7 +109,11 @@ export const uiText = {
       emptyIntro: 'Create your first collection above and start adding words.'
     },
     collection: {
-      intro: 'Add words to this collection or edit the existing cards.'
+      intro: 'Add words to this collection or edit the existing cards.',
+      addCardsTitle: 'Add cards',
+      addCardsMode: 'Card creation mode',
+      aiMode: 'AI',
+      manualMode: 'Manual'
     },
     aiCards: {
       title: 'Generate cards with AI',
@@ -303,7 +307,11 @@ export const uiText = {
       emptyIntro: 'Создайте первую коллекцию выше и начните добавлять слова.'
     },
     collection: {
-      intro: 'Добавляйте слова в коллекцию или редактируйте существующие карточки.'
+      intro: 'Добавляйте слова в коллекцию или редактируйте существующие карточки.',
+      addCardsTitle: 'Добавить карточки',
+      addCardsMode: 'Режим создания карточек',
+      aiMode: 'AI',
+      manualMode: 'Вручную'
     },
     aiCards: {
       title: 'Создать карточки с AI',

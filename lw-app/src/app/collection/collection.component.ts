@@ -6,6 +6,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { CardsComponent } from '../cards/cards.component';
 import { I18nService } from '../i18n/i18n.service';
 import { FormsModule } from '@angular/forms';
+import { CardComponent } from '../card/card.component';
 import { Card } from '../card/card';
 import { Word } from '../card/word';
 import { CardHttpService } from '../card/card.http.service';
@@ -16,7 +17,7 @@ import { AnalyticsEvents } from '../shared/services/analytics-events';
 @Component({
   selector: 'app-collection',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, CardsComponent],
+  imports: [NgIf, NgFor, FormsModule, CardsComponent, CardComponent],
   templateUrl: './collection.component.html',
   styleUrl: './collection.component.css'
 })
@@ -25,7 +26,8 @@ export class CollectionComponent implements OnInit {
   @ViewChild(CardsComponent) cardsComponent?: CardsComponent;
   collection!: Collection;
   loaded = false;
-  aiPanelOpen = false;
+  addPanelOpen = false;
+  addMode: 'ai' | 'manual' = 'ai';
   sourceText = '';
   sourceLanguage = 'English';
   targetLanguage = 'Russian';
@@ -74,8 +76,22 @@ export class CollectionComponent implements OnInit {
     this.loaded = true;
   }
 
-  toggleAiPanel() {
-    this.aiPanelOpen = !this.aiPanelOpen;
+  setAddMode(mode: 'ai' | 'manual') {
+    this.addMode = mode;
+    this.addPanelOpen = true;
+  }
+
+  toggleAddPanel() {
+    this.addPanelOpen = !this.addPanelOpen;
+  }
+
+  onManualCardAdded(card: Card) {
+    if (this.cardsComponent) {
+      this.cardsComponent.addCard(card);
+      return;
+    }
+
+    this.collection.cards.push(card);
   }
 
   generateSuggestions() {

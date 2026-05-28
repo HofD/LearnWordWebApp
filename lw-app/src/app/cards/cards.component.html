@@ -40,14 +40,6 @@
     <app-card [card]="card" [collectionId]="collectionId" (onCardRemoved)="removeCard($event)"></app-card>
   </article>
 
-  <section class="content-card add-card-panel">
-    <div class="add-card-heading">
-      <h2 class="h5 mb-1">{{i18n.text().cards.addTitle}}</h2>
-      <p class="text-muted mb-0">{{i18n.text().cards.addIntro}}</p>
-    </div>
-    <app-card [collectionId]="collectionId" (onCardAdded)="addCard($event)"></app-card>
-  </section>
-
   <div class="modal fade" id="deleteCardModal" tabindex="-1" aria-labelledby="deleteCardModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">

@@ -1,3 +1,37 @@
+.cards-pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.75rem 1rem;
+}
+
+.cards-pager-summary {
+    color: var(--lw-muted);
+    font-size: 0.875rem;
+}
+
+.cards-pager-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.cards-page-size {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin: 0;
+    color: var(--lw-muted);
+    font-size: 0.875rem;
+}
+
+.cards-page-size .form-select {
+    width: 5rem;
+}
+
 .word-card {
     border-color: #d7dce1;
     padding: 1rem;
@@ -66,4 +100,15 @@
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--lw-border-soft);
+}
+
+@media (max-width: 575.98px) {
+    .cards-pager {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .cards-pager-controls {
+        justify-content: space-between;
+    }
 }

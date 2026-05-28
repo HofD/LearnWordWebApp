@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiError, CollectionHttpService, GeneratedCardSuggestion } from '../collections/collection.http.service';
 import { Collection } from './collection';
@@ -22,6 +22,7 @@ import { AnalyticsEvents } from '../shared/services/analytics-events';
 })
 export class CollectionComponent implements OnInit {
 
+  @ViewChild(CardsComponent) cardsComponent?: CardsComponent;
   collection!: Collection;
   loaded = false;
   aiPanelOpen = false;
@@ -162,6 +163,7 @@ export class CollectionComponent implements OnInit {
 
         this.collection.cards.push(...savedCollectionCards);
         if (savedCollectionCards.length > 0) {
+          this.cardsComponent?.goToLastPage();
           this.analytics.reachGoal(AnalyticsEvents.CardCreated, {
             collectionId: this.collection.id,
             cardsCount: savedCollectionCards.length,

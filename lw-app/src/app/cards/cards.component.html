@@ -1,24 +1,29 @@
 <div class="stack">
-  <article *ngFor="let card of cards; index as i" class="content-card word-card">
-    <div class="word-card-header">
-      <span class="word-card-meta">{{i18n.text().cards.card}} · {{card.words.length}} {{card.words.length === 1 ? i18n.text().cards.word : i18n.text().cards.words}}</span>
-      <button type="button" class="word-card-delete" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteModal' + card.id" [attr.aria-label]="i18n.text().cards.deleteThisCard"></button>
+  <div *ngIf="cards.length > pageSizeOptions[0]" class="cards-pager content-card">
+    <div class="cards-pager-summary">
+      {{i18n.text().cards.showing}} {{rangeStart}}-{{rangeEnd}} {{i18n.text().cards.of}} {{cards.length}}
     </div>
-    <app-card [card]="card" [collectionId]="collectionId" (onCardRemoved)="removeCard($event)"></app-card>
-    <div class="modal fade" id="deleteModal{{card.id}}" tabindex="-1" [attr.aria-labelledby]="'deleteModalLabel' + card.id" aria-hidden="true">
-      <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="deleteModalLabel{{card.id}}">{{i18n.text().cards.deleteThisCardQuestion}}</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" [attr.aria-label]="i18n.text().common.close"></button>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{i18n.text().common.close}}</button>
-            <button (click)="delete(card.id!, i)" type="button" data-bs-dismiss="modal" class="btn btn-danger">{{i18n.text().common.delete}}</button>
-          </div>
-        </div>
+    <div class="cards-pager-controls">
+      <label class="cards-page-size">
+        <span>{{i18n.text().cards.perPage}}</span>
+        <select class="form-select form-select-sm" [value]="pageSize" (change)="changePageSize($event)">
+          <option *ngFor="let option of pageSizeOptions" [value]="option">{{option}}</option>
+        </select>
+      </label>
+      <div class="btn-group btn-group-sm" role="group" [attr.aria-label]="i18n.text().cards.pagination">
+        <button type="button" class="btn btn-outline-secondary" (click)="goToPreviousPage()" [disabled]="normalizedCurrentPage === 1">{{i18n.text().cards.previous}}</button>
+        <button type="button" class="btn btn-outline-secondary" disabled>{{normalizedCurrentPage}} / {{totalPages}}</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="goToNextPage()" [disabled]="normalizedCurrentPage === totalPages">{{i18n.text().cards.next}}</button>
       </div>
     </div>
+  </div>
+
+  <article *ngFor="let card of visibleCards; trackBy: trackByCardId" class="content-card word-card">
+    <div class="word-card-header">
+      <span class="word-card-meta">{{i18n.text().cards.card}} · {{card.words.length}} {{card.words.length === 1 ? i18n.text().cards.word : i18n.text().cards.words}}</span>
+      <button type="button" class="word-card-delete" data-bs-toggle="modal" data-bs-target="#deleteCardModal" (click)="openDeleteModal(card)" [attr.aria-label]="i18n.text().cards.deleteThisCard"></button>
+    </div>
+    <app-card [card]="card" [collectionId]="collectionId" (onCardRemoved)="removeCard($event)"></app-card>
   </article>
 
   <section class="content-card add-card-panel">
@@ -28,4 +33,19 @@
     </div>
     <app-card [collectionId]="collectionId" (onCardAdded)="addCard($event)"></app-card>
   </section>
+
+  <div class="modal fade" id="deleteCardModal" tabindex="-1" aria-labelledby="deleteCardModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="deleteCardModalLabel">{{i18n.text().cards.deleteThisCardQuestion}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" [attr.aria-label]="i18n.text().common.close"></button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">{{i18n.text().common.close}}</button>
+          <button (click)="deletePendingCard()" type="button" data-bs-dismiss="modal" class="btn btn-danger">{{i18n.text().common.delete}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

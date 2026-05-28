@@ -18,6 +18,7 @@ export class CardsComponent {
   pageSizeOptions = [25, 50, 100];
   pageSize = 25;
   currentPage = 1;
+  searchQuery = '';
   cardPendingDelete: Card | null = null;
 
   constructor(
@@ -26,7 +27,7 @@ export class CardsComponent {
   ) { }
 
   get totalPages() {
-    return Math.max(1, Math.ceil(this.cards.length / this.pageSize));
+    return Math.max(1, Math.ceil(this.filteredCards.length / this.pageSize));
   }
 
   get normalizedCurrentPage() {
@@ -38,19 +39,49 @@ export class CardsComponent {
   }
 
   get pageEndIndex() {
-    return Math.min(this.pageStartIndex + this.pageSize, this.cards.length);
+    return Math.min(this.pageStartIndex + this.pageSize, this.filteredCards.length);
   }
 
   get visibleCards() {
-    return this.cards.slice(this.pageStartIndex, this.pageEndIndex);
+    return this.filteredCards.slice(this.pageStartIndex, this.pageEndIndex);
   }
 
   get rangeStart() {
-    return this.cards.length === 0 ? 0 : this.pageStartIndex + 1;
+    return this.filteredCards.length === 0 ? 0 : this.pageStartIndex + 1;
   }
 
   get rangeEnd() {
     return this.pageEndIndex;
+  }
+
+  get normalizedSearchQuery() {
+    return this.normalizeSearchText(this.searchQuery);
+  }
+
+  get isSearchActive() {
+    return this.normalizedSearchQuery.length > 0;
+  }
+
+  get filteredCards() {
+    const query = this.normalizedSearchQuery;
+    if (!query) {
+      return this.cards;
+    }
+
+    return this.cards.filter(card =>
+      card.words.some(word =>
+        this.normalizeSearchText(word.value).includes(query) ||
+        this.normalizeSearchText(word.translation).includes(query)
+      )
+    );
+  }
+
+  get shouldShowCardControls() {
+    return this.cards.length > 0 || this.isSearchActive;
+  }
+
+  get shouldShowPaginationControls() {
+    return this.filteredCards.length > this.pageSizeOptions[0];
   }
 
   addCard(card: Card) {
@@ -107,11 +138,24 @@ export class CardsComponent {
     this.keepCurrentPageInRange();
   }
 
+  changeSearchQuery(event: Event) {
+    this.searchQuery = (event.target as HTMLInputElement).value;
+    this.currentPage = 1;
+  }
+
   trackByCardId(index: number, card: Card) {
     return card.id ?? `${this.pageStartIndex + index}`;
   }
 
   private keepCurrentPageInRange() {
     this.currentPage = this.normalizedCurrentPage;
+  }
+
+  private normalizeSearchText(value: string | null | undefined) {
+    return (value ?? '')
+      .trim()
+      .toLocaleLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '');
   }
 }

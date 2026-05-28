@@ -11,12 +11,26 @@
     font-size: 0.875rem;
 }
 
+.cards-search-count {
+    margin-top: 0.125rem;
+    color: var(--lw-text);
+    font-weight: 600;
+}
+
 .cards-pager-controls {
     display: flex;
     gap: 0.75rem;
     align-items: center;
     flex-wrap: wrap;
     justify-content: flex-end;
+}
+
+.cards-search {
+    margin: 0;
+}
+
+.cards-search .form-control {
+    width: min(16rem, 44vw);
 }
 
 .cards-page-size {
@@ -30,6 +44,12 @@
 
 .cards-page-size .form-select {
     width: 5rem;
+}
+
+.cards-empty-state {
+    padding: 1rem;
+    border-style: dashed;
+    background: #fbfcfd;
 }
 
 .word-card {
@@ -110,5 +130,13 @@
 
     .cards-pager-controls {
         justify-content: space-between;
+    }
+
+    .cards-search {
+        width: 100%;
+    }
+
+    .cards-search .form-control {
+        width: 100%;
     }
 }

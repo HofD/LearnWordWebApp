@@ -1,22 +1,36 @@
 <div class="stack">
-  <div *ngIf="cards.length > pageSizeOptions[0]" class="cards-pager content-card">
+  <div *ngIf="shouldShowCardControls" class="cards-pager content-card">
     <div class="cards-pager-summary">
-      {{i18n.text().cards.showing}} {{rangeStart}}-{{rangeEnd}} {{i18n.text().cards.of}} {{cards.length}}
+      <div>
+        {{i18n.text().cards.showing}} {{rangeStart}}-{{rangeEnd}} {{i18n.text().cards.of}} {{filteredCards.length}}
+      </div>
+      <div *ngIf="isSearchActive" class="cards-search-count">
+        {{i18n.text().cards.found}} {{filteredCards.length}} {{i18n.text().cards.of}} {{cards.length}}
+      </div>
     </div>
     <div class="cards-pager-controls">
-      <label class="cards-page-size">
+      <label class="cards-search">
+        <span class="visually-hidden">{{i18n.text().cards.search}}</span>
+        <input type="search" class="form-control form-control-sm" [value]="searchQuery" (input)="changeSearchQuery($event)" [placeholder]="i18n.text().cards.searchPlaceholder" [attr.aria-label]="i18n.text().cards.search">
+      </label>
+      <label *ngIf="shouldShowPaginationControls" class="cards-page-size">
         <span>{{i18n.text().cards.perPage}}</span>
         <select class="form-select form-select-sm" [value]="pageSize" (change)="changePageSize($event)">
           <option *ngFor="let option of pageSizeOptions" [value]="option">{{option}}</option>
         </select>
       </label>
-      <div class="btn-group btn-group-sm" role="group" [attr.aria-label]="i18n.text().cards.pagination">
+      <div *ngIf="shouldShowPaginationControls" class="btn-group btn-group-sm" role="group" [attr.aria-label]="i18n.text().cards.pagination">
         <button type="button" class="btn btn-outline-secondary" (click)="goToPreviousPage()" [disabled]="normalizedCurrentPage === 1">{{i18n.text().cards.previous}}</button>
         <button type="button" class="btn btn-outline-secondary" disabled>{{normalizedCurrentPage}} / {{totalPages}}</button>
         <button type="button" class="btn btn-outline-secondary" (click)="goToNextPage()" [disabled]="normalizedCurrentPage === totalPages">{{i18n.text().cards.next}}</button>
       </div>
     </div>
   </div>
+
+  <section *ngIf="isSearchActive && filteredCards.length === 0" class="content-card cards-empty-state">
+    <h2 class="h6 mb-1">{{i18n.text().cards.searchEmptyTitle}}</h2>
+    <p class="text-muted mb-0">{{i18n.text().cards.searchEmptyIntro}}</p>
+  </section>
 
   <article *ngFor="let card of visibleCards; trackBy: trackByCardId" class="content-card word-card">
     <div class="word-card-header">

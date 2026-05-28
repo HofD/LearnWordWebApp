@@ -85,6 +85,20 @@ export class CollectionComponent implements OnInit {
     this.addPanelOpen = !this.addPanelOpen;
   }
 
+  targetLanguageOptions() {
+    return this.languageOptions.filter(language => language !== this.sourceLanguage);
+  }
+
+  onSourceLanguageChange(language: string) {
+    this.sourceLanguage = language;
+    this.ensureDistinctTargetLanguage();
+  }
+
+  onTargetLanguageChange(language: string) {
+    this.targetLanguage = language;
+    this.ensureDistinctTargetLanguage();
+  }
+
   onManualCardAdded(card: Card) {
     if (this.cardsComponent) {
       this.cardsComponent.addCard(card);
@@ -98,6 +112,8 @@ export class CollectionComponent implements OnInit {
     if (!this.sourceText.trim() || this.generating || this.savingSuggestions) {
       return;
     }
+
+    this.ensureDistinctTargetLanguage();
 
     this.generating = true;
     this.generationError = '';
@@ -215,6 +231,15 @@ export class CollectionComponent implements OnInit {
   private safeMaxCards() {
     const rounded = Math.round(Number(this.maxCards));
     return Math.min(10, Math.max(1, Number.isFinite(rounded) ? rounded : 8));
+  }
+
+  private ensureDistinctTargetLanguage() {
+    if (this.sourceLanguage !== this.targetLanguage) {
+      return;
+    }
+
+    const fallback = this.languageOptions.find(language => language !== this.sourceLanguage) ?? '';
+    this.targetLanguage = fallback;
   }
 
   private generationErrorMessage(error: unknown) {

@@ -41,14 +41,14 @@
                 <div class="ai-options-grid">
                     <div>
                         <label for="aiSourceLanguage" class="form-label">{{i18n.text().aiCards.sourceLanguage}}</label>
-                        <select id="aiSourceLanguage" name="sourceLanguage" class="form-select" [(ngModel)]="sourceLanguage" [disabled]="generating || savingSuggestions">
+                        <select id="aiSourceLanguage" name="sourceLanguage" class="form-select" [ngModel]="sourceLanguage" (ngModelChange)="onSourceLanguageChange($event)" [disabled]="generating || savingSuggestions">
                             <option *ngFor="let language of languageOptions" [value]="language">{{language}}</option>
                         </select>
                     </div>
                     <div>
                         <label for="aiTargetLanguage" class="form-label">{{i18n.text().aiCards.targetLanguage}}</label>
-                        <select id="aiTargetLanguage" name="targetLanguage" class="form-select" [(ngModel)]="targetLanguage" [disabled]="generating || savingSuggestions">
-                            <option *ngFor="let language of languageOptions" [value]="language">{{language}}</option>
+                        <select id="aiTargetLanguage" name="targetLanguage" class="form-select" [ngModel]="targetLanguage" (ngModelChange)="onTargetLanguageChange($event)" [disabled]="generating || savingSuggestions">
+                            <option *ngFor="let language of targetLanguageOptions()" [value]="language">{{language}}</option>
                         </select>
                     </div>
                     <div>

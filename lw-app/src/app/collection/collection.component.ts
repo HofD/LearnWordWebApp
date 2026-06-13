@@ -39,6 +39,7 @@ export class CollectionComponent implements OnInit {
     'Hindi',
     'Spanish',
     'French',
+    'Italian',
     'Arabic',
     'Bengali',
     'Portuguese',

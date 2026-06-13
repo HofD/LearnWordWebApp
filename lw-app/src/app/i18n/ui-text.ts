@@ -88,9 +88,9 @@ export const uiText = {
     emailConfirm: {
       title: 'Verify Email',
       verifying: 'Verifying...',
-      failedPrefix: 'Verification failed, you can also verify your account using the',
-      forgotPasswordLink: 'forgot password',
-      failedSuffix: 'page.',
+      failedPrefix: 'Verification failed. Open the newest confirmation link from your email, or use the',
+      registerLink: 'registration',
+      failedSuffix: 'page with the same email to send a new confirmation link.',
       success: 'Verification successful, you can now login'
     },
     collections: {
@@ -203,6 +203,7 @@ export const uiText = {
     },
     errors: {
       wrongCredentials: 'Wrong username or password.',
+      emailNotConfirmed: 'Please confirm your email before logging in. Check your inbox for the confirmation link; if it is missing, register again with the same email to resend it.',
       generic: 'Something bad happened; please try again later.'
     }
   },
@@ -286,9 +287,9 @@ export const uiText = {
     emailConfirm: {
       title: 'Подтверждение email',
       verifying: 'Проверяем...',
-      failedPrefix: 'Не удалось подтвердить email. Также можно подтвердить аккаунт через страницу',
-      forgotPasswordLink: 'сброса пароля',
-      failedSuffix: '.',
+      failedPrefix: 'Не удалось подтвердить email. Откройте самую свежую ссылку из письма или используйте страницу',
+      registerLink: 'регистрации',
+      failedSuffix: 'с тем же email, чтобы отправить новую ссылку подтверждения.',
       success: 'Email подтвержден, теперь вы можете войти'
     },
     collections: {
@@ -401,6 +402,7 @@ export const uiText = {
     },
     errors: {
       wrongCredentials: 'Неверное имя пользователя или пароль.',
+      emailNotConfirmed: 'Подтвердите email перед входом. Проверьте письмо со ссылкой подтверждения; если письма нет, зарегистрируйтесь повторно с тем же email, чтобы отправить его еще раз.',
       generic: 'Что-то пошло не так. Попробуйте позже.'
     }
   }

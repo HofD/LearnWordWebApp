@@ -136,6 +136,8 @@ export class AuthService {
             console.error('An error occurred:', error.error);
         } else if (error.status === 401) {
             this.alertService.error(this.i18n.text().errors.wrongCredentials);
+        } else if (error.status === 403 && error.url?.includes('/api/auth/login')) {
+            this.alertService.error(this.i18n.text().errors.emailNotConfirmed, { autoClose: false });
         } else {
             // The backend returned an unsuccessful response code.
             // The response body may contain clues as to what went wrong.

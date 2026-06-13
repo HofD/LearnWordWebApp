@@ -37,7 +37,11 @@ export class LoginComponent {
       return;
     }
 
-    await this.authService.login(this.loginForm.controls['userEmail'].value, this.loginForm.controls['userPassword'].value);
+    try {
+      await this.authService.login(this.loginForm.controls['userEmail'].value, this.loginForm.controls['userPassword'].value);
+    } catch {
+      return;
+    }
 
     if (this.tokenStorageService.getToken() != null) {
       this.authService.sendAuthStateChangeNotification(true);

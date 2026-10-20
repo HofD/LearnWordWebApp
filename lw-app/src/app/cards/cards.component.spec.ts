@@ -59,4 +59,13 @@ describe('CardsComponent', () => {
     expect(component.searchQuery).toBe('дом');
     expect(component.currentPage).toBe(1);
   });
+  it('keeps owner size choices and clamps paging when content shrinks', () => {
+    component.cards = Array.from({ length: 102 }, (_, index) => new Card(index + 1, 1, false, []));
+    component.currentPage = 5; component.setPageSize(50);
+    expect(component.currentPage).toBe(3); expect(component.rangeStart).toBe(101); expect(component.rangeEnd).toBe(102);
+    component.setPageSize(100); expect(component.currentPage).toBe(2);
+    component.removeCard(102); component.removeCard(101); expect(component.normalizedCurrentPage).toBe(1);
+    component.setPageSize(13); expect(component.pageSize).toBe(100);
+  });
+
 });

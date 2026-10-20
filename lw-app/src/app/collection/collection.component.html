@@ -5,10 +5,9 @@
         </div>
     </div>
     <div *ngIf="loaded" class="stack">
-        <div class="page-heading">
-            <h1>{{collection.name}}</h1>
-            <p>{{i18n.text().collection.intro}}</p>
-        </div>
+        <app-collection-heading [name]="collection.name" [intro]="i18n.text().collection.intro">
+            <app-collection-visibility [collection]="collection"></app-collection-visibility>
+        </app-collection-heading>
 
         <section class="content-card add-card-generator">
             <div class="add-card-heading">

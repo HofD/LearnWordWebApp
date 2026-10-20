@@ -173,3 +173,17 @@ a {
     width: 100%;
   }
 }
+
+/* Shared content presentation; keep Bootstrap button and navbar contrast intact. */
+.app-main a:not(.btn):not(.nav-link):not(.navbar-brand) { color:var(--lw-text); }
+.app-main a:not(.btn):not(.nav-link):not(.navbar-brand):visited { color:#495057; }
+.app-main a:not(.btn):not(.nav-link):not(.navbar-brand):hover { color:#000; text-decoration-thickness:2px; }
+.app-main a:not(.btn):not(.nav-link):not(.navbar-brand):focus-visible { color:#000;outline:2px solid #495057;outline-offset:3px;border-radius:2px; }
+.pager-search { display:flex;align-items:center;gap:.5rem;min-width:0;margin:0; }
+.pager-search input { width:min(16rem,40vw);min-width:0; }
+.pager-search button { flex-shrink:0; }
+.collection-word-row { padding-bottom:.75rem;border-bottom:1px solid var(--lw-border-soft); }
+.collection-word-row:last-child { padding-bottom:0;border-bottom:0; }
+@media(max-width:575.98px) { .pager-search { width:100%; }.pager-search input { width:100%; } }
+
+.collection-heading .heading-actions .btn { min-height:2.75rem;display:inline-flex;align-items:center;justify-content:center; }

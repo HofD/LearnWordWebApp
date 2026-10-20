@@ -1,3 +1,5 @@
+import { PagerComponent } from '../shared/ui/pager.component';
+import { CardFrameComponent } from '../shared/ui/card-frame.component';
 import { Component, Input } from '@angular/core';
 import { Card } from '../card/card';
 import { CardComponent } from '../card/card.component';
@@ -8,7 +10,7 @@ import { I18nService } from '../i18n/i18n.service';
 @Component({
   selector: 'app-cards',
   standalone: true,
-  imports: [CardComponent, NgFor, NgIf],
+  imports: [PagerComponent, CardFrameComponent, CardComponent, NgFor, NgIf],
   templateUrl: './cards.component.html',
   styleUrl: './cards.component.css'
 })
@@ -134,6 +136,11 @@ export class CardsComponent {
       return;
     }
 
+    this.setPageSize(value);
+  }
+
+  setPageSize(value: number) {
+    if (!this.pageSizeOptions.includes(value)) return;
     this.pageSize = value;
     this.keepCurrentPageInRange();
   }

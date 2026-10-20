@@ -1,0 +1,20 @@
+<div class="page-shell stack">
+  <div class="page-heading"><h1>{{i18n.text().social.explore}}</h1><p>{{i18n.text().social.exploreIntro}}</p></div>
+  <app-pager [total]="result?.totalCount ?? 0" [page]="page" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [busy]="loading" (pageChange)="load($event)" (pageSizeChange)="changePageSize($event)">
+    <form class="pager-search" (ngSubmit)="submitSearch()">
+      <label for="exploreSearch" class="visually-hidden">{{i18n.text().social.search}}</label>
+      <input id="exploreSearch" type="search" name="search" class="form-control form-control-sm" maxlength="200" [(ngModel)]="search" [placeholder]="i18n.text().social.search" [disabled]="loading">
+      <button type="submit" class="btn btn-outline-secondary btn-sm" [disabled]="loading">{{i18n.text().social.searchAction}}</button>
+    </form>
+  </app-pager>
+  <p *ngIf="loading" role="status">{{i18n.text().common.loading}}</p>
+  <div *ngIf="error" class="content-card" role="alert"><p>{{i18n.text().social.error}}</p><button class="btn btn-outline-dark" (click)="load()">{{i18n.text().social.retry}}</button></div>
+  <ng-container *ngIf="!loading && !error && result">
+    <p *ngIf="result.items.length === 0" role="status">{{i18n.text().social.empty}}</p>
+    <article *ngFor="let collection of result.items" class="content-card stack-sm">
+      <h2 class="h5 text-break"><a [routerLink]="['/shared/collections', collection.publicId]">{{collection.name}}</a></h2>
+      <p class="mb-0 text-break">{{i18n.text().social.by}}: {{collection.author}}</p>
+      <p class="mb-0">{{i18n.text().social.count}}: {{collection.cardsCount}}</p>
+    </article>
+  </ng-container>
+</div>

@@ -1,0 +1,34 @@
+<div class="page-shell stack">
+  <a routerLink="/explore">{{i18n.text().social.back}}</a>
+  <app-collection-heading *ngIf="details && !unavailable" [name]="details.name" [intro]="i18n.text().social.sharedIntro">
+    <p headingMeta class="small text-muted text-break">{{i18n.text().social.by}}: {{details.author}} · {{i18n.text().social.count}}: {{details.cardsCount}}</p>
+    <a *ngIf="details.isOwner && details.ownerCollectionId" class="btn btn-dark btn-sm" [routerLink]="['/collections', details.ownerCollectionId]">{{i18n.text().social.edit}}</a>
+    <button *ngIf="!details.isOwner && !forkedId" type="button" class="btn btn-dark btn-sm" [disabled]="forking || searchBusy || error" (click)="fork()">{{forking ? i18n.text().social.forking : i18n.text().social.fork}}</button>
+    <a *ngIf="forkedId" class="btn btn-dark btn-sm" [routerLink]="['/collections', forkedId]">{{i18n.text().social.openCopy}}</a>
+  </app-collection-heading>
+  <p *ngIf="forkError" class="text-danger small mb-0" role="alert">{{i18n.text().social.forkError}}</p>
+  <p *ngIf="forkedId" class="small mb-0" role="status">{{i18n.text().social.forkSuccess}}</p>
+  <app-pager *ngIf="!unavailable" [total]="error ? 0 : (details?.totalCount ?? 0)" [page]="page" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" [busy]="searchBusy || forking" (pageChange)="load($event)" (pageSizeChange)="changePageSize($event)">
+    <div pagerSummary *ngIf="activeSearch && details && !searchBusy && !error" class="shared-search-count">{{i18n.text().cards.found}} {{details.totalCount}} {{i18n.text().cards.of}} {{details.cardsCount}}</div>
+    <label class="shared-card-search">
+      <span class="visually-hidden">{{i18n.text().cards.search}}</span>
+      <input id="sharedSearch" type="search" class="form-control form-control-sm" maxlength="200" [value]="search" (input)="onSearchInput($any($event.target).value)" [placeholder]="i18n.text().cards.searchPlaceholder" [attr.aria-label]="i18n.text().cards.search" [disabled]="forking">
+    </label>
+  </app-pager>
+  <p *ngIf="searchBusy" role="status">{{i18n.text().common.loading}}</p>
+  <p *ngIf="unavailable" role="alert">{{i18n.text().social.unavailable}}</p>
+  <div *ngIf="error" role="alert"><p>{{i18n.text().social.error}}</p><button class="btn btn-outline-dark" (click)="load()">{{i18n.text().social.retry}}</button></div>
+  <ng-container *ngIf="details && !searchBusy && !error && !unavailable">
+    <section *ngIf="activeSearch && details.totalCount === 0" class="content-card shared-search-empty">
+      <h2 class="h6 mb-1">{{i18n.text().cards.searchEmptyTitle}}</h2>
+      <p class="text-muted mb-2">{{i18n.text().cards.searchEmptyIntro}}</p>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="clearSearch()">{{i18n.text().social.clearSearch}}</button>
+    </section>
+    <p *ngIf="!activeSearch && details.cardsCount === 0" role="status">{{i18n.text().social.noCards}}</p>
+    <app-card-frame *ngFor="let card of details.cards" [wordCount]="card.words.length">
+      <div class="stack-sm">
+        <div *ngFor="let word of card.words" class="collection-word-row"><app-word-display [word]="word"></app-word-display></div>
+      </div>
+    </app-card-frame>
+  </ng-container>
+</div>

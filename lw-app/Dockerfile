@@ -5,7 +5,7 @@ COPY package*.json .
 RUN npm ci --force
 COPY . .
 ARG ANGULAR_CONFIGURATION=production
-RUN npm run build -- --configuration ${ANGULAR_CONFIGURATION}
+RUN npm run build -- --configuration ${ANGULAR_CONFIGURATION} --output-hashing=all
 # STAGE 2: Run an App #
 FROM nginx:1.27-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf

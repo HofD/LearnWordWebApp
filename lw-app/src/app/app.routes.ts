@@ -1,3 +1,5 @@
+import { ExploreComponent } from './social/explore.component';
+import { SharedCollectionComponent } from './social/shared-collection.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
@@ -18,6 +20,8 @@ export const routes: Routes = [
     { path: 'confirm', component: EmailConfirmComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'reset-password', component: ResetPasswordComponent },
+    { path: 'explore', component: ExploreComponent, canActivate: [authGuard] },
+    { path: 'shared/collections/:publicId', component: SharedCollectionComponent, canActivate: [authGuard] },
     { path: 'collections', component: CollectionsComponent, canActivate: [authGuard] },
     { path: 'collections/:id', component: CollectionComponent, canActivate: [authGuard] },
     { path: 'review/:collectionId', component: ReviewComponent, canActivate: [authGuard] },

@@ -1,3 +1,5 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CollectionsComponent } from './collections.component';
@@ -8,7 +10,8 @@ describe('CollectionsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CollectionsComponent]
+      imports: [CollectionsComponent, HttpClientTestingModule],
+      providers: [provideRouter([])]
     })
     .compileComponents();
     

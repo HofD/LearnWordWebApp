@@ -1,3 +1,5 @@
+import { CollectionHeadingComponent } from '../shared/ui/collection-heading.component';
+import { CollectionVisibilityComponent } from '../social/collection-visibility.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiError, CollectionHttpService, GeneratedCardSuggestion } from '../collections/collection.http.service';
@@ -17,7 +19,7 @@ import { AnalyticsEvents } from '../shared/services/analytics-events';
 @Component({
   selector: 'app-collection',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, CardsComponent, CardComponent],
+  imports: [CollectionHeadingComponent, CollectionVisibilityComponent, NgIf, NgFor, FormsModule, CardsComponent, CardComponent],
   templateUrl: './collection.component.html',
   styleUrl: './collection.component.css'
 })

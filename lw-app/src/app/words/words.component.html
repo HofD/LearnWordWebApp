@@ -1,19 +1,14 @@
 <div class="stack-sm w-100">
     <div *ngIf="card" class="stack-sm">
-        <div *ngFor="let word of card?.words" class="word-row">
-            <div *ngIf="word.id === null || editingWordId !== word.id" class="word-display">
-                <div class="word-main">
-                    <div class="fs-5 fw-semibold">{{word.value}}</div>
-                    <div *ngIf="word.transcription" class="text-muted small">{{word.transcription}}</div>
-                    <div class="text-muted">{{word.translation}}</div>
-                </div>
+        <div *ngFor="let word of card?.words" class="collection-word-row">
+            <app-word-display *ngIf="word.id === null || editingWordId !== word.id" [word]="word">
                 <div *ngIf="word.id !== null" class="word-actions" [attr.aria-label]="i18n.text().words.actions">
                     <button type="button" class="word-icon-button word-edit-button" (click)="startEdit(word)" [attr.aria-label]="i18n.text().words.editWord" [title]="i18n.text().words.editWord">
                         <img src="assets/icons/pencil.svg" alt="" aria-hidden="true">
                     </button>
                     <button type="button" class="word-icon-button word-delete-button" data-bs-toggle="modal" [attr.data-bs-target]="'#deleteWordModal' + card.id + '-' + word.id" [attr.aria-label]="i18n.text().words.deleteWord" [title]="i18n.text().words.deleteWord"></button>
                 </div>
-            </div>
+            </app-word-display>
 
             <form *ngIf="word.id !== null && editingWordId === word.id" class="word-edit-form stack-sm" [formGroup]="editWordForm">
                 <div>

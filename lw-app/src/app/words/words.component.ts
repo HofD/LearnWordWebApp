@@ -1,3 +1,4 @@
+import { WordDisplayComponent } from '../shared/ui/word-display.component';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Word } from '../card/word';
 import { Card } from '../card/card';
@@ -12,7 +13,7 @@ import { AnalyticsEvents } from '../shared/services/analytics-events';
 @Component({
   selector: 'app-words',
   standalone: true,
-  imports: [NgIf, NgFor, FormsModule, ReactiveFormsModule],
+  imports: [WordDisplayComponent, NgIf, NgFor, FormsModule, ReactiveFormsModule],
   templateUrl: './words.component.html',
   styleUrl: './words.component.css'
 })

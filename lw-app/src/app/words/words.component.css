@@ -1,26 +1,3 @@
-.word-row {
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--lw-border-soft);
-}
-
-.word-row:last-child {
-    padding-bottom: 0;
-    border-bottom: 0;
-}
-
-.word-display {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    align-items: flex-start;
-}
-
-.word-main {
-    flex: 1 1 auto;
-    min-width: 0;
-    overflow-wrap: anywhere;
-}
-
 .word-actions {
     display: flex;
     gap: 0.25rem;

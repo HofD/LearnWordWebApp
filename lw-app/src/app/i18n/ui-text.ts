@@ -220,6 +220,19 @@ export const uiText = {
       add: 'Add',
       addHint: 'Fill in text and translation to add the word.'
     },
+    coach: {
+      title: 'AI Coach', loading: 'Looking for useful extra practice…',
+      unavailable: 'AI Coach is unavailable right now. Your session is complete.',
+      advisory: 'Optional extra practice. Your review schedule and learning progress stay separate.',
+      explain: 'Take a closer look', practice: 'Extra practice', notNow: 'Not now', resume: 'Continue',
+      done: 'Done', back: 'Back to suggestions', continue: 'Continue',
+      actionError: 'Could not save this action. Please try again.',
+      answerError: 'Your answer could not be confirmed. Send the same answer again to save it safely.',
+      progress: 'Exercises answered', choose: 'Choose an answer', correct: 'Correct', incorrect: 'Not quite',
+      practiceComplete: 'Practice complete.', correctCount: 'correct', completed: 'Completed',
+      stale: 'This card has changed. This suggestion is no longer current.',
+      contentUnavailable: 'This suggestion is no longer available.'
+    },
     learning: {
       title: "Today's learning",
       due: 'Due', weak: 'Need practice', new: 'New', strong: 'Strong', learning: 'Learning',
@@ -474,6 +487,19 @@ export const uiText = {
       transcriptionPlaceholder: '[muːn]',
       add: 'Добавить',
       addHint: 'Заполните текст и перевод, чтобы добавить слово.'
+    },
+    coach: {
+      title: 'AI-помощник', loading: 'Ищем полезную дополнительную практику…',
+      unavailable: 'AI-помощник сейчас недоступен. Ваше занятие завершено.',
+      advisory: 'Дополнительная практика по желанию. Расписание повторений и прогресс обучения учитываются отдельно.',
+      explain: 'Разобрать', practice: 'Дополнительная практика', notNow: 'Не сейчас', resume: 'Продолжить',
+      done: 'Готово', back: 'Назад к предложениям', continue: 'Продолжить',
+      actionError: 'Не удалось сохранить действие. Попробуйте снова.',
+      answerError: 'Ответ не удалось подтвердить. Отправьте тот же ответ снова, чтобы безопасно его сохранить.',
+      progress: 'Завершено упражнений', choose: 'Выберите ответ', correct: 'Верно', incorrect: 'Не совсем',
+      practiceComplete: 'Практика завершена.', correctCount: 'верно', completed: 'Завершено',
+      stale: 'Карточка изменилась. Это предложение больше не актуально.',
+      contentUnavailable: 'Это предложение больше недоступно.'
     },
     learning: {
       title: 'Сегодняшнее занятие',

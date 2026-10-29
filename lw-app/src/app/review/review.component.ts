@@ -6,12 +6,13 @@ import { ReviewHttpService, ReviewOutcome, ReviewTelemetry } from './review.http
 import { I18nService } from '../i18n/i18n.service';
 import { AnalyticsService } from '../shared/services/analytics.service';
 import { AnalyticsEvents } from '../shared/services/analytics-events';
+import { CoachComponent } from '../coach/coach.component';
 import { LearningCard, LearningHttpService, LearningSession } from '../learning/learning.http.service';
 
 @Component({
   selector: 'app-review',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, CoachComponent],
   templateUrl: './review.component.html',
   styleUrl: './review.component.css'
 })

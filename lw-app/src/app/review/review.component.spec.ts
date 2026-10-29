@@ -5,6 +5,8 @@ import { LearningHttpService, LearningSession } from '../learning/learning.http.
 import { I18nService } from '../i18n/i18n.service';
 import { provideRouter } from '@angular/router';
 
+import { CoachAnalysis } from '../coach/coach.models';
+import { CoachHttpService } from '../coach/coach.http.service';
 import { ReviewComponent } from './review.component';
 import { ReviewHttpService, ReviewOutcome } from './review.http.service';
 
@@ -32,6 +34,7 @@ describe('ReviewComponent', () => {
       imports: [ReviewComponent],
       providers: [
         provideRouter([]),
+        { provide: CoachHttpService, useValue: { analyze: () => of({ status: 'Completed', decision: 'None', interventions: [], observations: [] }) } },
         { provide: ReviewHttpService, useValue: reviewService },
         { provide: LearningHttpService, useValue: {} },
         { provide: ActivatedRoute, useValue: { snapshot: { params: { collectionId: '7' } } } }
@@ -120,6 +123,7 @@ describe('ReviewComponent learning sessions', () => {
     await TestBed.configureTestingModule({
       imports: [ReviewComponent], providers: [
         provideRouter([]),
+        { provide: CoachHttpService, useValue: { analyze: () => of({ status: 'Completed', decision: 'None', interventions: [], observations: [] }) } },
         { provide: ReviewHttpService, useValue: review },
         { provide: LearningHttpService, useValue: learning },
         { provide: ActivatedRoute, useValue: { snapshot: { params: { collectionId: '7' }, queryParams: { today: 'true' } } } }
@@ -157,6 +161,21 @@ describe('ReviewComponent learning sessions', () => {
     expect(fixture.nativeElement.textContent).toContain('Need more work: 1');
     component.completeSession();
     expect(learning.complete.calls.count()).toBe(1);
+  });
+
+  it('keeps the deterministic completion visible while Coach is loading or fails', () => {
+    const analysis = new Subject<CoachAnalysis>();
+    const coach = TestBed.inject(CoachHttpService);
+    spyOn(coach, 'analyze').and.returnValue(analysis);
+    create(); component.submitReview('Good'); component.submitReview('Again'); fixture.detectChanges();
+    expect(component.finished).toBeTrue();
+    expect(fixture.nativeElement.textContent).toContain('Session complete');
+    expect(fixture.nativeElement.textContent).toContain('Looking for useful extra practice');
+    analysis.error(new Error('provider unavailable')); fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('AI Coach is unavailable');
+    expect(fixture.nativeElement.textContent).toContain('Reviewed: 2');
+    expect(learning.complete.calls.count()).toBe(1);
+    expect(review.reviewCard.calls.count()).toBe(2);
   });
 
   it('blocks duplicate clicks and retries an ambiguous answer using exactly the same payload', () => {

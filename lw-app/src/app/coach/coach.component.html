@@ -1,0 +1,64 @@
+<section *ngIf="visible" class="content-card coach stack" aria-labelledby="coach-title" [attr.aria-busy]="loading || busy">
+  <h2 #coachHeading tabindex="-1" id="coach-title" class="h5 mb-0">{{i18n.text().coach.title}}</h2>
+  <p *ngIf="loading" class="text-muted mb-0" role="status">{{i18n.text().coach.loading}}</p>
+  <div *ngIf="analysisError" class="stack-sm" role="status">
+    <p class="text-muted mb-0">{{i18n.text().coach.unavailable}}</p>
+    <div><button type="button" class="btn btn-outline-dark" (click)="analyze()" [disabled]="loading">{{i18n.text().learning.retry}}</button></div>
+  </div>
+  <ng-container *ngIf="!loading && !analysisError && analysis?.status === 'Completed'">
+    <p *ngIf="analysis?.summary" class="mb-0">{{analysis?.summary}}</p>
+    <p class="text-muted small mb-0">{{i18n.text().coach.advisory}}</p>
+    <div *ngIf="actionError" class="stack-sm" role="alert">
+      <p class="text-danger mb-0">{{pendingAnswer ? i18n.text().coach.answerError : i18n.text().coach.actionError}}</p>
+      <div *ngIf="pendingAnswer"><button type="button" class="btn btn-outline-dark" [disabled]="busy" (click)="retryAnswer()">{{i18n.text().learning.retryAnswer}}</button></div>
+    </div>
+    <ng-container *ngIf="active as item; else suggestions">
+      <div class="coach-panel stack-sm">
+        <h3 #activeHeading tabindex="-1" class="h6 mb-0">{{item.title}}</h3>
+        <ng-container *ngIf="item.type !== 'ExtraPractice'">
+          <ng-container *ngIf="item.lesson as lesson">
+            <p class="mb-0 coach-prose">{{lesson.explanation}}</p>
+            <div *ngFor="let example of lesson.examples" class="coach-example">
+              <p class="mb-0">{{example.source}}</p><p class="text-muted mb-0">{{example.target}}</p>
+            </div>
+            <ul *ngIf="lesson.tips.length" class="mb-0"><li *ngFor="let tip of lesson.tips">{{tip}}</li></ul>
+          </ng-container>
+          <div class="coach-actions"><button type="button" class="btn btn-dark" [disabled]="busy" (click)="complete(item)">{{i18n.text().coach.done}}</button>
+            <button type="button" class="btn btn-outline-dark" [disabled]="busy" (click)="close()">{{i18n.text().coach.back}}</button></div>
+        </ng-container>
+        <ng-container *ngIf="item.type === 'ExtraPractice'">
+          <p class="text-muted small mb-0" role="status">{{i18n.text().coach.progress}}: {{answeredCount(item)}} / {{item.exercises.length}}</p>
+          <ng-container *ngIf="exercise as current">
+            <p class="mb-0">{{current.prompt}}</p>
+            <div *ngIf="!feedback" class="coach-options" [attr.aria-label]="i18n.text().coach.choose">
+              <button *ngFor="let option of current.options" type="button" class="btn btn-outline-dark text-start" [disabled]="busy || !!pendingAnswer" (click)="choose(option.id)">{{option.text}}</button>
+            </div>
+          </ng-container>
+          <div *ngIf="feedback" class="stack-sm" role="status">
+            <p class="mb-0" [class.text-success]="feedback.correct">{{feedback.correct ? i18n.text().coach.correct : i18n.text().coach.incorrect}}</p>
+            <p *ngIf="feedback.explanation" class="mb-0">{{feedback.explanation}}</p>
+            <div><button type="button" class="btn btn-dark" (click)="nextExercise()">{{i18n.text().coach.continue}}</button></div>
+          </div>
+          <div *ngIf="!exercise && item.status === 'Completed'" class="stack-sm" role="status">
+            <p class="mb-0">{{i18n.text().coach.practiceComplete}} {{correctCount(item)}} / {{item.exercises.length}} {{i18n.text().coach.correctCount}}</p>
+            <div><button type="button" class="btn btn-dark" (click)="close()">{{i18n.text().coach.done}}</button></div>
+          </div>
+          <div *ngIf="!feedback && item.status !== 'Completed'"><button type="button" class="btn btn-link px-0" [disabled]="busy || !!pendingAnswer" (click)="close()">{{i18n.text().coach.back}}</button></div>
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-template #suggestions>
+      <article *ngFor="let item of interventions" class="coach-panel stack-sm">
+        <h3 class="h6 mb-0">{{item.title}}</h3>
+        <p *ngIf="observation(item)" class="mb-0">{{observation(item)}}</p>
+        <div *ngIf="item.status === 'Suggested' || item.status === 'Accepted'" class="coach-actions">
+          <button type="button" class="btn btn-dark" [disabled]="busy" (click)="open(item)">{{item.status === 'Accepted' ? i18n.text().coach.resume : item.type === 'ExtraPractice' ? i18n.text().coach.practice : i18n.text().coach.explain}}</button>
+          <button type="button" class="btn btn-outline-dark" [disabled]="busy" (click)="dismiss(item)">{{i18n.text().coach.notNow}}</button>
+        </div>
+        <p *ngIf="item.status === 'Completed'" class="text-muted small mb-0">{{i18n.text().coach.completed}}<span *ngIf="item.type === 'ExtraPractice'"> · {{correctCount(item)}} / {{item.exercises.length}} {{i18n.text().coach.correctCount}}</span></p>
+        <p *ngIf="item.status === 'Stale'" class="text-muted small mb-0">{{i18n.text().coach.stale}}</p>
+        <p *ngIf="item.status === 'Unavailable'" class="text-muted small mb-0">{{i18n.text().coach.contentUnavailable}}</p>
+      </article>
+    </ng-template>
+  </ng-container>
+</section>

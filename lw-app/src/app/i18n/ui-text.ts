@@ -220,6 +220,19 @@ export const uiText = {
       add: 'Add',
       addHint: 'Fill in text and translation to add the word.'
     },
+    learning: {
+      title: "Today's learning",
+      due: 'Due', weak: 'Need practice', new: 'New', strong: 'Strong', learning: 'Learning',
+      minutes: 'min', start: 'Start', empty: 'Nothing planned for today. Your cards will return when due.',
+      summary: 'Your knowledge', studied: 'Cards studied', attempts: 'Reviews', recent: 'Reviews in the last 7 days',
+      loadError: 'Could not load your learning plan.', retry: 'Try again',
+      reviewError: 'The answer could not be confirmed. Retry to save the same answer safely.',
+      retryAnswer: 'Retry answer', loadReviewError: 'Could not start this review. Please try again.',
+      completed: 'Session complete', reviewed: 'Reviewed', successful: 'Successful', needsWork: 'Need more work',
+      completing: 'Saving session summary…', completeError: 'Your answers are saved, but the session could not be closed.',
+      retryComplete: 'Finish session', backToCollection: 'Back to collection',
+      progress: 'Completed cards', refreshing: 'Loading learning plan…'
+    },
     review: {
       title: 'Review',
       intro: 'Reveal each translation, then choose how the answer felt.',
@@ -461,6 +474,19 @@ export const uiText = {
       transcriptionPlaceholder: '[muːn]',
       add: 'Добавить',
       addHint: 'Заполните текст и перевод, чтобы добавить слово.'
+    },
+    learning: {
+      title: 'Сегодняшнее занятие',
+      due: 'Пора повторить', weak: 'Нужна практика', new: 'Новые', strong: 'Уверенные', learning: 'В изучении',
+      minutes: 'мин', start: 'Начать', empty: 'На сегодня всё. Карточки вернутся, когда придёт срок повторения.',
+      summary: 'Ваши знания', studied: 'Карточек изучено', attempts: 'Повторов', recent: 'Повторов за 7 дней',
+      loadError: 'Не удалось загрузить план занятия.', retry: 'Попробовать снова',
+      reviewError: 'Ответ не удалось подтвердить. Повторите отправку, чтобы безопасно сохранить тот же ответ.',
+      retryAnswer: 'Отправить ответ снова', loadReviewError: 'Не удалось начать повторение. Попробуйте снова.',
+      completed: 'Занятие завершено', reviewed: 'Повторено', successful: 'Успешно', needsWork: 'Нужно закрепить',
+      completing: 'Сохраняем итог занятия…', completeError: 'Ответы сохранены, но не удалось закрыть занятие.',
+      retryComplete: 'Завершить занятие', backToCollection: 'Назад к коллекции',
+      progress: 'Завершено карточек', refreshing: 'Загружаем план занятия…'
     },
     review: {
       title: 'Повторение',

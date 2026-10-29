@@ -1,3 +1,4 @@
+import { TodayLearningComponent } from '../learning/today-learning.component';
 import { CollectionHeadingComponent } from '../shared/ui/collection-heading.component';
 import { CollectionVisibilityComponent } from '../social/collection-visibility.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -19,7 +20,7 @@ import { AnalyticsEvents } from '../shared/services/analytics-events';
 @Component({
   selector: 'app-collection',
   standalone: true,
-  imports: [CollectionHeadingComponent, CollectionVisibilityComponent, NgIf, NgFor, FormsModule, CardsComponent, CardComponent],
+  imports: [TodayLearningComponent, CollectionHeadingComponent, CollectionVisibilityComponent, NgIf, NgFor, FormsModule, CardsComponent, CardComponent],
   templateUrl: './collection.component.html',
   styleUrl: './collection.component.css'
 })
@@ -28,6 +29,7 @@ export class CollectionComponent implements OnInit {
   @ViewChild(CardsComponent) cardsComponent?: CardsComponent;
   collection!: Collection;
   loaded = false;
+  learningRevision = 0;
   addPanelOpen = false;
   addMode: 'ai' | 'manual' = 'ai';
   sourceText = '';

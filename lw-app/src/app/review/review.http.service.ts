@@ -6,6 +6,12 @@ import { catchError, throwError } from "rxjs";
 
 export type ReviewOutcome = 'Again' | 'Hard' | 'Good' | 'Easy';
 
+export interface ReviewTelemetry {
+    sessionId?: string;
+    responseTimeMs?: number;
+    requestId?: string;
+}
+
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -25,10 +31,10 @@ export class ReviewHttpService {
         );
     }
 
-    public reviewCard(cardId: number, outcome: ReviewOutcome) {
+    public reviewCard(cardId: number, outcome: ReviewOutcome, telemetry: ReviewTelemetry = {}) {
         return this.http.post(
             `${environment.apiUrl}/api/review/cards/${cardId}/review`,
-            { outcome },
+            { outcome, ...telemetry },
             httpOptions
         ).pipe(
             catchError((error) => this.handleError(error))

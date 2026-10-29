@@ -1,6 +1,6 @@
 import { PagerComponent } from '../shared/ui/pager.component';
 import { CardFrameComponent } from '../shared/ui/card-frame.component';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Card } from '../card/card';
 import { CardComponent } from '../card/card.component';
 import { NgFor, NgIf } from '@angular/common';
@@ -17,6 +17,7 @@ import { I18nService } from '../i18n/i18n.service';
 export class CardsComponent {
   @Input() cards: Array<Card> = new Array<Card>;
   @Input() collectionId!: number;
+  @Output() onLearningChanged = new EventEmitter<void>();
   pageSizeOptions = [25, 50, 100];
   pageSize = 25;
   currentPage = 1;

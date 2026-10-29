@@ -16,6 +16,7 @@ export class CardComponent implements OnInit {
   @Input() card?: Card | null;
   @Output() onCardAdded = new EventEmitter<Card>();
   @Output() onCardRemoved = new EventEmitter<number>();
+  @Output() onLearningChanged = new EventEmitter<void>();
 
   ngOnInit(): void {
     if (this.card === null) {

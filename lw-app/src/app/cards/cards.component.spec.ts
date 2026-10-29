@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { WordsComponent } from '../words/words.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -66,6 +68,15 @@ describe('CardsComponent', () => {
     component.setPageSize(100); expect(component.currentPage).toBe(2);
     component.removeCard(102); component.removeCard(101); expect(component.normalizedCurrentPage).toBe(1);
     component.setPageSize(13); expect(component.pageSize).toBe(100);
+  });
+
+  it('propagates persisted word changes through the card to refresh collection learning', () => {
+    component.cards = [new Card(1, 1, false, [new Word(1, 'Moon', '', 'Луна')])];
+    fixture.detectChanges();
+    spyOn(component.onLearningChanged, 'emit');
+    const words = fixture.debugElement.query(By.directive(WordsComponent)).componentInstance as WordsComponent;
+    words.onLearningChanged.emit();
+    expect(component.onLearningChanged.emit).toHaveBeenCalledTimes(1);
   });
 
 });

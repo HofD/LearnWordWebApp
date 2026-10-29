@@ -38,10 +38,12 @@ describe('WordsComponent', () => {
       translation: 'Луна'
     });
     spyOn(wordHttp, 'add').and.returnValue(of(savedWord));
+    spyOn(component.onLearningChanged, 'emit');
 
     component.addWord();
 
     expect(component.card.words).toEqual([savedWord]);
+    expect(component.onLearningChanged.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should update a word after saving edit', () => {
@@ -55,11 +57,13 @@ describe('WordsComponent', () => {
       translation: 'Солнце'
     });
     spyOn(wordHttp, 'update').and.returnValue(of(updatedWord));
+    spyOn(component.onLearningChanged, 'emit');
 
     component.saveEdit(currentWord);
 
     expect(component.card.words[0]).toEqual(updatedWord);
     expect(component.editingWordId).toBeNull();
+    expect(component.onLearningChanged.emit).toHaveBeenCalledTimes(1);
   });
 
   it('should render compact icon-only word actions with accessible labels', () => {
@@ -101,4 +105,17 @@ describe('WordsComponent', () => {
 
     expect(component.onCardRemoved.emit).toHaveBeenCalledWith(4);
   });
+  it('refreshes learner state after removing one word without removing its card', () => {
+    const first = new Word(10, 'Moon', '', 'Луна');
+    const second = new Word(11, 'Sun', '', 'Солнце');
+    component.card = new Card(4, 1, false, [first, second]);
+    spyOn(wordHttp, 'delete').and.returnValue(of({}));
+    spyOn(component.onLearningChanged, 'emit');
+    spyOn(component.onCardRemoved, 'emit');
+    component.deleteWord(first);
+    expect(component.card.words).toEqual([second]);
+    expect(component.onLearningChanged.emit).toHaveBeenCalledTimes(1);
+    expect(component.onCardRemoved.emit).not.toHaveBeenCalled();
+  });
+
 });

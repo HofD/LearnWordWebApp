@@ -1,0 +1,3 @@
+.learning-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.learning-counts { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; }
+.learning-summary { border-top: 1px solid var(--lw-border-soft); padding-top: .75rem; display: grid; gap: .5rem; }

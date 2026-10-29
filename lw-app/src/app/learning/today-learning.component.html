@@ -1,0 +1,29 @@
+<section class="content-card stack-sm" aria-labelledby="todayLearningTitle">
+  <div class="learning-heading">
+    <h2 id="todayLearningTitle" class="h5 mb-0">{{i18n.text().learning.title}}</h2>
+    <a *ngIf="plan && plan.totalCount > 0" class="btn btn-dark" [routerLink]="['/review', collectionId]" [queryParams]="{today: true}">{{i18n.text().learning.start}}</a>
+  </div>
+  <p *ngIf="loading" role="status" class="text-muted mb-0">{{i18n.text().learning.refreshing}}</p>
+  <div *ngIf="error" role="alert" class="stack-sm">
+    <p class="text-danger mb-0">{{i18n.text().learning.loadError}}</p>
+    <div><button type="button" class="btn btn-outline-dark btn-sm" (click)="refresh()">{{i18n.text().learning.retry}}</button></div>
+  </div>
+  <ng-container *ngIf="plan">
+    <div *ngIf="plan.totalCount > 0" class="learning-counts">
+      <span>{{plan.groups.due}} {{i18n.text().learning.due}}</span>
+      <span>{{plan.groups.weak}} {{i18n.text().learning.weak}}</span>
+      <span>{{plan.groups.new}} {{i18n.text().learning.new}}</span>
+      <span class="text-muted">~{{plan.estimatedMinutes}} {{i18n.text().learning.minutes}}</span>
+    </div>
+    <p *ngIf="plan.totalCount === 0" class="text-muted mb-0">{{i18n.text().learning.empty}}</p>
+  </ng-container>
+  <div *ngIf="summary" class="learning-summary" [attr.aria-label]="i18n.text().learning.summary">
+    <div class="learning-counts">
+      <span>{{i18n.text().learning.strong}} <strong>{{summary.strong}}</strong></span>
+      <span>{{i18n.text().learning.learning}} <strong>{{summary.learning}}</strong></span>
+      <span>{{i18n.text().learning.weak}} <strong>{{summary.weak}}</strong></span>
+      <span>{{i18n.text().learning.new}} <strong>{{summary.new}}</strong></span>
+    </div>
+    <p class="text-muted small mb-0">{{i18n.text().learning.studied}}: {{summary.totalCardsStudied}} · {{i18n.text().learning.recent}}: {{summary.recentAttemptsCount}}</p>
+  </div>
+</section>

@@ -10,15 +10,21 @@
         </div>
     </div>
 
-    <div *ngIf="loaded">
+    <div *ngIf="loadError" class="content-card stack-sm" role="alert">
+        <p class="text-danger mb-0">{{i18n.text().learning.loadReviewError}}</p>
+        <div><button type="button" class="btn btn-outline-dark" (click)="loadCards(collectionId)">{{i18n.text().learning.retry}}</button></div>
+    </div>
+
+    <div *ngIf="loaded && !loadError">
         <div *ngIf="currentCard && currentCard.words && currentCard.words.length > 0" class="content-card review-card stack">
+                <p class="text-muted small mb-0" aria-live="polite">{{i18n.text().learning.progress}}: {{currentIndex}} / {{cards.length}}</p>
                 <div class="progress">
                     <div class="progress-bar" role="progressbar" 
-                         [style.width.%]="(currentIndex + 1) / cards.length * 100"
-                         [attr.aria-valuenow]="(currentIndex + 1) / cards.length * 100"
+                         [style.width.%]="currentIndex / cards.length * 100"
+                         [attr.aria-valuenow]="currentIndex / cards.length * 100"
                          aria-valuemin="0" 
                          aria-valuemax="100">
-                        {{currentIndex + 1}} / {{cards.length}}
+                        {{currentIndex}} / {{cards.length}}
                     </div>
                 </div>
 
@@ -64,39 +70,57 @@
                     <span *ngIf="currentCard.dueDate">{{i18n.text().review.due}} {{currentCard.dueDate | date:'shortDate'}}</span>
                 </div>
 
+                <div *ngIf="reviewError" class="stack-sm" role="alert">
+                    <p class="text-danger mb-0">{{i18n.text().learning.reviewError}}</p>
+                    <div><button type="button" class="btn btn-dark" [disabled]="submitting" (click)="retryAnswer()">{{i18n.text().learning.retryAnswer}}</button></div>
+                </div>
                 <div class="review-actions">
                     <button
                         type="button"
                         (click)="submitReview('Again')"
                         class="btn btn-outline-danger"
-                        [disabled]="submitting">
+                        [disabled]="submitting || reviewError">
                         {{i18n.text().review.again}}
                     </button>
                     <button
                         type="button"
                         (click)="submitReview('Hard')"
                         class="btn btn-warning"
-                        [disabled]="submitting">
+                        [disabled]="submitting || reviewError">
                         {{i18n.text().review.hard}}
                     </button>
                     <button
                         type="button"
                         (click)="submitReview('Good')"
                         class="btn btn-success"
-                        [disabled]="submitting">
+                        [disabled]="submitting || reviewError">
                         {{i18n.text().review.good}}
                     </button>
                     <button
                         type="button"
                         (click)="submitReview('Easy')"
                         class="btn btn-outline-success"
-                        [disabled]="submitting">
+                        [disabled]="submitting || reviewError">
                         {{i18n.text().review.easy}}
                     </button>
                 </div>
         </div>
 
-        <div *ngIf="!currentCard || !currentCard.words || currentCard.words.length === 0" class="empty-state text-center stack">
+        <div *ngIf="finished" class="content-card stack text-center" role="status">
+            <h2 class="h5 mb-0">{{i18n.text().learning.completed}}</h2>
+            <p class="mb-0">{{i18n.text().learning.reviewed}}: {{session ? session.completedCardsCount : currentIndex}}</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <span>{{i18n.text().learning.successful}}: {{successfulReviews}}</span>
+                <span>{{i18n.text().learning.needsWork}}: {{failedReviews}}</span>
+            </div>
+            <div><a [routerLink]="['/collections', collectionId]" class="btn btn-dark">{{i18n.text().learning.backToCollection}}</a></div>
+        </div>
+        <p *ngIf="completing" role="status" class="text-muted">{{i18n.text().learning.completing}}</p>
+        <div *ngIf="completionError" class="content-card stack-sm" role="alert">
+            <p class="text-danger mb-0">{{i18n.text().learning.completeError}}</p>
+            <div><button type="button" class="btn btn-dark" (click)="completeSession()">{{i18n.text().learning.retryComplete}}</button></div>
+        </div>
+        <div *ngIf="!finished && !completing && !completionError && (!currentCard || !currentCard.words || currentCard.words.length === 0)" class="empty-state text-center stack">
             <div>
                 <h2 class="h5">{{i18n.text().review.emptyTitle}}</h2>
                 <p class="text-muted mb-0">{{i18n.text().review.emptyIntro}}</p>

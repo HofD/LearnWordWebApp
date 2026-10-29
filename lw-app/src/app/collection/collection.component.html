@@ -9,6 +9,8 @@
             <app-collection-visibility [collection]="collection"></app-collection-visibility>
         </app-collection-heading>
 
+        <app-today-learning [collectionId]="collection.id" [revision]="collection.cards.length + learningRevision"></app-today-learning>
+
         <section class="content-card add-card-generator">
             <div class="add-card-heading">
                 <div class="add-card-title-row">
@@ -111,6 +113,6 @@
             </div>
         </section>
 
-        <app-cards [cards]="collection.cards" [collectionId]="collection.id"></app-cards>
+        <app-cards [cards]="collection.cards" [collectionId]="collection.id" (onLearningChanged)="learningRevision = learningRevision + 1"></app-cards>
     </div>
 </div>

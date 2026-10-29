@@ -46,6 +46,7 @@ export class WordsComponent implements OnInit {
 
   @Output() onCardAdded = new EventEmitter<Card>();
   @Output() onCardRemoved = new EventEmitter<number>();
+  @Output() onLearningChanged = new EventEmitter<void>();
 
   ngOnInit(): void {
 
@@ -129,6 +130,7 @@ export class WordsComponent implements OnInit {
       next: (data: any) => {
         this.replaceWord(word, data);
         this.cancelEdit();
+        this.onLearningChanged.emit();
       }
     });
   }
@@ -148,6 +150,7 @@ export class WordsComponent implements OnInit {
         }
 
         this.card!.words = this.card!.words.filter(existingWord => existingWord !== word);
+        this.onLearningChanged.emit();
         if (this.editingWordId === word.id) {
           this.cancelEdit();
         }
@@ -161,6 +164,7 @@ export class WordsComponent implements OnInit {
 
   addWordToCard(word: Word) {
     this.card?.words.push(word);
+    this.onLearningChanged.emit();
   }
 
   private replaceWord(currentWord: Word, updatedWord: Word) {

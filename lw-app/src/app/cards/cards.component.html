@@ -14,7 +14,7 @@
 
   <app-card-frame *ngFor="let card of visibleCards; trackBy: trackByCardId" [wordCount]="card.words.length">
     <button cardActions type="button" class="word-card-delete" data-bs-toggle="modal" data-bs-target="#deleteCardModal" (click)="openDeleteModal(card)" [attr.aria-label]="i18n.text().cards.deleteThisCard"></button>
-    <app-card [card]="card" [collectionId]="collectionId" (onCardRemoved)="removeCard($event)"></app-card>
+    <app-card [card]="card" [collectionId]="collectionId" (onCardRemoved)="removeCard($event)" (onLearningChanged)="onLearningChanged.emit()"></app-card>
   </app-card-frame>
 
   <div class="modal fade" id="deleteCardModal" tabindex="-1" aria-labelledby="deleteCardModalLabel" aria-hidden="true">

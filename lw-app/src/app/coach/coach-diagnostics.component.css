@@ -1,0 +1,8 @@
+.diagnostics { overflow-wrap: anywhere; min-width: 0; }
+.diagnostic-values { display: grid; grid-template-columns: minmax(0, 1fr); gap: .25rem; }
+.diagnostic-values dd { margin: 0 0 .5rem; }
+.diagnostic-actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-between; }
+.diagnostic-actions button { min-height: 44px; white-space: normal; }
+pre { max-width: 100%; max-height: 65vh; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; font-size: .8rem; }
+pre:focus { outline: 2px solid #0d6efd; outline-offset: 4px; }
+@media (min-width: 576px) { .diagnostic-values { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: .5rem 1rem; } }

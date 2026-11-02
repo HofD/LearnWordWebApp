@@ -115,6 +115,7 @@
             </div>
             <div><a [routerLink]="['/collections', collectionId]" class="btn btn-dark">{{i18n.text().learning.backToCollection}}</a></div>
         </div>
+        <div *ngIf="finished && session && coachDebug" class="mt-3"><a [routerLink]="['/coach-diagnostics', session.id]" class="btn btn-link">{{i18n.text().coachDiagnostics.open}}</a></div>
         <app-coach *ngIf="finished && session" [sessionId]="session.id"></app-coach>
         <p *ngIf="completing" role="status" class="text-muted">{{i18n.text().learning.completing}}</p>
         <div *ngIf="completionError" class="content-card stack-sm" role="alert">

@@ -220,6 +220,18 @@ export const uiText = {
       add: 'Add',
       addHint: 'Fill in text and translation to add the word.'
     },
+    coachDiagnostics: {
+      title: 'Coach diagnostics', open: 'View Coach diagnostics',
+      intro: 'Private, read-only evidence and generation metadata already available for this session.',
+      summary: 'Snapshot summary', captured: 'Captured during analysis',
+      capturedHelp: 'This snapshot records the evidence available to that analysis.',
+      reconstructed: 'Reconstructed now', reconstructedHelp: 'This older analysis has no stored snapshot. These diagnostics use the current data and may differ from the original analysis context.',
+      session: 'Session', capturedAt: 'Snapshot time', status: 'Analysis status', decision: 'Decision', decisionSource: 'Decision source',
+      providerCalled: 'Provider called', candidates: 'Candidate cards', yes: 'Yes', no: 'No', unknown: 'Unknown',
+      json: 'Full diagnostic JSON', download: 'Download JSON',
+      loadError: 'Diagnostics could not be loaded. The session may be unavailable or belong to another account.',
+      downloadError: 'Could not download the file. You can select and copy the JSON below.'
+    },
     coach: {
       title: 'AI Coach', loading: 'Looking for useful extra practice…',
       unavailable: 'AI Coach is unavailable right now. Your session is complete.',
@@ -487,6 +499,18 @@ export const uiText = {
       transcriptionPlaceholder: '[muːn]',
       add: 'Добавить',
       addHint: 'Заполните текст и перевод, чтобы добавить слово.'
+    },
+    coachDiagnostics: {
+      title: 'Диагностика AI-помощника', open: 'Открыть диагностику AI-помощника',
+      intro: 'Приватные данные об учебных фактах и генерации, уже доступные для этого занятия. Только для чтения.',
+      summary: 'Сводка снимка', captured: 'Сохранено при анализе',
+      capturedHelp: 'Снимок содержит учебные факты, доступные при этом анализе.',
+      reconstructed: 'Восстановлено сейчас', reconstructedHelp: 'У этого старого анализа нет сохранённого снимка. Диагностика использует текущие данные и может отличаться от исходного контекста анализа.',
+      session: 'Занятие', capturedAt: 'Время снимка', status: 'Статус анализа', decision: 'Решение', decisionSource: 'Источник решения',
+      providerCalled: 'Вызван AI-провайдер', candidates: 'Карточек-кандидатов', yes: 'Да', no: 'Нет', unknown: 'Неизвестно',
+      json: 'Полный JSON диагностики', download: 'Скачать JSON',
+      loadError: 'Не удалось загрузить диагностику. Занятие может быть недоступно или принадлежать другому аккаунту.',
+      downloadError: 'Не удалось скачать файл. Можно выделить и скопировать JSON ниже.'
     },
     coach: {
       title: 'AI-помощник', loading: 'Ищем полезную дополнительную практику…',

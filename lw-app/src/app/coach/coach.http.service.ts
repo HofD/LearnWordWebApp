@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { UiLanguage } from '../i18n/ui-text';
-import { CoachAnalysis, CoachAnswer, CoachIntervention } from './coach.models';
+import { CoachAnalysis, CoachAnswer, CoachDiagnostics, CoachIntervention } from './coach.models';
 
 @Injectable({ providedIn: 'root' })
 export class CoachHttpService {
@@ -14,6 +14,9 @@ export class CoachHttpService {
   }
   analysis(sessionId: string) {
     return this.http.get<CoachAnalysis>(`${this.base}/sessions/${sessionId}/coach-analysis`);
+  }
+  diagnostics(sessionId: string) {
+    return this.http.get<CoachDiagnostics>(`${this.base}/sessions/${encodeURIComponent(sessionId)}/coach-diagnostics`);
   }
   intervention(id: string) {
     return this.http.get<CoachIntervention>(`${this.base}/interventions/${id}`);

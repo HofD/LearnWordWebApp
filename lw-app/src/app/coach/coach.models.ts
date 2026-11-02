@@ -55,3 +55,16 @@ export interface CoachAnswer {
   explanation: string;
   intervention: CoachIntervention;
 }
+
+// Diagnostics are private, text-free backend snapshots. Preserve additional fields in the JSON export.
+export interface CoachDiagnostics {
+  schemaVersion: number;
+  sessionId: string;
+  analysisId?: string | null;
+  mode: 'CapturedAtAnalysis' | 'ReconstructedNow';
+  capturedAt: string;
+  analysis?: { status?: string; decision?: string; decisionSource?: string; [key: string]: unknown };
+  context?: { candidateCount?: number; [key: string]: unknown };
+  providerCalled: boolean | null;
+  [key: string]: unknown;
+}

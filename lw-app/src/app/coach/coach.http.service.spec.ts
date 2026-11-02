@@ -24,6 +24,16 @@ describe('CoachHttpService', () => {
     expect(read.request.method).toBe('GET');
     read.flush({});
   });
+  it('reads diagnostics using GET only without choosing a user or invoking paid analysis', () => {
+    service.diagnostics('old-session').subscribe();
+    const request = http.expectOne(`${base}/sessions/old-session/coach-diagnostics`);
+    expect(request.request.method).toBe('GET');
+    expect(request.request.body).toBeNull();
+    expect(request.request.params.keys()).toEqual([]);
+    request.flush({ schemaVersion: 1, mode: 'ReconstructedNow' });
+    http.expectNone(`${base}/sessions/old-session/coach-analysis`);
+  });
+
   it('keeps accept, dismiss and completion separate from review APIs', () => {
     for (const action of ['accept', 'dismiss', 'complete'] as const) {
       service[action]('intervention').subscribe();

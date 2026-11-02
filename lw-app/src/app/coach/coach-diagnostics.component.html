@@ -1,0 +1,36 @@
+<div class="page-shell-focus stack diagnostics">
+  <header class="page-heading">
+    <h1>{{i18n.text().coachDiagnostics.title}}</h1>
+    <p>{{i18n.text().coachDiagnostics.intro}}</p>
+  </header>
+  <p *ngIf="loading" role="status">{{i18n.text().common.loading}}</p>
+  <div *ngIf="error" class="content-card stack-sm" role="alert">
+    <p class="mb-0">{{i18n.text().coachDiagnostics.loadError}}</p>
+    <div><button type="button" class="btn btn-outline-dark" [disabled]="loading" (click)="load()">{{i18n.text().learning.retry}}</button></div>
+  </div>
+  <ng-container *ngIf="diagnostics as data">
+    <section class="content-card stack" aria-labelledby="diagnostic-summary">
+      <h2 id="diagnostic-summary" class="h5 mb-0">{{i18n.text().coachDiagnostics.summary}}</h2>
+      <p *ngIf="data.mode === 'CapturedAtAnalysis'" class="mb-0 snapshot-mode">{{i18n.text().coachDiagnostics.captured}} <code>CapturedAtAnalysis</code> — {{i18n.text().coachDiagnostics.capturedHelp}}</p>
+      <p *ngIf="data.mode === 'ReconstructedNow'" class="mb-0 snapshot-mode">{{i18n.text().coachDiagnostics.reconstructed}} <code>ReconstructedNow</code> — {{i18n.text().coachDiagnostics.reconstructedHelp}}</p>
+      <dl class="diagnostic-values mb-0">
+        <dt>{{i18n.text().coachDiagnostics.session}}</dt><dd>{{data.sessionId}}</dd>
+        <dt>{{i18n.text().coachDiagnostics.capturedAt}}</dt><dd>{{data.capturedAt | date:'medium'}}</dd>
+        <dt>{{i18n.text().coachDiagnostics.status}}</dt><dd>{{data.analysis?.status ?? i18n.text().coachDiagnostics.unknown}}</dd>
+        <dt>{{i18n.text().coachDiagnostics.decision}}</dt><dd>{{data.analysis?.decision ?? i18n.text().coachDiagnostics.unknown}}</dd>
+        <dt>{{i18n.text().coachDiagnostics.decisionSource}}</dt><dd>{{data.analysis?.decisionSource ?? i18n.text().coachDiagnostics.unknown}}</dd>
+        <dt>{{i18n.text().coachDiagnostics.providerCalled}}</dt><dd>{{data.providerCalled === true ? i18n.text().coachDiagnostics.yes : data.providerCalled === false ? i18n.text().coachDiagnostics.no : i18n.text().coachDiagnostics.unknown}}</dd>
+        <dt>{{i18n.text().coachDiagnostics.candidates}}</dt><dd>{{data.context?.candidateCount ?? i18n.text().coachDiagnostics.unknown}}</dd>
+      </dl>
+    </section>
+    <section class="content-card stack" aria-labelledby="diagnostic-json">
+      <div class="diagnostic-actions">
+        <h2 id="diagnostic-json" class="h5 mb-0">{{i18n.text().coachDiagnostics.json}}</h2>
+        <button type="button" class="btn btn-outline-dark" (click)="download()">{{i18n.text().coachDiagnostics.download}}</button>
+      </div>
+      <p *ngIf="downloadError" class="text-danger mb-0" role="alert">{{i18n.text().coachDiagnostics.downloadError}}</p>
+      <pre tabindex="0" [attr.aria-label]="i18n.text().coachDiagnostics.json">{{json}}</pre>
+    </section>
+  </ng-container>
+  <div><a routerLink="/collections" class="btn btn-outline-dark">{{i18n.text().review.backToCollections}}</a></div>
+</div>

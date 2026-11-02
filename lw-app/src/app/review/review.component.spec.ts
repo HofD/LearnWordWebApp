@@ -178,6 +178,28 @@ describe('ReviewComponent learning sessions', () => {
     expect(review.reviewCard.calls.count()).toBe(2);
   });
 
+  it('keeps technical diagnostics hidden during normal study completion', () => {
+    create(); component.submitReview('Good'); component.submitReview('Again'); fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('a[href^="/coach-diagnostics/"]')).toBeNull();
+  });
+
+  it('shows a secondary diagnostics link only for an explicitly enabled debug query', () => {
+    TestBed.inject(ActivatedRoute).snapshot.queryParams['coachDebug'] = 'true';
+    create();
+    expect(fixture.nativeElement.querySelector('a[href^="/coach-diagnostics/"]')).toBeNull();
+    component.submitReview('Good'); component.submitReview('Again'); fixture.detectChanges();
+    const link: HTMLAnchorElement = fixture.nativeElement.querySelector('a[href^="/coach-diagnostics/"]');
+    expect(link.getAttribute('href')).toBe(`/coach-diagnostics/${learningSession.id}`);
+    expect(link.textContent).toContain('View Coach diagnostics');
+  });
+
+  it('does not enable diagnostics for a false debug query', () => {
+    TestBed.inject(ActivatedRoute).snapshot.queryParams['coachDebug'] = 'false';
+    create(); component.submitReview('Good'); component.submitReview('Again'); fixture.detectChanges();
+    expect(component.coachDebug).toBeFalse();
+    expect(fixture.nativeElement.querySelector('a[href^="/coach-diagnostics/"]')).toBeNull();
+  });
+
   it('blocks duplicate clicks and retries an ambiguous answer using exactly the same payload', () => {
     const pending = new Subject<object>();
     review.reviewCard.and.returnValue(pending);

@@ -28,6 +28,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
   completionError = false;
   completing = false;
   finished = false;
+  coachDebug = false;
   successfulReviews = 0;
   failedReviews = 0;
   collectionId!: number;
@@ -49,6 +50,7 @@ export class ReviewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.collectionId = Number(this.route.snapshot.params['collectionId']);
     this.todayMode = this.route.snapshot.queryParams?.['today'] === 'true';
+    this.coachDebug = this.route.snapshot.queryParams?.['coachDebug'] === 'true';
     this.loadCards(this.collectionId);
   }
 

@@ -25,5 +25,6 @@ export const routes: Routes = [
     { path: 'collections', component: CollectionsComponent, canActivate: [authGuard] },
     { path: 'collections/:id', component: CollectionComponent, canActivate: [authGuard] },
     { path: 'review/:collectionId', component: ReviewComponent, canActivate: [authGuard] },
+    { path: 'coach-diagnostics/:sessionId', loadComponent: () => import('./coach/coach-diagnostics.component').then(module => module.CoachDiagnosticsComponent), canActivate: [authGuard] },
     { path: 'about', component: AboutComponent }
 ];
